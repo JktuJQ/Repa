@@ -56,20 +56,30 @@
     </h3>
 
     <div class="quick-access">
-        <a href="{{ url_for('static', filename='assets/lectures') }}" class="item">
+        <a href="{{ url_for('static', filename='assets/notes') }}" class="item">
             <i class="ri-book-2-line"></i>
-            <h5>Лекции</h5>
-            <p>{ file_data['lectures']|length }} лекций</p>
+            <h5>Конспекты</h5>
+            <p>{{ file_data['notes']|length }} конспектов</p>
         </a>
-        <a href="{{ url_for('static', filename='assets/seminars') }}" class="item">
+        <a href="{{ url_for('static', filename='assets/cheatsheets') }}" class="item">
             <i class="ri-book-2-line"></i>
-            <h5>Семинары</h5>
-            <p>{ file_data['seminars']|length }} семинаров</p>
+            <h5>Шпаргалки</h5>
+            <p>{{ file_data['cheatsheets']|length }} шпаргалок</p>
+        </a>
+        <a href="{{ url_for('static', filename='assets/textbooks') }}" class="item">
+            <i class="ri-book-2-line"></i>
+            <h5>Учебники</h5>
+            <p>{{ file_data['textbooks']|length }} учебников</p>
+        </a>
+        <a href="{{ url_for('static', filename='assets/videos') }}" class="item">
+            <i class="ri-video-chat-fill"></i>
+            <h5>Видео</h5>
+            <p>{{ file_data['videos']|length }} видео</p>
         </a>
         <a href="{{ url_for('static', filename='assets/clips') }}" class="item">
             <i class="ri-video-chat-fill"></i>
             <h5>Клипы</h5>
-            <p>{ file_data['clips']|length }} клипов</p>
+            <p>{{ file_data['clips']|length }} клипов</p>
         </a>
     </div>
 
@@ -79,22 +89,28 @@
 
     <table>
         <tbody>
-        { for category in ['lectures', 'seminars', 'clips'] %}
-        { for file in file_data[category][:5] %}
+        {% for category in file_types %}
+        {% for file in file_data[category][:5] %}
         <tr>
             <td class="icon">
-                { if category == 'lectures' or category == 'seminars' %}
-                <i class="ri-book-2-line"></i>
-                { elif category == 'clips' %}
+                {% if category == 'notes' %}
+                <i class="ri-quill-pen-line"></i>
+                {% elif category == 'cheatsheets' %}
+                <i class="ri-bookmark-line"></i>
+                {% elif category == 'textbooks' %}
+                <i class="ri-feedback-fill"></i>
+                {% elif category == 'videos' %}
                 <i class="ri-video-chat-fill"></i>
-                { endif %}
+                {% elif category == 'clips' %}
+                <i class="ri-mail-send-fill"></i>
+                {% endif %}
             </td>
-            <td class="name">{ file.name }}</td>
-            <td class="date">{ file.created_at }}</td>
+            <td class="name">{{ file.name }}</td>
+            <td class="date">{{ file.created_at }}</td>
             <td class="more"><i class="ri-more-fill"></i></td>
         </tr>
-        { endfor %}
-        { endfor %}
+        {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 </div>
@@ -113,10 +129,10 @@
             <i class="ri-arrow-down-s-line"></i>
         </div>
         <div class="profile-retractable">
-            <div class="sign-out" onclick="window.location.href='{{ url_for('logout') }}'">
+            <button class="sign-out" onclick="window.location.href='{{ url_for('logout') }}'">
                 <h3>Выйти из аккаунта</h3>
                 <i class="ri-logout-box-r-line"></i>
-            </div>
+            </button>
         </div>
     </div>
 </div>

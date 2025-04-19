@@ -5,18 +5,18 @@ from data.db_sesions import databases
 # db.sqlite
 User = None
 
-Note = None
-NoteType = None
+File = None
+FileType = None
 
 
 def load_models():
     """Loads all models from databases"""
 
-    global User, Note, NoteType
+    global User, File, FileType
 
     db_database = databases["db"].classes
 
     User = db_database.users
 
-    Note = db_database.notes
-    NoteType = db_database.notes_type
+    File = db_database.files
+    FileType = db_database.file_types
