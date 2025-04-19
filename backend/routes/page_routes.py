@@ -34,7 +34,7 @@ def dashboard():
         file_data={
             file_type: db_session().query(File).filter(
                 File.file_type_id == db_session().query(FileType).filter(
-                    FileType.type == file_type).first().id).order_by(File.created_at.desc())
+                    FileType.type == file_type).first().id).order_by(File.id.desc())
             .all()
             for file_type in FILE_TYPES
         }

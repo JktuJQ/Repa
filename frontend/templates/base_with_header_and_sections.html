@@ -43,11 +43,6 @@
             <i class="ri-mail-send-fill"></i>
             <h3>Клипы</h3>
         </a>
-        <br>
-        <a href="{{ url_for('file_download') }}" class="item {% if request.path.split('/')[-1] == 'download' %}active{% endif %}">
-            <i class="ri-upload-line"></i>
-            <h3>Загрузить</h3>
-        </a>
     </div>
 </div>
 {% endblock %}
@@ -63,15 +58,10 @@
                     <p>{{ session['name'] }}</p>
                 </div>
             </div>
-
-            <i class="ri-arrow-down-s-line"></i>
-        </div>
-        <div class="profile-retractable">
-            <a class="sign-out item" onclick="window.location.href='{{ url_for('logout') }}'">
+             <a class="sign-out item" onclick="window.location.href='{{ url_for('logout') }}'">
                 <h3>Выйти из аккаунта</h3>
                 <i class="ri-logout-box-r-line"></i>
             </a>
-        </div>
     </div>
 </div>
 
