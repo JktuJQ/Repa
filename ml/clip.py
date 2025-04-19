@@ -72,10 +72,21 @@ def compose_center(background_path, overlay_path, output_path):
         '-c:a', 'copy',
         output_path
     ]
-    subprocess.run(cmd)
+    subprocess.run(cmd, check=True)
+
+def crop(input_path, output_path, width, height, x, y):
+    cmd = [
+        'ffmpeg', '-y', '-i',
+        input_path, '-vf',
+        f'crop={width}:{height}:{x}:{y}',
+        output_path
+    ]
+    
+    subprocess.run(cmd, check=True)
 
 def to_vertical(input_path, output_path, w=1080, h=1920, background=None,
-                bg_blur=15, in_one_cmd=True):
+                bg_blur=15, in_one_cmd=True, left_cut=0.1, right_cut=0.1,
+                down_cut=0.1, up_cut=0.0):
     """
     :param background: background video. If None then background is scaled blur video
     """
