@@ -2,9 +2,14 @@
 from globals import *
 
 from backend.application import application, db_session
-from flask import render_template, session, url_for, redirect
+from flask import render_template, session, url_for, redirect, flash
+from werkzeug.utils import secure_filename
 
 from data.db_models import File, FileType, User
+
+from backend.forms.download_form import DownloadFileForm
+
+from datetime import datetime
 
 
 @application.route("/", methods=["GET"])
@@ -30,6 +35,36 @@ def dashboard():
             for file_type in FILE_TYPES
         }
     )
+
+
+@application.route('/download', methods=["GET", 'POST'])
+def file_download():
+    form = DownloadFileForm()
+    if form.validate_on_submit():
+        try:
+            file = form.file.data
+            filename = secure_filename(file.filename)
+
+            file.save(f"frontend/static/assets/{form.file_type}/{filename}")
+
+            print(File(name=form.name.data, created_at=datetime.today().strftime('%Y-%m-%d'), author_id=session["id"],
+                     filename=filename, description=form.description.data, subject=form.subject.data))
+            db_session().add(
+                File(name=form.name.data, created_at=datetime.today().strftime('%Y-%m-%d'), author_id=session["id"],
+                     filename=filename, description=form.description.data, subject=form.subject.data))
+            db_session().commit()
+
+            print()
+
+            print("4")
+
+            flash("Загрузка прошла успешно", "success")
+            return redirect(url_for("file_detail", file_id=db_session().query(File).filter(File.filename == filename).first().id))
+
+        except:
+            flash(f"Ошибка обработки файла", "error")
+
+    return render_template("file_download.html", form=form)
 
 
 def file_info(file: File):
@@ -58,7 +93,7 @@ def catalog(file_type: str):
     )
 
 
-@application.route("/file_detail/<int:file_id>")
+@application.route("/file_detail/<int:file_id>", methods=["GET"])
 def file_detail(file_id: int):
     return render_template(
         "file_detail.html",

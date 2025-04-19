@@ -1,0 +1,68 @@
+{% extends "base_with_header_and_sections.html" %}
+
+{% block title %}Загрузка файлов{% endblock %}
+
+{% block content %}
+<div class="download-form-container">
+    <h2>Загрузите конспект</h2>
+
+    <form method="POST" enctype="multipart/form-data" novalidate>
+        {{ form.csrf_token }}
+
+        <div class="form-group">
+            {{ form.file_type.label }}
+            {{ form.file_type(class="form-control") }}
+            {% for error in form.file_type.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.name.label }}
+            {{ form.name(class="form-control") }}
+            {% for error in form.name.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.subject.label }}
+            {{ form.subject(class="form-control") }}
+            {% for error in form.subject.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.description.label }}
+            {{ form.description(class="form-control") }}
+            {% for error in form.description.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.file.label }}
+            <div class="file-upload-box">
+                {{ form.file(class="file-input") }}
+                <label for="file" class="file-upload-label">
+                    <i class="ri-upload-cloud-2-line"></i>
+                    <span class="file-upload-text">Выберите файл</span>
+                    <span class="file-upload-hint">pdf, jpg, jpeg, png, mp4 (Максимальный размер: 100MB)</span>
+                </label>
+                <div id="file-name" class="file-name-display">Нет выбранных файлов</div>
+            </div>
+            {% for error in form.file.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-actions">
+            {{ form.submit(class="submit-btn") }}
+            <button type="reset" class="cancel-btn">
+                <i class="ri-close-line"></i>Отмена
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

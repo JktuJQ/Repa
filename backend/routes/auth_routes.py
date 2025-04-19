@@ -14,6 +14,7 @@ def login():
         user = db_session().query(User).filter(User.username == form.username.data).first()
         if user and user.password == form.password.data:
             session["logged_in"] = True
+            session["id"] = user.id
             session["username"] = user.username
             session["name"] = user.name
             flash("Успешный вход в аккаунт", "success")
