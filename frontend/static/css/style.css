@@ -24,6 +24,8 @@ body {
 }
 
 .flash {
+    position: fixed;
+    z-index: 1000;
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 8px;
@@ -910,6 +912,28 @@ input:checked + .slider:before {
 
 .auth-box .auth-footer a:hover {
     text-decoration: underline;
+}
+
+.profile-retractable {
+    display: none;
+}
+
+.profile-retractable.active {
+
+    display: flex;
+    align-items: flex-end;
+    background-color: white;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 10vw;
+}
+
+.profile-retractable .sign-out {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 1vw 1vw;
 }
 
 /* Responsive Design */

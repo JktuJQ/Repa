@@ -5,10 +5,10 @@
 {% block content %}
 <div class="left-section">
     <div class="sidebar">
-        <h2>Конспекты</h2>
+        <h2>Repa</h2>
         <div class="item active">
             <i class="ri-apps-line"></i>
-            <h3>Dashboard</h3>
+            <h3>Главная</h3>
         </div>
         <div class="item">
             <i class="ri-folder-line"></i>
@@ -18,21 +18,23 @@
             <i class="ri-video-line"></i>
             <h3>Семинары</h3>
         </div>
-        </div>
         <div class="item">
+            <i class="ri-video-line"></i>
+            <h3>Клипы</h3>
+        </div>
+        
+        <!-- <div class="item">
             <i class="ri-upload-line"></i>
             <h3>Загрузить</h3>
         </div>
         <div class="item">
             <i class="ri-settings-3-line"></i>
             <h3>Настройки</h3>
-        </div>
+        </div> -->
+    </div>
     </div>
 
-    <div class="sign-out" onclick="window.location.href='{{ url_for('logout') }}'">
-        <i class="ri-logout-box-r-line"></i>
-        <h3>Выйти из аккаунта</h3>
-    </div>
+    
 </div>
 
 <div class="main">
@@ -54,7 +56,6 @@
     </h3>
 
     <div class="quick-access">
-        <!--
         <a href="{{ url_for('static', filename='assets/lectures') }}" class="item">
             <i class="ri-book-2-line"></i>
             <h5>Лекции</h5>
@@ -65,7 +66,6 @@
             <h5>Семинары</h5>
             <p>{{ file_data['seminars'] }} files</p>
         </a>
-        -->
     </div>
 
     <h3 class="separator">
@@ -95,15 +95,24 @@
 </div>
 
 <div class="right-section">
-    <div class="profile">
-        <div class="info">
-            <img src="https://ui-avatars.com/api/?name={{ username|urlencode }}&background=1976d2&color=fff">
-            <div class="account">
-                <h5>{{ username }}</h5>
-                <p>{{ session.email }}</p>
+    <div class="profile-container">
+        <div class="profile">
+            <div class="info">
+                <img src="https://ui-avatars.com/api/?name={{ username|urlencode }}&background=1976d2&color=fff">
+                <div class="account">
+                    <h5>{{ username }}</h5>
+                    <p>{{ session.email }}</p>
+                </div>
+            </div>
+            
+            <i class="ri-arrow-down-s-line"></i>
+        </div>
+        <div class="profile-retractable">
+            <div class="sign-out" onclick="window.location.href='{{ url_for('logout') }}'">
+                <h3>Выйти из аккаунта</h3>
+                <i class="ri-logout-box-r-line"></i>
             </div>
         </div>
-        <i class="ri-arrow-down-s-line"></i>
     </div>
 </div>
 {% endblock %}

@@ -19,4 +19,4 @@ application.extensions = {
 
 def run(port: int = 8080, host: str = "127.0.0.1"):
     """Runs application on "http://{host}:{port}/"""
-    application.run(port=port, host=host)
+    application.run(port=port, host=host, debug=True)
