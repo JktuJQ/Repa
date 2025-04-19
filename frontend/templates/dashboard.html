@@ -56,30 +56,51 @@
     </h3>
 
     <div class="quick-access">
-        <a href="{{ url_for('static', filename='assets/notes') }}" class="item">
+        <a href="{{ url_for('notes') }}" class="item">
             <i class="ri-book-2-line"></i>
             <h5>Конспекты</h5>
-            <p>{{ file_data['notes']|length }} конспектов</p>
+            <p>{{ file_data['notes']|length }} материал
+                {% if file_data['notes']|length == 1 %}
+                {% elif file_data['notes']|length < 5 %}а
+                {% else %}ов
+                {% endif %}
+            </p>
         </a>
-        <a href="{{ url_for('static', filename='assets/cheatsheets') }}" class="item">
+        <a href="{{ url_for('cheatsheets') }}" class="item">
             <i class="ri-book-2-line"></i>
             <h5>Шпаргалки</h5>
-            <p>{{ file_data['cheatsheets']|length }} шпаргалок</p>
+            <p>{{ file_data['cheatsheets']|length }} материал
+                {% if file_data['cheatsheets']|length == 1 %}
+                {% elif file_data['cheatsheets']|length < 5 %}а
+                {% else %}ов
+                {% endif %}</p>
         </a>
-        <a href="{{ url_for('static', filename='assets/textbooks') }}" class="item">
+        <a href="{{ url_for('textbooks') }}" class="item">
             <i class="ri-book-2-line"></i>
             <h5>Учебники</h5>
-            <p>{{ file_data['textbooks']|length }} учебников</p>
+            <p>{{ file_data['textbooks']|length }} материал
+                {% if file_data['textbooks']|length == 1 %}
+                {% elif file_data['textbooks']|length < 5 %}а
+                {% else %}ов
+                {% endif %}</p>
         </a>
-        <a href="{{ url_for('static', filename='assets/videos') }}" class="item">
+        <a href="{{ url_for('videos') }}" class="item">
             <i class="ri-video-chat-fill"></i>
             <h5>Видео</h5>
-            <p>{{ file_data['videos']|length }} видео</p>
+            <p>{{ file_data['videos']|length }} материал
+                {% if file_data['videos']|length == 1 %}
+                {% elif file_data['videos']|length < 5 %}а
+                {% else %}ов
+                {% endif %}</p>
         </a>
-        <a href="{{ url_for('static', filename='assets/clips') }}" class="item">
+        <a href="{{ url_for('clips') }}" class="item">
             <i class="ri-video-chat-fill"></i>
             <h5>Клипы</h5>
-            <p>{{ file_data['clips']|length }} клипов</p>
+            <p>{{ file_data['clips']|length }} материал
+                {% if file_data['clips']|length == 1 %}
+                {% elif file_data['clips']|length < 5 %}а
+                {% else %}ов
+                {% endif %}</p>
         </a>
     </div>
 
