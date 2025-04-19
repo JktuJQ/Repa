@@ -1,8 +1,6 @@
 import cv2
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy import ndimage
-import imutils
 
 
 def add_black_border(image, border_size=20):
@@ -19,6 +17,10 @@ def add_black_border(image, border_size=20):
 
 
 def find_page_contour(img, margin=20, a=180, c=5):
+    """
+    :param float a max-value for threshhold
+    :param float c ...
+    """
     height, width = img.shape[:2]
     border_size = 20
     corners = np.array([
@@ -78,14 +80,6 @@ def find_page_contour(img, margin=20, a=180, c=5):
     # return screenCnt.reshape(4, 2)
 
 
-def align_img(image, contour):
-    """Полный процесс выравнивания документа"""
-    # 1. Пытаемся найти контур страницы
-    ordered_contour = order_points(contour)
-    aligned = four_point_transform(image, ordered_contour.reshape(4, 2))
-    return aligned
-
-
 def four_point_transform(image, pts):
     """Точное перспективное преобразование по 4 точкам"""
     rect = order_points(pts)
@@ -138,34 +132,45 @@ def order_points(pts, type="float32"):
     return np.array([tl, tr, br, bl], dtype=type)
 
 
-def rotate_image(image, angle):
-    """Улучшенный поворот изображения"""
-    if angle == 0:
-        return image
+def align_img(image, contour):
+    """Полный процесс выравнивания документа"""
+    # 1. Пытаемся найти контур страницы
+    ordered_contour = order_points(contour)
+    aligned = four_point_transform(image, ordered_contour.reshape(4, 2))
+    return aligned
 
-    (h, w) = image.shape[:2]
-    center = (w // 2, h // 2)
+def preprocess_img(image):
+    return align_img(image, find_page_contour(image, a=180, c=5))
 
-    # Вычисляем матрицу поворота
-    M = cv2.getRotationMatrix2D(center, angle, 1.0)
 
-    # Вычисляем новые границы изображения
-    cos = np.abs(M[0, 0])
-    sin = np.abs(M[0, 1])
+# def rotate_image(image, angle):
+#     """Улучшенный поворот изображения"""
+#     if angle == 0:
+#         return image
 
-    new_w = int((h * sin) + (w * cos))
-    new_h = int((h * cos) + (w * sin))
+#     (h, w) = image.shape[:2]
+#     center = (w // 2, h // 2)
 
-    # Корректируем матрицу поворота
-    M[0, 2] += (new_w - w) / 2
-    M[1, 2] += (new_h - h) / 2
+#     # Вычисляем матрицу поворота
+#     M = cv2.getRotationMatrix2D(center, angle, 1.0)
 
-    # Поворачиваем с белым фоном
-    rotated = cv2.warpAffine(
-        image, M, (new_w, new_h),
-        flags=cv2.INTER_CUBIC,
-        borderMode=cv2.BORDER_CONSTANT,
-        borderValue=(255, 255, 255)
-    )
+#     # Вычисляем новые границы изображения
+#     cos = np.abs(M[0, 0])
+#     sin = np.abs(M[0, 1])
 
-    return rotated
+#     new_w = int((h * sin) + (w * cos))
+#     new_h = int((h * cos) + (w * sin))
+
+#     # Корректируем матрицу поворота
+#     M[0, 2] += (new_w - w) / 2
+#     M[1, 2] += (new_h - h) / 2
+
+#     # Поворачиваем с белым фоном
+#     rotated = cv2.warpAffine(
+#         image, M, (new_w, new_h),
+#         flags=cv2.INTER_CUBIC,
+#         borderMode=cv2.BORDER_CONSTANT,
+#         borderValue=(255, 255, 255)
+#     )
+
+#     return rotated
