@@ -102,5 +102,6 @@ def catalog(file_type: str):
 def file_detail(file_id: int):
     return render_template(
         "file_detail.html",
+        file_type=db_session().query(FileType).filter(FileType.id == db_session().query(File).filter(File.id == file_id).first().file_type_id).first().type,
         file=file_info(db_session().query(File).filter(File.id == file_id).first())
     )
