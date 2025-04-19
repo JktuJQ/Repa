@@ -1,5 +1,5 @@
 # Imports
-from backend.application import application
+from backend.application import application, db_session
 from flask import render_template, session, url_for, redirect
 
 from data.db_models import Note
@@ -15,6 +15,7 @@ def index():
 @application.route("/dashboard", methods=["GET"])
 def dashboard():
     if not session.get("logged_in"):
+        print("not logged in")
         return redirect(url_for("login"))
 
     return render_template(
@@ -22,8 +23,8 @@ def dashboard():
         username=session.get("username"),
         file_data={
             "lectures":
-                application.extensions["db_session"].query(Note).filter(Note.type == 1).all(),
+                db_session().query(Note).filter(Note.type == 1).all(),
             "seminars":
-                application.extensions["db_session"].query(Note).filter(Note.type == 2).all(),
+                db_session().query(Note).filter(Note.type == 2).all(),
         })
 
