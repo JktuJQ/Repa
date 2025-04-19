@@ -17,8 +17,8 @@ TEMPLATE_FOLDER: str = "../frontend/templates"
 STATIC_FOLDER: str = "../frontend/static"
 
 UPLOAD_FOLDER: str = "../data/files"
-LECTURES_FOLDER: str = os.path.join(UPLOAD_FOLDER, "lectures")
-SEMINARS_FOLDER: str = os.path.join(UPLOAD_FOLDER, "seminars")
+LECTURES_FOLDER: str = os.path.join(UPLOAD_FOLDER, "notes")
+SEMINARS_FOLDER: str = os.path.join(UPLOAD_FOLDER, "cheatsheets")
 
 # Website-related
 DEBUG = True
@@ -36,17 +36,14 @@ def file_extension(filename: str) -> str:
 class NotesFileType(Enum):
     """Enumeration that represents type of notes."""
 
-    TEXT = 1
-    IMAGE = 2
-    VIDEO = 3
+    IMAGE = 1
+    VIDEO = 2
 
     @property
     def extensions(self) -> set[str]:
         """Returns set of allowed extensions for this note type"""
-        if self == self.TEXT:
-            return {"txt", "md", "doc", "docx", "pdf"}
-        elif self == self.IMAGE:
-            return {"png", "jpg", "jpeg"}
+        if self == self.IMAGE:
+            return {"png", "jpg", "jpeg", "pdf"}
         elif self == self.VIDEO:
             return {"mp4", "mov", "avi"}
 

@@ -22,9 +22,9 @@ def dashboard():
         "dashboard.html",
         username=session.get("username"),
         file_data={
-            "lectures":
+            "notes":
                 db_session().query(Note).filter(Note.type == 1).all(),
-            "seminars":
+            "cheatsheets":
                 db_session().query(Note).filter(Note.type == 2).all(),
         })
 
