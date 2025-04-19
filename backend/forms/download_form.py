@@ -14,7 +14,7 @@ class DownloadFileForm(FlaskForm):
 
     file_type = SelectField(
         "Тип конспекта",
-        choices=zip(FILE_TYPES, list(map(lambda x: x.capitalize(), FILE_TYPES_RU))),
+        choices=list(zip(FILE_TYPES, list(map(lambda x: x.capitalize(), FILE_TYPES_RU)))),
         validators=[DataRequired()],
         render_kw={"placeholder": "Выберите тип заметки"}
     )

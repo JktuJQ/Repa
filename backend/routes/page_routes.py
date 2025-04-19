@@ -45,23 +45,19 @@ def file_download():
             file = form.file.data
             filename = secure_filename(file.filename)
 
-            file.save(f"frontend/static/assets/{form.file_type}/{filename}")
-
-            print(File(name=form.name.data, created_at=datetime.today().strftime('%Y-%m-%d'), author_id=session["id"],
-                     filename=filename, description=form.description.data, subject=form.subject.data))
             db_session().add(
                 File(name=form.name.data, created_at=datetime.today().strftime('%Y-%m-%d'), author_id=session["id"],
+                     file_type_id=db_session().query(FileType).filter(FileType.type == form.file_type.data).first().id,
                      filename=filename, description=form.description.data, subject=form.subject.data))
             db_session().commit()
 
-            print()
-
-            print("4")
-
             flash("Загрузка прошла успешно", "success")
-            return redirect(url_for("file_detail", file_id=db_session().query(File).filter(File.filename == filename).first().id))
+            file.save(f"frontend/static/assets/{form.file_type.data}/{filename}")
+            return redirect(
+                url_for("file_detail", file_id=db_session().query(File).filter(File.filename == filename).first().id))
 
-        except:
+        except Exception as e:
+            print(e)
             flash(f"Ошибка обработки файла", "error")
 
     return render_template("file_download.html", form=form)
