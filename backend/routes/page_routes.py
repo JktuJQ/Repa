@@ -61,12 +61,14 @@ def file_download():
                 File(name=form.name.data, created_at=datetime.today().strftime('%Y-%m-%d'), author_id=session["id"],
                      file_type_id=db_session().query(FileType).filter(FileType.type == form.file_type.data).first().id,
                      filename=filename + "(" + str(len(
-                         db_session().query(File).filter(File.filename.like(f"{filename.split('.')[0]}%")).all())) + ")" + extension,
+                         db_session().query(File).filter(
+                             File.filename.like(f"{filename.split('.')[0]}%")).all())) + ")." + extension,
                      description=form.description.data, subject=form.subject.data))
             db_session().commit()
 
             flash("Загрузка прошла успешно", "success")
-            created_file = db_session().query(File).filter(File.id == db_session().query(func.max(File.id)).scalar()).first()
+            created_file = db_session().query(File).filter(
+                File.id == db_session().query(func.max(File.id)).scalar()).first()
             file.save(f"frontend/static/assets/{form.file_type.data}/{created_file.filename}")
             return redirect(
                 url_for("file_detail", file_id=created_file.id))

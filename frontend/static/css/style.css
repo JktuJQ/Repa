@@ -19,6 +19,10 @@ body {
     background: #f0f5fd;
 }
 
+a {
+    text-decoration: none;
+}
+
 /* Flash messages */
 .flashed-messages {
     position: fixed;
@@ -1968,4 +1972,144 @@ textarea.form-control {
 .upload-tips li i {
     color: #4CAF50;
     font-size: 16px;
+}
+
+/* Recent Items Horizontal Layout */
+.recent-horizontal-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.recent-horizontal-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.1);
+}
+
+.recent-horizontal-title {
+    color: #364670;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.recent-horizontal-title i {
+    font-size: 20px;
+}
+
+.recent-horizontal-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #ddd #f5f5f5;
+}
+
+.recent-horizontal-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.recent-horizontal-scroll::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 3px;
+}
+
+.recent-horizontal-scroll::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 3px;
+}
+
+.recent-horizontal-item {
+    flex: 0 0 auto;
+    width: 200px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f9fafc;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 80px;
+}
+
+.recent-horizontal-item:hover {
+    background: #f0f5fd;
+}
+
+.recent-horizontal-name {
+    color: #364670;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recent-horizontal-date {
+    color: #999;
+    font-size: 12px;
+    margin-top: auto;
+}
+
+.recent-horizontal-more {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    padding: 2px;
+    margin-top: 4px;
+}
+
+.recent-horizontal-more:hover {
+    color: #1976d2;
+}
+
+/* Category-specific colors */
+.recent-horizontal-title i.ri-quill-pen-line {
+    color: #4CAF50;
+}
+
+.recent-horizontal-title i.ri-bookmark-line {
+    color: #FF9800;
+}
+
+.recent-horizontal-title i.ri-book-2-line {
+    color: #9C27B0;
+}
+
+.recent-horizontal-title i.ri-video-chat-fill {
+    color: #2196F3;
+}
+
+.recent-horizontal-title i.ri-mail-send-fill {
+    color: #F44336;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .recent-horizontal-item {
+        width: 160px;
+        padding: 10px;
+    }
+
+    .recent-horizontal-name {
+        font-size: 13px;
+    }
+
+    .recent-horizontal-date {
+        font-size: 11px;
+    }
+
+    .recent-horizontal-more {
+        font-size: 14px;
+    }
 }
