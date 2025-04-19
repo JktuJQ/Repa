@@ -5,36 +5,37 @@
 {% block content %}
 <div class="left-section">
     <div class="sidebar">
-        <h2>Repa</h2>
+        <h1>Repa</h1>
         <div class="item active">
             <i class="ri-apps-line"></i>
             <h3>Главная</h3>
         </div>
-        <div class="item">
-            <i class="ri-folder-line"></i>
-            <h3>Лекции</h3>
-        </div>
-        <div class="item">
-            <i class="ri-video-line"></i>
-            <h3>Семинары</h3>
-        </div>
-        <div class="item">
-            <i class="ri-video-line"></i>
+        <a href="{{ url_for('notes') }}" class="item">
+            <i class="ri-quill-pen-line"></i>
+            <h3>Конспекты</h3>
+        </a>
+        <a href="{{ url_for('cheatsheets') }}" class="item">
+            <i class="ri-bookmark-line"></i>
+            <h3>Шпаргалки</h3>
+        </a>
+        <a href="{{ url_for('textbooks') }}" class="item">
+            <i class="ri-book-2-line"></i>
+            <h3>Учебники</h3>
+        </a>
+        <a href="{{ url_for('videos') }}" class="item">
+            <i class="ri-video-chat-fill"></i>
+            <h3>Видео</h3>
+        </a>
+        <a href="{{ url_for('clips') }}" class="item">
+            <i class="ri-mail-send-fill"></i>
             <h3>Клипы</h3>
-        </div>
-
+        </a>
+        <br>
         <div class="item">
             <i class="ri-upload-line"></i>
             <h3>Загрузить</h3>
         </div>
-        <div class="item">
-            <i class="ri-settings-3-line"></i>
-            <h3>Настройки</h3>
-        </div>
     </div>
-</div>
-
-
 </div>
 
 <div class="main">
@@ -57,7 +58,7 @@
 
     <div class="quick-access">
         <a href="{{ url_for('notes') }}" class="item">
-            <i class="ri-book-2-line"></i>
+            <i class="ri-quill-pen-line"></i>
             <h5>Конспекты</h5>
             <p>{{ file_data['notes']|length }} материал
                 {% if file_data['notes']|length == 1 %}
@@ -67,7 +68,7 @@
             </p>
         </a>
         <a href="{{ url_for('cheatsheets') }}" class="item">
-            <i class="ri-book-2-line"></i>
+            <i class="ri-bookmark-line"></i>
             <h5>Шпаргалки</h5>
             <p>{{ file_data['cheatsheets']|length }} материал
                 {% if file_data['cheatsheets']|length == 1 %}
@@ -94,7 +95,7 @@
                 {% endif %}</p>
         </a>
         <a href="{{ url_for('clips') }}" class="item">
-            <i class="ri-video-chat-fill"></i>
+            <i class="ri-mail-send-fill"></i>
             <h5>Клипы</h5>
             <p>{{ file_data['clips']|length }} материал
                 {% if file_data['clips']|length == 1 %}
@@ -108,9 +109,10 @@
         Недавние
     </h3>
 
+{% for category in file_types %}
     <table>
         <tbody>
-        {% for category in file_types %}
+
         {% for file in file_data[category][:5] %}
         <tr>
             <td class="icon">
@@ -119,7 +121,7 @@
                 {% elif category == 'cheatsheets' %}
                 <i class="ri-bookmark-line"></i>
                 {% elif category == 'textbooks' %}
-                <i class="ri-feedback-fill"></i>
+                <i class="ri-book-2-line"></i>
                 {% elif category == 'videos' %}
                 <i class="ri-video-chat-fill"></i>
                 {% elif category == 'clips' %}
@@ -131,9 +133,10 @@
             <td class="more"><i class="ri-more-fill"></i></td>
         </tr>
         {% endfor %}
-        {% endfor %}
         </tbody>
     </table>
+    <br>
+    {% endfor %}
 </div>
 
 <div class="right-section">
@@ -150,10 +153,10 @@
             <i class="ri-arrow-down-s-line"></i>
         </div>
         <div class="profile-retractable">
-            <button class="sign-out" onclick="window.location.href='{{ url_for('logout') }}'">
+            <a class="sign-out" onclick="window.location.href='{{ url_for('logout') }}'">
                 <h3>Выйти из аккаунта</h3>
                 <i class="ri-logout-box-r-line"></i>
-            </button>
+            </a>
         </div>
     </div>
 </div>

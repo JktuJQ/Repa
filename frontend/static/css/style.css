@@ -76,7 +76,7 @@ body {
     z-index: 100;
 }
 
-.left-section h2 {
+.left-section h1 {
     color: #364670;
     margin-bottom: 15px;
     text-align: center;
@@ -89,8 +89,7 @@ body {
     width: 100%;
 }
 
-.left-section .sidebar .item,
-.left-section .sign-out {
+.left-section .sidebar .item {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -99,35 +98,28 @@ body {
     transition: all 0.3s ease;
     padding: 8px 12px;
     border-radius: 8px;
+    text-decoration: none;
 }
 
 .left-section .sidebar .item.active,
-.left-section .sidebar .item.active h3,
 .left-section .sidebar .item.active i {
     background-color: #e8eaf6;
     color: #1976d2;
 }
 
 .left-section .sidebar .item:hover,
-.left-section .sign-out:hover {
+.left-section .sidebar .item .active h3:hover {
     color: #1976d2;
     background-color: #f0f5fd;
 }
 
-.left-section .sidebar .item h3,
-.left-section .sign-out h3 {
+.left-section .sidebar .item h3 {
     font-size: 15px;
     font-weight: 500;
 }
 
-.left-section .sidebar .item i,
-.left-section .sign-out i {
+.left-section .sidebar .item i {
     font-size: 22px;
-}
-
-.left-section .sign-out {
-    margin-top: auto;
-    width: 100%;
 }
 
 /* Main Content */
