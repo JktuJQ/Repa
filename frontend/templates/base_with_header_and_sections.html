@@ -44,10 +44,10 @@
             <h3>Клипы</h3>
         </a>
         <br>
-        <a href="{{ url_for('file_download') }}" class="item {% if request.path.split('/')[-1] == 'download' %}active{% endif %}">
+        <!--<a href="{{ url_for('file_download') }}" class="item {% if request.path.split('/')[-1] == 'download' %}active{% endif %}">
             <i class="ri-upload-line"></i>
             <h3>Загрузить</h3>
-        </a>
+        </a>-->
     </div>
 </div>
 {% endblock %}
@@ -63,51 +63,53 @@
                     <p>{{ session['name'] }}</p>
                 </div>
             </div>
-
-            <i class="ri-arrow-down-s-line"></i>
-        </div>
-        <div class="profile-retractable">
             <a class="sign-out item" onclick="window.location.href='{{ url_for('logout') }}'">
                 <h3>Выйти из аккаунта</h3>
                 <i class="ri-logout-box-r-line"></i>
             </a>
+            <!-- <i class="ri-arrow-down-s-line"></i> -->
         </div>
+        <!-- <div class="profile-retractable">
+            <a class="sign-out item" onclick="window.location.href='{{ url_for('logout') }}'">
+                <h3>Выйти из аккаунта</h3>
+                <i class="ri-logout-box-r-line"></i>
+            </a>
+        </div> -->
     </div>
-</div>
-
-<div class="quick-download-types">
-    <h3>Быстрый выбор типа</h3>
-    <div class="quick-type-buttons">
-        <a href="{{ url_for('static', filename='')}}" class="quick-type-btn notes" data-type="notes">
-            <i class="ri-quill-pen-line"></i>
-            <span>Конспекты</span>
-        </a>
-        <a class="quick-type-btn cheatsheets" data-type="cheatsheets">
-            <i class="ri-bookmark-line"></i>
-            <span>Шпаргалки</span>
-        </a>
-        <a class="quick-type-btn textbooks" data-type="textbooks">
-            <i class="ri-book-2-line"></i>
-            <span>Учебники</span>
-        </a>
-        <a class="quick-type-btn videos" data-type="videos">
-            <i class="ri-video-chat-fill"></i>
-            <span>Видео</span>
-        </a>
-        <a class="quick-type-btn clips" data-type="clips">
-            <i class="ri-mail-send-fill"></i>
-            <span>Клипы</span>
-        </a>
-    </div>
-
-    <div class="upload-tips">
-        <h3>Советы по загрузке</h3>
-        <ul>
-            <li><i class="ri-check-line"></i> Используйте понятные названия</li>
-            <li><i class="ri-check-line"></i> Добавляйте описание</li>
-            <li><i class="ri-check-line"></i> Указывайте предмет</li>
-            <li><i class="ri-check-line"></i> Макс. размер файла: 100MB</li>
-        </ul>
+    <div class="quick-download-types">
+        <h3>Быстрый выбор типа</h3>
+        <div class="quick-type-buttons">
+            <a href="{{ url_for('static', filename='')}}" class="quick-type-btn notes" data-type="notes">
+                <i class="ri-quill-pen-line"></i>
+                <span>Конспекты</span>
+            </a>
+            <a class="quick-type-btn cheatsheets" data-type="cheatsheets">
+                <i class="ri-bookmark-line"></i>
+                <span>Шпаргалки</span>
+            </a>
+            <a class="quick-type-btn textbooks" data-type="textbooks">
+                <i class="ri-book-2-line"></i>
+                <span>Учебники</span>
+            </a>
+            <a class="quick-type-btn videos" data-type="videos">
+                <i class="ri-video-chat-fill"></i>
+                <span>Видео</span>
+            </a>
+            <a class="quick-type-btn clips" data-type="clips">
+                <i class="ri-mail-send-fill"></i>
+                <span>Клипы</span>
+            </a>
+        </div>
+    
+        <div class="upload-tips">
+            <h3>Советы по загрузке</h3>
+            <ul>
+                <li><i class="ri-check-line"></i> Используйте понятные названия</li>
+                <li><i class="ri-check-line"></i> Добавляйте описание</li>
+                <li><i class="ri-check-line"></i> Указывайте предмет</li>
+                <li><i class="ri-check-line"></i> Макс. размер файла: 100MB</li>
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}

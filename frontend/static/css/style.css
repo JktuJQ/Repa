@@ -139,6 +139,10 @@ body {
     overflow-y: auto;
 }
 
+.main::-webkit-scrollbar {
+    width: 10px;
+}
+
 .main .header {
     display: flex;
     align-items: center;
@@ -332,17 +336,26 @@ body {
 
 /* Right Section */
 .right-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     /* padding: 25px 25px 15px 10px; */
     width: 20vw;
     padding: 25px 10px;
     /* overflow-y: auto; */
 }
 
+.right-section .quick-download-types {
+    margin-top: 10vh;
+    height: 100%;
+}
+
 .right-section .profile {
     background: #fff;
     padding: 10px;
     display: flex;
-    align-items: center;
+    flex-direction: column; 
+    /* align-items: ; */
     justify-content: space-between;
     border-radius: 15px;
     box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
@@ -555,34 +568,6 @@ body {
 .main table tbody tr td.action .download-btn:hover {
     color: #fff;
     background: #1976d2;
-}
-
-/* Fix Sign Out Functionality */
-.left-section .sign-out {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #364670;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 12px;
-    width: calc(100% - 24px);
-    margin: 20px 12px 0;
-    border-radius: 8px;
-}
-
-.left-section .sign-out:hover {
-    background: #f0f5fd;
-    color: #d32f2f;
-}
-
-.left-section .sign-out i {
-    font-size: 22px;
-}
-
-.left-section .sign-out h3 {
-    font-size: 15px;
-    font-weight: 500;
 }
 
 /* Fix Settings Page Layout */
@@ -927,14 +912,26 @@ input:checked + .slider:before {
 
 /*---------------FILE DETAILS----------------------*/
 .file-detail-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
     background-color: white;
-    width: 30vw;
+    border-radius: 16px;
+    padding: 20px;
+    /* width: 30vw; */
+    height: 85vh;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+}
+
+.file-detail-container .file-preview img {
+    width: 50vw;
 }
 /*-------------------------------------------------*/
 .files-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    /* justify-content: ; */
 
 }
 
@@ -1041,38 +1038,11 @@ input:checked + .slider:before {
     text-decoration: underline;
 }
 
-.profile-retractable {
-    display: none;
-}
-
-.profile-retractable.active {
-
-    display: flex;
-    align-items: flex-end;
-    background-color: white;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    height: 10vw;
-    transform-origin: top;
-    animation: Wrapper 0.3s;
-    object-fit: cover;
-    border-radius: 0 0 15px 15px;
-}
-@keyframes Wrapper{
-    0%{
-      transform: scaleY(0);
-    }
-    100%{
-      transform: scaleY(1);
-    }
-}
-
-.profile-retractable .sign-out {
+.right-section .profile .item {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin: 1vw 1vw;
+    margin: 1vh 0;
 }
 
 /* Responsive Design */

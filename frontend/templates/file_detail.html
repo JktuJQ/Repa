@@ -4,33 +4,32 @@
 
 {% block content %}
 <div class="file-detail-container">
-    <div class="file-header">
-        <h2>{{ file['file'].name }}</h2>
-        <div class="file-meta">
-            <span class="author">Загружено {{ file.author }}</span>
-            <span class="date">в {{ file['file'].created_at }}</span>
+    <div class="file-preview">
+        {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
+        {% if file['file'].filename[-4:] == 'pdf' %}
+        <iframe src="https://docs.google.com/gview?url=http://example.com/mypdf.pdf&embedded=true&url={{ url_for('static', filename=file['link']) }}"
+        frameborder="0"></iframe>
+            {% else %}
+            <img src="{{ url_for('static', filename=file['link']) }}" alt="{{ file['file'].name }}">
+        {% endif %}
+        {% elif file_type in ('videos', 'clips') %}
+            <video controls>
+                <source src="{{ url_for('static', filename=file['link']) }}"/>
+            </video>
+        {% endif %}
+    </div>
+    <div class="file-info">
+        <div class="file-header">
+            <h2>{{ file['file'].name }}</h2>
+            <div class="file-meta">
+                <span class="author">Загружено {{ file.author }}</span>
+                <span class="date">в {{ file['file'].created_at }}</span>
+            </div>
+        </div>  
+    
+        <div class="file-description">
+            <p>{{ file['file'].description }}</p>
         </div>
-    </div>
-
-    <div class="file-description">
-        <p>{{ file['file'].description }}</p>
-    </div>
-
-    <div class="file-content">
-        <div class="file-preview">
-            {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
-            {% if file['file'].filename[-4:] == 'pdf' %}
-            <iframe src="https://docs.google.com/gview?url=http://example.com/mypdf.pdf&embedded=true&url={{ url_for('static', filename=file['link']) }}"
-            frameborder="0"></iframe>
-                {% else %}
-                <img src="{{ url_for('static', filename=file['link']) }}" alt="{{ file['file'].name }}">
-            {% endif %}
-            {% elif file_type in ('videos', 'clips') %}
-                <video controls>
-                    <source src="{{ url_for('static', filename=file['link']) }}"/>
-                </video>
-            {% endif %}
-        </div>
-    </div>
+    </div>    
 </div>
 {% endblock %}
