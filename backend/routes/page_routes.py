@@ -1,4 +1,6 @@
 # Imports
+from globals import *
+
 from backend.application import application, db_session
 from flask import render_template, session, url_for, redirect
 
@@ -21,6 +23,7 @@ def dashboard():
     return render_template(
         "dashboard.html",
         username=session.get("username"),
+        file_types=FILE_TYPES,
         file_data={
             "notes":
                 db_session().query(Note).filter(Note.type == 1).all(),
