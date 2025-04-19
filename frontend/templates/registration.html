@@ -10,7 +10,7 @@
 
         <form action="" method="post">
             {{ form.csrf_token }}
-            <p>
+            <p class="form-group">
                 {{ form.username.label() }}
                 {{ form.username() }}
                 {% if form.username.errors %}
@@ -19,7 +19,7 @@
                 {% endfor %}
                 {% endif %}
             </p>
-            <p>
+            <p class="form-group">
                 {{ form.password.label() }}
                 {{ form.password() }}
                 {% if form.password.errors %}
@@ -28,7 +28,7 @@
                 {% endfor %}
                 {% endif %}
             </p>
-            <p>
+            <p class="form-group">
                 {{ form.name.label() }}
                 {{ form.name() }}
                 {% if form.name.errors %}
@@ -38,7 +38,7 @@
                 {% endif %}
             </p>
             <p>
-                {{ form.submit() }}
+                {{ form.submit(class="auth-btn") }}
             </p>
         </form>
         <div class="auth-footer">
