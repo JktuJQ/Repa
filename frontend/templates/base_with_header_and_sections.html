@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="header">
+    <div class="search">
+        <button><i class="ri-search-2-line"></i></button>
+        <input type="text" placeholder="Поиск">
+        <i class="ri-equalizer-line"></i>
+    </div>
+    <div class="icon-btns">
+        <i class="ri-notification-line"></i>
+        <i class="ri-message-3-line"></i>
+        <i class="ri-menu-line" id="menu-btn"></i>
+    </div>
+</div>
+{% endblock %}
+
+{% block left_section %}
+<div class="left-section">
+    <div class="sidebar">
+        <h1>Repa</h1>
+        <div class="item active">
+            <i class="ri-apps-line"></i>
+            <h3>Главная</h3>
+        </div>
+        <a href="{{ url_for('catalog', file_type='notes') }}" class="item">
+            <i class="ri-quill-pen-line"></i>
+            <h3>Конспекты</h3>
+        </a>
+        <a href="{{ url_for('catalog', file_type='cheatsheets') }}" class="item">
+            <i class="ri-bookmark-line"></i>
+            <h3>Шпаргалки</h3>
+        </a>
+        <a href="{{ url_for('catalog', file_type='textbooks') }}" class="item">
+            <i class="ri-book-2-line"></i>
+            <h3>Учебники</h3>
+        </a>
+        <a href="{{ url_for('catalog', file_type='videos') }}" class="item">
+            <i class="ri-video-chat-fill"></i>
+            <h3>Видео</h3>
+        </a>
+        <a href="{{ url_for('catalog', file_type='clips') }}" class="item">
+            <i class="ri-mail-send-fill"></i>
+            <h3>Клипы</h3>
+        </a>
+        <br>
+        <div class="item">
+            <i class="ri-upload-line"></i>
+            <h3>Загрузить</h3>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block right_section %}
+<div class="right-section">
+    <div class="profile-container">
+        <div class="profile">
+            <div class="info">
+                <img src="https://ui-avatars.com/api/?name={{ username|urlencode }}&background=1976d2&color=fff">
+                <div class="account">
+                    <h5>{{ username }}</h5>
+                    <p>{{ session.email }}</p>
+                </div>
+            </div>
+
+            <i class="ri-arrow-down-s-line"></i>
+        </div>
+        <div class="profile-retractable">
+            <a class="sign-out item" onclick="window.location.href='{{ url_for('logout') }}'">
+                <h3>Выйти из аккаунта</h3>
+                <i class="ri-logout-box-r-line"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

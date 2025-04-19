@@ -18,3 +18,4 @@ STATIC_FOLDER: str = "../frontend/static"
 DEBUG = True
 
 FILE_TYPES: list[str] = ["notes", "cheatsheets", "textbooks", "videos", "clips"]
+FILE_TYPES_RU: list[str] = ["конспекты", "шпаргалки", "учебники", "видео", "клипы"]

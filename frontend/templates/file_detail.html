@@ -1,0 +1,36 @@
+{% extends "base_with_header_and_sections.html" %}
+
+{% block title %}{{ file.name }}{% endblock %}
+
+{% block content %}
+<div class="file-detail-container">
+    <div class="file-header">
+        <h2>{{ file['file'].name }}</h2>
+        <div class="file-meta">
+            <span class="author">By {{ file.author }}</span>
+            <span class="date">Created on {{ file['file'].created_at }}</span>
+        </div>
+    </div>
+
+    <div class="file-description">
+        <p>{{ file['file'].description }}</p>
+    </div>
+
+    <div class="file-content">
+        <div class="file-preview">
+            {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
+            {% if file['file'].filename[-4:] == 'pdf' %}
+            <iframe src="https://docs.google.com/gview?url=http://example.com/mypdf.pdf&embedded=true&url={{ url_for('static', filename=file['link']) }}"
+                    frameborder="0"></iframe>
+            {% else %}
+            <img src="{{ url_for('static', filename=['link']) }}" alt="{{ file['file'].name }}">
+            {% endif %}
+            {% elif file_type in ('video', 'clips') %}
+            <video controls>
+                <source src="{{ url_for('static', filename=file['link']) }}"/>
+            </video>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

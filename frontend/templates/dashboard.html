@@ -1,164 +1,93 @@
-{% extends "base.html" %}
+{% extends "base_with_header_and_sections.html" %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Главная{% endblock %}
 
 {% block content %}
-<div class="left-section">
-    <div class="sidebar">
-        <h1>Repa</h1>
-        <div class="item active">
-            <i class="ri-apps-line"></i>
-            <h3>Главная</h3>
-        </div>
-        <a href="{{ url_for('notes') }}" class="item">
-            <i class="ri-quill-pen-line"></i>
-            <h3>Конспекты</h3>
-        </a>
-        <a href="{{ url_for('cheatsheets') }}" class="item">
-            <i class="ri-bookmark-line"></i>
-            <h3>Шпаргалки</h3>
-        </a>
-        <a href="{{ url_for('textbooks') }}" class="item">
-            <i class="ri-book-2-line"></i>
-            <h3>Учебники</h3>
-        </a>
-        <a href="{{ url_for('videos') }}" class="item">
-            <i class="ri-video-chat-fill"></i>
-            <h3>Видео</h3>
-        </a>
-        <a href="{{ url_for('clips') }}" class="item">
-            <i class="ri-mail-send-fill"></i>
-            <h3>Клипы</h3>
-        </a>
-        <br>
-        <div class="item">
-            <i class="ri-upload-line"></i>
-            <h3>Загрузить</h3>
-        </div>
-    </div>
+
+
+<h3 class="separator">
+    Быстрый доступ
+</h3>
+
+<div class="quick-access">
+    <a href="{{ url_for('catalog', file_type='notes') }}" class="item">
+        <i class="ri-quill-pen-line"></i>
+        <h5>Конспекты</h5>
+        <p>{{ file_data['notes']|length }} материал
+            {% if file_data['notes']|length == 1 %}
+            {% elif file_data['notes']|length < 5 %}а
+            {% else %}ов
+            {% endif %}
+        </p>
+    </a>
+    <a href="{{ url_for('catalog', file_type='cheatsheets') }}" class="item">
+        <i class="ri-bookmark-line"></i>
+        <h5>Шпаргалки</h5>
+        <p>{{ file_data['cheatsheets']|length }} материал
+            {% if file_data['cheatsheets']|length == 1 %}
+            {% elif file_data['cheatsheets']|length < 5 %}а
+            {% else %}ов
+            {% endif %}</p>
+    </a>
+    <a href="{{ url_for('catalog', file_type='textbooks') }}" class="item">
+        <i class="ri-book-2-line"></i>
+        <h5>Учебники</h5>
+        <p>{{ file_data['textbooks']|length }} материал
+            {% if file_data['textbooks']|length == 1 %}
+            {% elif file_data['textbooks']|length < 5 %}а
+            {% else %}ов
+            {% endif %}</p>
+    </a>
+    <a href="{{ url_for('catalog', file_type='videos') }}" class="item">
+        <i class="ri-video-chat-fill"></i>
+        <h5>Видео</h5>
+        <p>{{ file_data['videos']|length }} материал
+            {% if file_data['videos']|length == 1 %}
+            {% elif file_data['videos']|length < 5 %}а
+            {% else %}ов
+            {% endif %}</p>
+    </a>
+    <a href="{{ url_for('catalog', file_type='clips') }}" class="item">
+        <i class="ri-mail-send-fill"></i>
+        <h5>Клипы</h5>
+        <p>{{ file_data['clips']|length }} материал
+            {% if file_data['clips']|length == 1 %}
+            {% elif file_data['clips']|length < 5 %}а
+            {% else %}ов
+            {% endif %}</p>
+    </a>
 </div>
 
-<div class="main">
-    <div class="header">
-        <div class="search">
-            <button><i class="ri-search-2-line"></i></button>
-            <input type="text" placeholder="Поиск">
-            <i class="ri-equalizer-line"></i>
-        </div>
-        <div class="icon-btns">
-            <i class="ri-notification-line"></i>
-            <i class="ri-message-3-line"></i>
-            <i class="ri-menu-line" id="menu-btn"></i>
-        </div>
-    </div>
-
-    <h3 class="separator">
-        Быстрый доступ
-    </h3>
-
-    <div class="quick-access">
-        <a href="{{ url_for('notes') }}" class="item">
-            <i class="ri-quill-pen-line"></i>
-            <h5>Конспекты</h5>
-            <p>{{ file_data['notes']|length }} материал
-                {% if file_data['notes']|length == 1 %}
-                {% elif file_data['notes']|length < 5 %}а
-                {% else %}ов
-                {% endif %}
-            </p>
-        </a>
-        <a href="{{ url_for('cheatsheets') }}" class="item">
-            <i class="ri-bookmark-line"></i>
-            <h5>Шпаргалки</h5>
-            <p>{{ file_data['cheatsheets']|length }} материал
-                {% if file_data['cheatsheets']|length == 1 %}
-                {% elif file_data['cheatsheets']|length < 5 %}а
-                {% else %}ов
-                {% endif %}</p>
-        </a>
-        <a href="{{ url_for('textbooks') }}" class="item">
-            <i class="ri-book-2-line"></i>
-            <h5>Учебники</h5>
-            <p>{{ file_data['textbooks']|length }} материал
-                {% if file_data['textbooks']|length == 1 %}
-                {% elif file_data['textbooks']|length < 5 %}а
-                {% else %}ов
-                {% endif %}</p>
-        </a>
-        <a href="{{ url_for('videos') }}" class="item">
-            <i class="ri-video-chat-fill"></i>
-            <h5>Видео</h5>
-            <p>{{ file_data['videos']|length }} материал
-                {% if file_data['videos']|length == 1 %}
-                {% elif file_data['videos']|length < 5 %}а
-                {% else %}ов
-                {% endif %}</p>
-        </a>
-        <a href="{{ url_for('clips') }}" class="item">
-            <i class="ri-mail-send-fill"></i>
-            <h5>Клипы</h5>
-            <p>{{ file_data['clips']|length }} материал
-                {% if file_data['clips']|length == 1 %}
-                {% elif file_data['clips']|length < 5 %}а
-                {% else %}ов
-                {% endif %}</p>
-        </a>
-    </div>
-
-    <h3 class="separator">
-        Недавние
-    </h3>
+<h3 class="separator">
+    Недавние
+</h3>
 
 {% for category in file_types %}
-    <table>
-        <tbody>
+<table>
+    <tbody>
 
-        {% for file in file_data[category][:5] %}
-        <tr>
-            <td class="icon">
-                {% if category == 'notes' %}
-                <i class="ri-quill-pen-line"></i>
-                {% elif category == 'cheatsheets' %}
-                <i class="ri-bookmark-line"></i>
-                {% elif category == 'textbooks' %}
-                <i class="ri-book-2-line"></i>
-                {% elif category == 'videos' %}
-                <i class="ri-video-chat-fill"></i>
-                {% elif category == 'clips' %}
-                <i class="ri-mail-send-fill"></i>
-                {% endif %}
-            </td>
-            <td class="name">{{ file.name }}</td>
-            <td class="date">{{ file.created_at }}</td>
-            <td class="more"><i class="ri-more-fill"></i></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <br>
+    {% for file in file_data[category][:5] %}
+    <tr>
+        <td class="icon">
+            {% if category == 'notes' %}
+            <i class="ri-quill-pen-line"></i>
+            {% elif category == 'cheatsheets' %}
+            <i class="ri-bookmark-line"></i>
+            {% elif category == 'textbooks' %}
+            <i class="ri-book-2-line"></i>
+            {% elif category == 'videos' %}
+            <i class="ri-video-chat-fill"></i>
+            {% elif category == 'clips' %}
+            <i class="ri-mail-send-fill"></i>
+            {% endif %}
+        </td>
+        <td class="name">{{ file.name }}</td>
+        <td class="date">{{ file.created_at }}</td>
+        <td class="more"><i class="ri-more-fill"></i></td>
+    </tr>
     {% endfor %}
-</div>
-
-<div class="right-section">
-    <div class="profile-container">
-        <div class="profile">
-            <div class="info">
-                <img src="https://ui-avatars.com/api/?name={{ username|urlencode }}&background=1976d2&color=fff">
-                <div class="account">
-                    <h5>{{ username }}</h5>
-                    <p>{{ session.email }}</p>
-                </div>
-            </div>
-
-            <i class="ri-arrow-down-s-line"></i>
-        </div>
-        <div class="profile-retractable">
-            <a class="sign-out item" onclick="window.location.href='{{ url_for('logout') }}'">
-                <h3>Выйти из аккаунта</h3>
-                <i class="ri-logout-box-r-line"></i>
-            </a>
-        </div>
-    </div>
-    <!-- <div class="ri-menu-line" id="menu-btn"></div> -->
-</div>
+    </tbody>
+</table>
+<br>
+{% endfor %}
 {% endblock %}
