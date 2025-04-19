@@ -1,3 +1,4 @@
+// Retractable profile window
 profile_container = document.querySelector(".profile-container");
 profile_small = document.querySelector(".profile-container").querySelector(".profile");
 profile_small.addEventListener("click", function() {
@@ -5,6 +6,36 @@ profile_small.addEventListener("click", function() {
     profile_small.classList.toggle("border");
 });
 
+// Repa Clips
+let isMuted = true;
+const videos = document.querySelectorAll('.clips-grid video');
+console.log(videos);
+const videoContainer = document.querySelector(".clips-grid")
+
+const togglePlayVideo = (video, shouldPlay, shouldRestart) => {
+    console.log(shouldPlay);
+    if (shouldPlay) return video.play();
+
+    video.pause();
+    if (shouldRestart)
+        video.currentTime = 0;
+}
+
+const toggleMute = () => {
+    isMuted = !isMuted;
+    console.log(isMuted);
+    videos.forEach(video => video.muted = isMuted);
+}
+
+const options = { root: document.querySelector(".clips-grid"), threshold: 1};
+const obeserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => togglePlayVideo(entry.target, entry.isIntersecting, true));
+}, options);
+
+videos.forEach(target => obeserver.observe(target));
+videos.forEach(target => target.addEventListener("click", function() { togglePlayVideo(target, target.paused, false) }));
+
+// Files validation
 document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.querySelector('.file-input');
     const fileNameDisplay = document.getElementById('file-name');
