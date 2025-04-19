@@ -241,26 +241,6 @@ body {
     border-radius: 16px;
 }
 
-.main .quick-access .item:nth-child(1) i {
-    color: #1976d2;
-    background: #e6e4ec;
-}
-
-.main .quick-access .item:nth-child(2) i {
-    color: #1d92f1;
-    background: #ddeffd;
-}
-
-.main .quick-access .item:nth-child(3) i {
-    color: #ffd12c;
-    background: #fff8df;
-}
-
-.main .quick-access .item:nth-child(4) i {
-    color: #3bc963;
-    background: #e2f7e8;
-}
-
 .main .quick-access .item h5 {
     font-size: 18px;
     font-weight: 500;
@@ -1709,4 +1689,194 @@ textarea.form-control {
     .file-upload-label i {
         font-size: 36px;
     }
+}
+
+/* Dashboard Tables Alignment Fix */
+.dashboard-tables-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dashboard-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.dashboard-table-wrapper table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.1);
+}
+
+.dashboard-table-wrapper table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.dashboard-table-wrapper table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.dashboard-table-wrapper table tbody tr:hover {
+    background-color: #f5f7fa;
+}
+
+.dashboard-table-wrapper table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+.dashboard-table-wrapper table td.icon {
+    width: 50px;
+    text-align: center;
+}
+
+.dashboard-table-wrapper table td.icon i {
+    font-size: 20px;
+    padding: 8px;
+    border-radius: 8px;
+    background: #f0f5fd;
+    color: #1976d2;
+}
+
+.dashboard-table-wrapper table td.name {
+    font-weight: 500;
+    color: #364670;
+    width: 60%;
+}
+
+.dashboard-table-wrapper table td.date {
+    color: #999;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.dashboard-table-wrapper table td.more {
+    width: 40px;
+    text-align: center;
+}
+
+.dashboard-table-wrapper table td.more i {
+    color: #999;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dashboard-table-wrapper table td.more i:hover {
+    color: #1976d2;
+}
+
+/* Category-specific icons */
+.dashboard-table-wrapper table td.icon .ri-quill-pen-line { /* Notes */
+    color: #4CAF50;
+    background: #e8f5e9;
+}
+
+.dashboard-table-wrapper table td.icon .ri-bookmark-line { /* Cheatsheets */
+    color: #FF9800;
+    background: #fff3e0;
+}
+
+.dashboard-table-wrapper table td.icon .ri-book-2-line { /* Textbooks */
+    color: #9C27B0;
+    background: #f3e5f5;
+}
+
+.dashboard-table-wrapper table td.icon .ri-video-chat-fill { /* Videos */
+    color: #2196F3;
+    background: #e3f2fd;
+}
+
+.dashboard-table-wrapper table td.icon .ri-mail-send-fill { /* Clips */
+    color: #F44336;
+    background: #ffebee;
+}
+
+/* Quick Access Items */
+.quick-access .item {
+    /* ... existing styles ... */
+}
+
+/* Color alignment between quick-access and tables */
+.quick-access .ri-quill-pen-line,
+.dashboard-table-wrapper table td.icon .ri-quill-pen-line { /* Notes - Green */
+    color: #4CAF50;
+    background: #e8f5e9;
+}
+
+.quick-access .ri-bookmark-line,
+.dashboard-table-wrapper table td.icon .ri-bookmark-line { /* Cheatsheets - Orange */
+    color: #FF9800;
+    background: #fff3e0;
+}
+
+.main .quick-access .ri-book-2-line,
+.main .dashboard-table-wrapper table td.icon .ri-book-2-line { /* Textbooks - Purple */
+    color: #9C27B0;
+    background: #f3e5f5;
+}
+
+.main .quick-access .ri-video-chat-fill,
+.main .dashboard-table-wrapper table td.icon .ri-video-chat-fill { /* Videos - Blue */
+    color: #2196F3;
+    background: #e3f2fd;
+}
+
+.main .quick-access .ri-mail-send-fill,
+.main .dashboard-table-wrapper table td.icon .ri-mail-send-fill { /* Clips - Red */
+    color: #F44336;
+    background: #ffebee;
+}
+
+/* Update quick-access icons to match */
+.quick-access .item i {
+    font-size: 24px;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+}
+
+/* Quick Access Section */
+.quick-access {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.quick-access .item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.1);
+    text-decoration: none;
+    color: inherit;
+}
+
+.quick-access .item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(136, 148, 171, 0.2);
+}
+
+.quick-access h5 {
+    font-size: 16px;
+    color: #364670;
+    margin-bottom: 8px;
+}
+
+.quick-access p {
+    font-size: 14px;
+    color: #999;
 }
