@@ -89,14 +89,20 @@
 
     <table>
         <tbody>
-        {% for category in FILE_TYPES %}
+        {% for category in file_types %}
         {% for file in file_data[category][:5] %}
         <tr>
             <td class="icon">
-                {% if category == 'lectures' or category == 'seminars' %}
-                <i class="ri-book-2-line"></i>
-                {% elif category == 'clips' %}
+                {% if category == 'notes' %}
+                <i class="ri-quill-pen-line"></i>
+                {% elif category == 'cheatsheets' %}
+                <i class="ri-bookmark-line"></i>
+                {% elif category == 'textbooks' %}
+                <i class="ri-feedback-fill"></i>
+                {% elif category == 'videos' %}
                 <i class="ri-video-chat-fill"></i>
+                {% elif category == 'clips' %}
+                <i class="ri-mail-send-fill"></i>
                 {% endif %}
             </td>
             <td class="name">{{ file.name }}</td>

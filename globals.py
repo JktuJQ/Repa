@@ -17,4 +17,4 @@ STATIC_FOLDER: str = "../frontend/static"
 # Website-related
 DEBUG = True
 
-FILE_TYPES: set[str] = {"notes", "cheatsheets", "textbooks", "videos", "clips"}
+FILE_TYPES: list[str] = ["notes", "cheatsheets", "textbooks", "videos", "clips"]

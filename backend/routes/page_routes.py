@@ -4,7 +4,7 @@ from globals import *
 from backend.application import application, db_session
 from flask import render_template, session, url_for, redirect
 
-from data.db_models import Note
+from data.db_models import File, FileType
 
 
 @application.route("/", methods=["GET"])
@@ -17,7 +17,6 @@ def index():
 @application.route("/dashboard", methods=["GET"])
 def dashboard():
     if not session.get("logged_in"):
-        print("not logged in")
         return redirect(url_for("login"))
 
     return render_template(
@@ -25,9 +24,34 @@ def dashboard():
         username=session.get("username"),
         file_types=FILE_TYPES,
         file_data={
-            "notes":
-                db_session().query(Note).filter(Note.type == 1).all(),
-            "cheatsheets":
-                db_session().query(Note).filter(Note.type == 2).all(),
-        })
+            file_type: db_session().query(File).filter(
+                File.file_type_id == db_session().query(FileType).filter(FileType.type == file_type).first().id)
+            .all()
+            for file_type in FILE_TYPES
+        }
+    )
 
+
+@application.route("/notes", methods=["GET"])
+def notes():
+    pass
+
+
+@application.route("/cheatsheets", methods=["GET"])
+def cheatsheets():
+    pass
+
+
+@application.route("/textbooks", methods=["GET"])
+def textbooks():
+    pass
+
+
+@application.route("/videos", methods=["GET"])
+def videos():
+    pass
+
+
+@application.route("/clips", methods=["GET"])
+def clips():
+    pass

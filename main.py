@@ -7,7 +7,6 @@ load_models()
 
 
 # noinspection PyUnresolvedReferences
-#aasdasfinasdof
 def main():
     """ Program's entry point."""
     from backend.application import run
