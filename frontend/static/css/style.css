@@ -229,7 +229,8 @@ body {
     text-decoration: none;
 }
 
-.main .quick-access .item:hover {
+.main .quick-access .item:hover,
+.files-grid .file-card:hover {
     box-shadow: none;
     border-color: #999;
 }
@@ -886,6 +887,50 @@ input:checked + .slider:before {
 
 .file-label span {
     color: #666;
+}
+
+.files-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+.files-grid .file-preview {
+    display: flex;
+    flex-direction: column;
+    width: 12vw;
+
+}
+
+.files-grid .file-card {
+    width: auto;
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid transparent;
+    transition: 0.3s ease;
+}
+
+.files-grid .video-card {
+    width: 100%;
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid transparent;
+    transition: 0.3s ease;
+}
+
+.files-grid .video-card .file-preview {
+    display: flex;
+    width: 40vw;
+}
+
+.files-grid .file-card a {
+    text-decoration: none;
+    color: inherit;
 }
 
 /* Auth Pages */

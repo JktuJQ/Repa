@@ -5,7 +5,11 @@
 {% block content %}
 <div class="files-grid">
     {% for file in files %}
+    {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
     <div class="file-card">
+    {% else %}
+    <div class="video-card">
+    {% endif %}
         <a href="{{ url_for('file_detail', file_id=file['file'].id) }}" class="file-link">
             <div class="file-preview">
                 {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
