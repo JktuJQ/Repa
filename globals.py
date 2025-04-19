@@ -21,6 +21,8 @@ LECTURES_FOLDER: str = os.path.join(UPLOAD_FOLDER, "lectures")
 SEMINARS_FOLDER: str = os.path.join(UPLOAD_FOLDER, "seminars")
 
 # Website-related
+DEBUG = True
+
 MAX_FILE_SIZE: int = 100 * 1024 * 1024
 
 

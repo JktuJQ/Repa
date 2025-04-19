@@ -11,8 +11,8 @@ def main():
     """ Program's entry point."""
     from backend.application import run
 
-    from backend.page_routes import index, dashboard
-    from backend.auth_routes import login, logout, registration
+    from backend.routes.page_routes import index, dashboard
+    from backend.routes.auth_routes import login, logout, registration
 
     run()
 

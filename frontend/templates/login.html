@@ -6,24 +6,34 @@
 <div class="auth-container">
     <div class="auth-box">
         <h2>Вход в аккаунт</h2>
-        
-        <form method="POST" action="{{ url_for('login') }}">
-            <div class="form-group">
-                <label for="username">Имя пользователя</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Пароль</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            
-            <button type="submit" class="auth-btn">Войти</button>
-            
-            <div class="auth-footer">
-                У вас нет аккаунта? <a href="{{ url_for('registration') }}">Зарегистироваться</a>
-            </div>
+
+        <form action="" method="post">
+            {{ form.csrf_token }}
+            <p>
+                {{ form.username.label() }}
+                {{ form.username() }}
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+            </p>
+            <p>
+                {{ form.password.label() }}
+                {{ form.password() }}
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
         </form>
+        <div class="auth-footer">
+            У вас нет аккаунта? <a href="{{ url_for('registration') }}">Зарегистироваться</a>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -6,34 +6,44 @@
 <div class="auth-container">
     <div class="auth-box">
         <h2>Создайте аккаунт</h2>
-        
-        <form method="POST" action="{{ url_for('register') }}">
-            <div class="form-group">
-                <label for="username">Имя пользователя</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Пароль</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="name">Имя</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            
-            <button type="submit" class="auth-btn">Зарегистрироваться</button>
-            
-            <div class="auth-footer">
-                У вас уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a>
-            </div>
+
+
+        <form action="" method="post">
+            {{ form.csrf_token }}
+            <p>
+                {{ form.username.label() }}
+                {{ form.username() }}
+                {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                {{ error }}
+                {% endfor %}
+                {% endif %}
+            </p>
+            <p>
+                {{ form.password.label() }}
+                {{ form.password() }}
+                {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                {{ error }}
+                {% endfor %}
+                {% endif %}
+            </p>
+            <p>
+                {{ form.name.label() }}
+                {{ form.name() }}
+                {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                {{ error }}
+                {% endfor %}
+                {% endif %}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
         </form>
+        <div class="auth-footer">
+            У вас уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a>
+        </div>
     </div>
 </div>
 {% endblock %}
