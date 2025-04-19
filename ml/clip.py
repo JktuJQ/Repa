@@ -78,13 +78,13 @@ def crop(input_path, output_path, width, height, x, y):
     
     subprocess.run(cmd, check=True)
 
-def to_vertical(input_path, output_path, w=1080, h=1920, background=None,
+def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
                 bg_blur=15):
     """
     :param background: background video. If None then background is scaled blur video
     """
     width, height = VideoFileClip(input_path).size
-    if (background is None):
+    if (background_path is None):
         cmd = [
             'ffmpeg', '-y',
             '-i', input_path,
@@ -102,6 +102,31 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background=None,
         ]
 
         subprocess.run(cmd, check=True)
+    else:
+
+
+        cmd = [
+            'ffmpeg',
+            '-y',
+            '-i', background_path,  # Фон (input 0)
+            '-i', input_path,       # Основное видео (input 1)
+            '-filter_complex',
+            f'[0:v]scale={w}:{h}:force_original_aspect_ratio=increase,'
+            f'crop={w}:{h},boxblur={bg_blur}[bg];'
+            f'[1:v]scale={w}:-2[fg];'
+            '[bg][fg]overlay=(W-w)/2:(H-h)/2[v]',  # Явно маркируем видео поток
+            '-map', '[v]',          # Берем обработанное видео
+            '-map', '1:a?',         # Берем аудио из второго входа (1:a) с опцией "?" если аудио нет
+            '-c:v', 'libx264',
+            '-preset', 'fast',
+            '-crf', '23',
+            '-c:a', 'copy',         # Копируем аудио без перекодирования
+            output_path
+        ]
+
+        subprocess.run(cmd, check=True)
+
 
 if __name__ == "__main__":
-    to_vertical("input.mp4", "output.mp4")
+    # cut("parkour.mp4", "bkg.mp4", 0, 20)
+    to_vertical("input.mp4", "output.mp4", background_path="bkg.mp4", bg_blur=5)
