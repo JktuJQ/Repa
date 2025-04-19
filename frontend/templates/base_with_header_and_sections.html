@@ -19,10 +19,10 @@
 <div class="left-section">
     <div class="sidebar">
         <h1><a href="{{ url_for('dashboard') }}">Repa </a></h1>
-        <div class="item active">
+        <a href="{{ url_for('dashboard') }}" class="item active">
             <i class="ri-apps-line"></i>
             <h3>Главная</h3>
-        </div>
+        </a>
         <a href="{{ url_for('catalog', file_type='notes') }}" class="item">
             <i class="ri-quill-pen-line"></i>
             <h3>Конспекты</h3>

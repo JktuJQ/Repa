@@ -7,8 +7,8 @@
     <div class="file-header">
         <h2>{{ file['file'].name }}</h2>
         <div class="file-meta">
-            <span class="author">By {{ file.author }}</span>
-            <span class="date">Created on {{ file['file'].created_at }}</span>
+            <span class="author">Загружено {{ file.author }}</span>
+            <span class="date">в {{ file['file'].created_at }}</span>
         </div>
     </div>
 
@@ -23,9 +23,9 @@
             <iframe src="https://docs.google.com/gview?url=http://example.com/mypdf.pdf&embedded=true&url={{ url_for('static', filename=file['link']) }}"
                     frameborder="0"></iframe>
             {% else %}
-            <img src="{{ url_for('static', filename=['link']) }}" alt="{{ file['file'].name }}">
+            <img src="{{ url_for('static', filename=file['link']) }}" alt="{{ file['file'].name }}">
             {% endif %}
-            {% elif file_type in ('video', 'clips') %}
+            {% elif file_type in ('videos', 'clips') %}
             <video controls>
                 <source src="{{ url_for('static', filename=file['link']) }}"/>
             </video>
