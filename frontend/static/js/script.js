@@ -86,3 +86,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const quickTypeButtons = document.querySelectorAll('.quick-type-btn');
+    const fileTypeSelect = document.getElementById('file_type');
+
+    if (quickTypeButtons && fileTypeSelect) {
+        quickTypeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                quickTypeButtons.forEach(btn => {
+                    btn.style.backgroundColor = btn === button ? '#e8eaf6' : '#f5f7fa';
+                    btn.style.fontWeight = btn === button ? '500' : '400';
+                });
+            });
+        });
+    }
+});

@@ -1886,3 +1886,116 @@ textarea.form-control {
     font-size: 14px;
     color: #999;
 }
+
+/* Quick Download Types Section */
+.quick-download-types {
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.1);
+}
+
+.quick-download-types h3 {
+    color: #364670;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.quick-type-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.quick-type-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    background: #f5f7fa;
+    color: #364670;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-size: 14px;
+}
+
+.quick-type-btn:hover {
+    background: #e8eaf6;
+    transform: translateX(3px);
+}
+
+.quick-type-btn i {
+    font-size: 20px;
+    width: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Color coding for quick type buttons */
+.quick-type-btn.notes {
+    border-left: 4px solid #4CAF50;
+}
+.quick-type-btn.notes i {
+    color: #4CAF50;
+}
+
+.quick-type-btn.cheatsheets {
+    border-left: 4px solid #FF9800;
+}
+.quick-type-btn.cheatsheets i {
+    color: #FF9800;
+}
+
+.quick-type-btn.textbooks {
+    border-left: 4px solid #9C27B0;
+}
+.quick-type-btn.textbooks i {
+    color: #9C27B0;
+}
+
+.quick-type-btn.videos {
+    border-left: 4px solid #2196F3;
+}
+.quick-type-btn.videos i {
+    color: #2196F3;
+}
+
+.quick-type-btn.clips {
+    border-left: 4px solid #F44336;
+}
+.quick-type-btn.clips i {
+    color: #F44336;
+}
+
+/* Upload Tips Section */
+.upload-tips h3 {
+    color: #364670;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.upload-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.upload-tips li {
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #555;
+    font-size: 14px;
+}
+
+.upload-tips li i {
+    color: #4CAF50;
+    font-size: 16px;
+}
