@@ -44,10 +44,10 @@
             <h3>Клипы</h3>
         </a>
         <br>
-        <div class="item">
+        <a href="{{ url_for('file_download') }}" class="item">
             <i class="ri-upload-line"></i>
             <h3>Загрузить</h3>
-        </div>
+        </a>
     </div>
 </div>
 {% endblock %}
@@ -57,10 +57,10 @@
     <div class="profile-container">
         <div class="profile">
             <div class="info">
-                <img src="https://ui-avatars.com/api/?name={{ username|urlencode }}&background=1976d2&color=fff">
+                <img src="https://ui-avatars.com/api/?name={{ session['username']|urlencode }}&background=1976d2&color=fff">
                 <div class="account">
-                    <h5>{{ username }}</h5>
-                    <p>{{ session.email }}</p>
+                    <h5>{{ session['username'] }}</h5>
+                    <p>{{ session['name'] }}</p>
                 </div>
             </div>
 
