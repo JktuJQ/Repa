@@ -56,34 +56,36 @@
     Недавние
 </h3>
 
-<div class="dashboard-tables-container">
+<div class="recent-horizontal-container">
     {% for category in file_types %}
-    <div class="dashboard-table-wrapper">
-        <table>
-            <tbody>
-            {% for file in file_data[category][:5] %}
+    <div class="recent-horizontal-section">
+        <h4 class="recent-horizontal-title">
+            {% if category == 'notes' %}
+            <i class="ri-quill-pen-line"></i> Конспекты
+            {% elif category == 'cheatsheets' %}
+            <i class="ri-bookmark-line"></i> Шпаргалки
+            {% elif category == 'textbooks' %}
+            <i class="ri-book-2-line"></i> Учебники
+            {% elif category == 'videos' %}
+            <i class="ri-video-chat-fill"></i> Видео
+            {% elif category == 'clips' %}
+            <i class="ri-mail-send-fill"></i> Клипы
+            {% endif %}
+        </h4>
 
-            <tr>
-                    <td class="icon">
-                        {% if category == 'notes' %}
-                        <i class="ri-quill-pen-line"></i>
-                        {% elif category == 'cheatsheets' %}
-                        <i class="ri-bookmark-line"></i>
-                        {% elif category == 'textbooks' %}
-                        <i class="ri-book-2-line"></i>
-                        {% elif category == 'videos' %}
-                        <i class="ri-video-chat-fill"></i>
-                        {% elif category == 'clips' %}
-                        <i class="ri-mail-send-fill"></i>
-                        {% endif %}
-                    </td>
-                    <td class="name">{{ file.name }}</td>
-                    <td class="date">Дата загрузки: {{ file.created_at }}</td>
-                    <td class="more"><i class="ri-more-fill"></i></td>
-                </tr>
+        <div class="recent-horizontal-scroll">
+            {% for file in file_data[category][:5] %}
+            <a href="{{ url_for('file_detail', file_id=file.id) }}">
+            <div class="recent-horizontal-item">
+                <h5 class="recent-horizontal-name">{{ file.name }}</h5>
+                <p class="recent-horizontal-date">{{ file.created_at }}</p>
+                <button class="recent-horizontal-more">
+                    <i class="ri-more-fill"></i>
+                </button>
+            </div>
+                </a>
             {% endfor %}
-            </tbody>
-        </table>
+        </div>
     </div>
     {% endfor %}
 </div>
