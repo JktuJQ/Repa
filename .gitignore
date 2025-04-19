@@ -12,3 +12,5 @@ __pycache__
 venv/
 
 data/
+
+ml/*.ipynb
