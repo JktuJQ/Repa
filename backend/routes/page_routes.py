@@ -14,6 +14,7 @@ from datetime import datetime
 
 @application.route("/", methods=["GET"])
 def index():
+    """Корень веб-приложения."""
     if not session.get("logged_in"):
         return redirect(url_for("login"))
     return redirect(url_for("dashboard"))
@@ -21,6 +22,7 @@ def index():
 
 @application.route("/dashboard", methods=["GET"])
 def dashboard():
+    """Главная страница сайта."""
     if not session.get("logged_in"):
         return redirect(url_for("login"))
 
@@ -39,11 +41,19 @@ def dashboard():
 
 @application.route('/download', methods=["GET", 'POST'])
 def file_download():
+    """Загружает файлы на сервис."""
     form = DownloadFileForm()
     if form.validate_on_submit():
         try:
             file = form.file.data
             filename = secure_filename(file.filename)
+            extension = filename[-4:]
+
+            file_type = form.file_type.data
+            if not (file_type in FILE_TYPES[:3] and extension in ("jpg", "jpeg", "png", "pdf") or
+                file_type in FILE_TYPES[3:] and extension in ("mov", "mp4", "mkv")):
+                flash("Некорректное расширение файла.", "error")
+                return render_template("file_download.html", form=form)
 
             db_session().add(
                 File(name=form.name.data, created_at=datetime.today().strftime('%Y-%m-%d'), author_id=session["id"],
@@ -56,15 +66,14 @@ def file_download():
             return redirect(
                 url_for("file_detail", file_id=db_session().query(File).filter(File.filename == filename).first().id))
 
-        except Exception as e:
-            print(e)
+        except:
             flash(f"Ошибка обработки файла", "error")
 
     return render_template("file_download.html", form=form)
 
 
 def file_info(file: File):
-    """Возращает информацию о файле"""
+    """Возвращает информацию о файле."""
     return {
         "file": file,
         "author": db_session().query(User).filter(User.id == file.author_id).first().username,
