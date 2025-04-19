@@ -22,7 +22,7 @@
             <i class="ri-video-line"></i>
             <h3>Клипы</h3>
         </div>
-        
+
         <div class="item">
             <i class="ri-upload-line"></i>
             <h3>Загрузить</h3>
@@ -32,9 +32,9 @@
             <h3>Настройки</h3>
         </div>
     </div>
-    </div>
+</div>
 
-    
+
 </div>
 
 <div class="main">
@@ -59,12 +59,17 @@
         <a href="{{ url_for('static', filename='assets/lectures') }}" class="item">
             <i class="ri-book-2-line"></i>
             <h5>Лекции</h5>
-            <p>{{ file_data['lectures'] }} files</p>
+            <p>{{ len(file_data['lectures']) }} лекций</p>
         </a>
-        <a href="{{ url_for('static', filename='assets/lectures') }}" class="item">
-            <i class="ri-group-line"></i>
+        <a href="{{ url_for('static', filename='assets/seminars') }}" class="item">
+            <i class="ri-book-2-line"></i>
             <h5>Семинары</h5>
-            <p>{{ file_data['seminars'] }} files</p>
+            <p>{{ len(file_data['seminars']) }} семинаров</p>
+        </a>
+        <a href="{{ url_for('static', filename='assets/clips') }}" class="item">
+            <i class="ri-video-chat-fill"></i>
+            <h5>Клипы</h5>
+            <p>{{ len(file_data['clips']) }} клипов</p>
         </a>
     </div>
 
@@ -74,22 +79,22 @@
 
     <table>
         <tbody>
-            {% for category in ['lectures', 'seminars'] %}
-                {% for file in file_data[category][:1] %}
-                <tr>
-                    <td class="icon">
-                        {% if category == 'lectures' %}
-                            <i class="ri-book-2-line"></i>
-                        {% elif category == 'seminars' %}
-                            <i class="ri-group-line"></i>
-                        {% endif %}
-                    </td>
-                    <td class="name">{{ file.name }}</td>
-                    <td class="date">{{ file.created_at }}</td>
-                    <td class="more"><i class="ri-more-fill"></i></td>
-                </tr>
-                {% endfor %}
-            {% endfor %}
+        {% for category in ['lectures', 'seminars', 'clips'] %}
+        {% for file in file_data[category][:5] %}
+        <tr>
+            <td class="icon">
+                {% if category == 'lectures' or category == 'seminars' %}
+                <i class="ri-book-2-line"></i>
+                {% elif category == 'clips' %}
+                <i class="ri-video-chat-fill"></i>
+                {% endif %}
+            </td>
+            <td class="name">{{ file.name }}</td>
+            <td class="date">{{ file.created_at }}</td>
+            <td class="more"><i class="ri-more-fill"></i></td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 </div>
@@ -104,7 +109,7 @@
                     <p>{{ session.email }}</p>
                 </div>
             </div>
-            
+
             <i class="ri-arrow-down-s-line"></i>
         </div>
         <div class="profile-retractable">
