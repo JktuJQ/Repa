@@ -33,6 +33,7 @@ def dashboard():
 
 
 def file_info(file: File):
+    """Возращает информацию о файле"""
     return {
         "file": file,
         "author": db_session().query(User).filter(User.id == file.author_id).first().username,
