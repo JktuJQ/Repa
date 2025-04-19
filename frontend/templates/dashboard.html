@@ -59,17 +59,17 @@
         <a href="{{ url_for('static', filename='assets/lectures') }}" class="item">
             <i class="ri-book-2-line"></i>
             <h5>Лекции</h5>
-            <p>{{ len(file_data['lectures']) }} лекций</p>
+            <p>{ file_data['lectures']|length }} лекций</p>
         </a>
         <a href="{{ url_for('static', filename='assets/seminars') }}" class="item">
             <i class="ri-book-2-line"></i>
             <h5>Семинары</h5>
-            <p>{{ len(file_data['seminars']) }} семинаров</p>
+            <p>{ file_data['seminars']|length }} семинаров</p>
         </a>
         <a href="{{ url_for('static', filename='assets/clips') }}" class="item">
             <i class="ri-video-chat-fill"></i>
             <h5>Клипы</h5>
-            <p>{{ len(file_data['clips']) }} клипов</p>
+            <p>{ file_data['clips']|length }} клипов</p>
         </a>
     </div>
 
@@ -79,22 +79,22 @@
 
     <table>
         <tbody>
-        {% for category in ['lectures', 'seminars', 'clips'] %}
-        {% for file in file_data[category][:5] %}
+        { for category in ['lectures', 'seminars', 'clips'] %}
+        { for file in file_data[category][:5] %}
         <tr>
             <td class="icon">
-                {% if category == 'lectures' or category == 'seminars' %}
+                { if category == 'lectures' or category == 'seminars' %}
                 <i class="ri-book-2-line"></i>
-                {% elif category == 'clips' %}
+                { elif category == 'clips' %}
                 <i class="ri-video-chat-fill"></i>
-                {% endif %}
+                { endif %}
             </td>
-            <td class="name">{{ file.name }}</td>
-            <td class="date">{{ file.created_at }}</td>
+            <td class="name">{ file.name }}</td>
+            <td class="date">{ file.created_at }}</td>
             <td class="more"><i class="ri-more-fill"></i></td>
         </tr>
-        {% endfor %}
-        {% endfor %}
+        { endfor %}
+        { endfor %}
         </tbody>
     </table>
 </div>
