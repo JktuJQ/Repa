@@ -1,5 +1,20 @@
 {% extends "base.html" %}
 
+{% block header %}
+<div class="header">
+    <div class="search">
+        <button><i class="ri-search-2-line"></i></button>
+        <input type="text" placeholder="Поиск">
+        <i class="ri-equalizer-line"></i>
+    </div>
+    <div class="icon-btns">
+        <i class="ri-notification-line"></i>
+        <i class="ri-message-3-line"></i>
+        <i class="ri-menu-line" id="menu-btn"></i>
+    </div>
+</div>
+{% endblock %}
+
 {% block left_section %}
 <div class="left-section">
     <div class="sidebar">
@@ -8,23 +23,23 @@
             <i class="ri-apps-line"></i>
             <h3>Главная</h3>
         </div>
-        <a href="{{ url_for('notes') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='notes') }}" class="item">
             <i class="ri-quill-pen-line"></i>
             <h3>Конспекты</h3>
         </a>
-        <a href="{{ url_for('cheatsheets') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='cheatsheets') }}" class="item">
             <i class="ri-bookmark-line"></i>
             <h3>Шпаргалки</h3>
         </a>
-        <a href="{{ url_for('textbooks') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='textbooks') }}" class="item">
             <i class="ri-book-2-line"></i>
             <h3>Учебники</h3>
         </a>
-        <a href="{{ url_for('videos') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='videos') }}" class="item">
             <i class="ri-video-chat-fill"></i>
             <h3>Видео</h3>
         </a>
-        <a href="{{ url_for('clips') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='clips') }}" class="item">
             <i class="ri-mail-send-fill"></i>
             <h3>Клипы</h3>
         </a>

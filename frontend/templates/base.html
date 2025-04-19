@@ -19,10 +19,14 @@
 {% endwith %}
 
 {% block left_section %} {% endblock %}
+<div class="main">
+{% block header %} {% endblock %}
 
 {% block content %}{% endblock %}
 
+</div>
 {% block right_section %} {% endblock %}
+
 
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
