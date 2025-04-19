@@ -18,7 +18,8 @@
 {% block left_section %}
 <div class="left-section">
     <div class="sidebar">
-        <h1><a href="{{ url_for('dashboard') }}">Repa </a></h1>
+        <h1><a href="{{ url_for('dashboard') }}"><img src="{{ url_for('static', filename='favicon.png') }}" width="32" height="32">Repa<img
+                src="{{ url_for('static', filename='favicon.png') }}" width="32" height="32"></a></h1>
         <a href="{{ url_for('dashboard') }}" class="item active">
             <i class="ri-apps-line"></i>
             <h3>Главная</h3>
