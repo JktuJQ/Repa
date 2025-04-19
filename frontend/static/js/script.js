@@ -27,7 +27,7 @@ const toggleMute = () => {
     videos.forEach(video => video.muted = isMuted);
 }
 
-const options = { root: document.querySelector(".clips-grid"), threshold: 1};
+const options = { root: document.querySelector(".clips-grid"), rootMargin: "-10%" };
 const obeserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => togglePlayVideo(entry.target, entry.isIntersecting, true));
 }, options);
