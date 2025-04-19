@@ -80,6 +80,11 @@ body {
     z-index: 100;
 }
 
+.left-section a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .left-section h1 {
     color: #364670;
     margin-bottom: 15px;
