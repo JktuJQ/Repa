@@ -1,0 +1,29 @@
+# Imports
+from backend.application import application
+from flask import render_template, session, url_for, redirect
+
+from data.db_models import Note
+
+
+@application.route("/", methods=["GET"])
+def index():
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+    return redirect(url_for("dashboard"))
+
+
+@application.route("/dashboard", methods=["GET"])
+def dashboard():
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+
+    return render_template(
+        "dashboard.html",
+        username=session.get("username"),
+        file_data={
+            "lectures":
+                application.extensions["db_session"].query(Note).filter(Note.type == 1).all(),
+            "seminars":
+                application.extensions["db_session"].query(Note).filter(Note.type == 2).all(),
+        })
+

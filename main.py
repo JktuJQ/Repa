@@ -1,20 +1,21 @@
 # Imports
-import sys
-import typing as t
-
 from data.db_sesions import full_init, dbs
-from data.models import load_models
+from data.db_models import load_models
 
 full_init(dbs)
 load_models()
 
 
-def main(argv: t.List[str]):
+# noinspection PyUnresolvedReferences
+def main():
     """ Program's entry point."""
     from backend.application import run
-    from backend.routes import index
+
+    from backend.page_routes import index, dashboard
+    from backend.auth_routes import login, logout, registration
+
     run()
 
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main()

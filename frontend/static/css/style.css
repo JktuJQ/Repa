@@ -1,1 +1,1300 @@
-    
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* Flash messages */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    background: #f0f5fd;
+}
+
+/* Flash messages */
+.flash-messages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.flash {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    color: white;
+    animation: slideIn 0.5s forwards;
+}
+
+.flash.success {
+    background-color: #4CAF50;
+}
+
+.flash.error {
+    background-color: #F44336;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+/* Left Section - Sidebar */
+.left-section {
+    background: #fff;
+    width: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 25px 10px;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.left-section h2 {
+    color: #364670;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.left-section .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.left-section .sidebar .item,
+.left-section .sign-out {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #364670;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.left-section .sidebar .item.active,
+.left-section .sidebar .item.active h3,
+.left-section .sidebar .item.active i {
+    background-color: #e8eaf6;
+    color: #1976d2;
+}
+
+.left-section .sidebar .item:hover,
+.left-section .sign-out:hover {
+    color: #1976d2;
+    background-color: #f0f5fd;
+}
+
+.left-section .sidebar .item h3,
+.left-section .sign-out h3 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.left-section .sidebar .item i,
+.left-section .sign-out i {
+    font-size: 22px;
+}
+
+.left-section .sign-out {
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Main Content */
+.main {
+    flex: 6;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.main .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.main .header .search {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    width: 75%;
+    padding: 8px 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+}
+
+.main .header .search button {
+    font-size: 20px;
+    border: none;
+    background: transparent;
+    color: #364670;
+    cursor: pointer;
+}
+
+.main .header .search input {
+    padding: 4px 6px;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.main .header .search i {
+    cursor: pointer;
+    color: #364670;
+}
+
+.main .header .icon-btns {
+    display: flex;
+    gap: 8px;
+}
+
+.main .header .icon-btns i {
+    font-size: 20px;
+    background: #1976d2;
+    padding: 8px;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.main .header .icon-btns i:hover {
+    background: #0d47a1;
+}
+
+.main .header .icon-btns i#menu-btn {
+    display: none;
+}
+
+.main .separator {
+    margin: 35px 0 20px;
+    font-weight: 500;
+    color: #364670;
+    font-size: 18px;
+}
+
+/* Quick Access */
+.main .quick-access {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.main .quick-access .item {
+    background: #fff;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    text-decoration: none;
+}
+
+.main .quick-access .item:hover {
+    box-shadow: none;
+    border-color: #999;
+}
+
+.main .quick-access .item i {
+    font-size: 46px;
+    padding: 10px;
+    border-radius: 16px;
+}
+
+.main .quick-access .item:nth-child(1) i {
+    color: #1976d2;
+    background: #e6e4ec;
+}
+
+.main .quick-access .item:nth-child(2) i {
+    color: #1d92f1;
+    background: #ddeffd;
+}
+
+.main .quick-access .item:nth-child(3) i {
+    color: #ffd12c;
+    background: #fff8df;
+}
+
+.main .quick-access .item:nth-child(4) i {
+    color: #3bc963;
+    background: #e2f7e8;
+}
+
+.main .quick-access .item h5 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #364670;
+    margin: 15px 0 8px;
+}
+
+.main .quick-access .item p {
+    color: #999;
+    font-size: 14px;
+}
+
+/* Table */
+.main table {
+    background: #fff;
+    padding: 15px;
+    width: 100%;
+    border-radius: 14px;
+    border-spacing: 0;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+}
+
+.main table tbody tr {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.main table tbody tr:hover {
+    background: #e8eaf6;
+}
+
+.main table tbody tr.selected {
+    background: #e8eaf6;
+}
+
+.main table tbody tr td {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.main table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.main table tbody tr td.icon i {
+    font-size: 20px;
+    background: #e6e4ec;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.main table tbody tr.selected td.icon i,
+.main table tbody tr:hover td.icon i {
+    border-color: #999;
+}
+
+.main table tbody tr td.name {
+    font-weight: 500;
+    font-size: 14px;
+    color: #364670;
+}
+
+.main table tbody tr td.extension,
+.main table tbody tr td.size,
+.main table tbody tr td.date {
+    color: #999;
+    font-size: 14px;
+}
+
+.main table tbody tr td.more i {
+    font-size: 20px;
+    color: #364670;
+}
+
+.main table tbody tr td.action {
+    text-align: center;
+}
+
+.main table tbody tr td.action .download-btn {
+    color: #1976d2;
+    transition: all 0.3s ease;
+}
+
+.main table tbody tr td.action .download-btn:hover {
+    color: #0d47a1;
+}
+
+/* Right Section */
+.right-section {
+    flex: 2;
+    padding: 25px 25px 15px 10px;
+    overflow-y: auto;
+}
+
+.right-section .profile {
+    background: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+}
+
+.right-section .profile .info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.right-section .profile .info img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.right-section .profile .info .account h5 {
+    font-size: 15px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    color: #364670;
+}
+
+.right-section .profile .info .account p {
+    font-size: 13px;
+    color: #999;
+}
+
+.right-section .profile > i {
+    font-size: 24px;
+    color: #364670;
+    cursor: pointer;
+}
+
+.right-section .widgets {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-section .widgets .disk {
+    background: #fff;
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 300px;
+    padding: 0 25px;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+}
+
+.right-section .widgets .disk .progress {
+    display: flex;
+    justify-content: center;
+}
+
+.right-section .widgets .disk .progress .progress-bar {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(closest-side, #fff 79%, transparent 80% 100%), conic-gradient(#1976d2 25%, #e9e4ff 0%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 20px;
+    border-radius: 50%;
+}
+
+.right-section .widgets .disk .progress .progress-bar::before {
+    content: "25%";
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.right-section .widgets .disk .progress .progress-bar::after {
+    content: "used";
+    font-size: 13px;
+    color: #999;
+}
+
+.right-section .widgets .disk .info h5 {
+    color: #999;
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.right-section .widgets .disk h5 span {
+    color: #364670;
+}
+
+.right-section .widgets .disk .info p {
+    font-size: 14px;
+    color: #999;
+    font-weight: 500;
+    text-align: center;
+}
+
+.right-section .widgets .bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-section .widgets .bottom button,
+.right-section .widgets .bottom .upload-btn {
+    border: none;
+    background: #1976d2;
+    color: #fff;
+    margin: 30px 0;
+    font-size: 20px;
+    padding: 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+.right-section .widgets .bottom button:hover,
+.right-section .widgets .bottom .upload-btn:hover {
+    background: #0d47a1;
+}
+
+.right-section .widgets .bottom .premium {
+    background: #fff;
+    padding: 25px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    transition: all 0.3s ease;
+}
+
+.right-section .widgets .bottom .premium:hover {
+    box-shadow: none;
+    border-color: #999;
+}
+
+.right-section .widgets .bottom .premium .title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.right-section .widgets .bottom .premium .title h5 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #364670;
+}
+
+.right-section .widgets .bottom .premium .title i {
+    font-size: 30px;
+    padding: 10px;
+    background: #1976d2;
+    color: #fff;
+    border-radius: 14px;
+}
+
+.right-section .widgets .bottom .premium p {
+    color: #999;
+    font-size: 16px;
+    line-height: 1.4rem;
+}
+
+.left-section .sidebar .item.settings {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+/* Fix Download Buttons */
+.main table tbody tr td.action {
+    text-align: center;
+    width: 50px;
+}
+
+.main table tbody tr td.action .download-btn {
+    color: #1976d2;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 8px;
+    border-radius: 8px;
+    background: #e8eaf6;
+}
+
+.main table tbody tr td.action .download-btn:hover {
+    color: #fff;
+    background: #1976d2;
+}
+
+/* Fix Sign Out Functionality */
+.left-section .sign-out {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #364670;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 12px;
+    width: calc(100% - 24px);
+    margin: 20px 12px 0;
+    border-radius: 8px;
+}
+
+.left-section .sign-out:hover {
+    background: #f0f5fd;
+    color: #d32f2f;
+}
+
+.left-section .sign-out i {
+    font-size: 22px;
+}
+
+.left-section .sign-out h3 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Fix Settings Page Layout */
+.settings-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    margin-top: 20px;
+}
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.settings-group:last-child {
+    border-bottom: none;
+}
+
+.settings-group h4 {
+    color: #364670;
+    font-weight: 500;
+}
+
+.settings-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-option label {
+    color: #364670;
+    font-size: 14px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #1976d2;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Fix Account Dropdown */
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    min-width: 200px;
+    z-index: 1000;
+    display: none;
+}
+
+.profile-menu.active {
+    display: block;
+}
+
+.profile-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: #364670;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.profile-menu a:hover {
+    background: #f0f5fd;
+    color: #1976d2;
+}
+
+.profile-menu a.logout {
+    color: #d32f2f;
+}
+
+.profile-menu a.logout:hover {
+    background: #ffebee;
+}
+
+/* Fix Responsive Issues */
+@media screen and (max-width: 992px) {
+    .left-section .sign-out {
+        justify-content: center;
+    }
+
+    .left-section .sign-out h3 {
+        display: none;
+    }
+
+    .left-section .sign-out i {
+        font-size: 26px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main table tbody tr td.action .download-btn {
+        padding: 6px;
+        font-size: 18px;
+    }
+
+    .settings-group {
+        padding: 15px 10px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .main table tbody tr td.action {
+        width: 40px;
+    }
+
+    .main table tbody tr td.action .download-btn {
+        padding: 5px;
+        font-size: 16px;
+    }
+
+    .settings-container {
+        padding: 20px 15px;
+    }
+}
+
+/* Files Header */
+.files-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 35px 0 20px;
+}
+
+.files-header h3 {
+    font-weight: 500;
+    color: #364670;
+    font-size: 18px;
+}
+
+.files-header .upload-btn {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.files-header .upload-btn:hover {
+    background: #0d47a1;
+}
+
+/* Upload Page */
+.upload-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    margin-top: 20px;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #364670;
+}
+
+.form-group select,
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group input[type="file"] {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.file-upload {
+    position: relative;
+}
+
+.file-upload input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-label:hover {
+    border-color: #1976d2;
+    background: #f0f5fd;
+}
+
+.file-label i {
+    font-size: 48px;
+    color: #1976d2;
+    margin-bottom: 15px;
+}
+
+.file-label span {
+    color: #666;
+}
+
+/* Auth Pages */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f5fd;
+}
+
+.auth-box {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-box h2 {
+    color: #364670;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.auth-box .form-group {
+    margin-bottom: 20px;
+}
+
+.auth-box .auth-btn {
+    width: 100%;
+    padding: 12px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-box .auth-btn:hover {
+    background: #0d47a1;
+}
+
+.auth-box .auth-footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #666;
+}
+
+.auth-box .auth-footer a {
+    color: #1976d2;
+    text-decoration: none;
+}
+
+.auth-box .auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1230px) {
+    .left-section {
+        width: 90px;
+    }
+
+    .left-section h2 {
+        font-size: 17px;
+    }
+
+    .left-section .sidebar .item {
+        justify-content: center;
+    }
+
+    .left-section .sidebar .item h3,
+    .left-section .sign-out h3 {
+        display: none;
+    }
+
+    .left-section .sidebar .item i,
+    .left-section .sign-out i {
+        font-size: 26px;
+    }
+
+    .main .quick-access {
+        justify-content: space-between;
+    }
+
+    .main .quick-access .item {
+        width: 23%;
+    }
+
+    .main .quick-access .item i {
+        font-size: 36px;
+    }
+
+    .main .quick-access .item h5 {
+        font-size: 16px;
+    }
+
+    .main .quick-access .item p,
+    .right-section .profile .info .account p {
+        font-size: 12px;
+    }
+
+    .right-section .widgets .disk {
+        height: 270px;
+    }
+
+    .right-section .widgets .disk .progress .progress-bar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .right-section .widgets .disk .info h5 {
+        font-size: 18px;
+    }
+
+    .right-section .widgets .bottom button {
+        font-size: 17px;
+        padding: 12px;
+    }
+
+    .right-section .widgets .bottom .premium .title h5 {
+        font-size: 17px;
+    }
+
+    .right-section .widgets .bottom .premium .title i {
+        font-size: 26px;
+    }
+
+    .right-section .widgets .bottom .premium p {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .left-section {
+        position: absolute;
+        width: 160px;
+        left: -160px;
+        z-index: 1000;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-section.active {
+        left: 0;
+    }
+
+    .left-section .sidebar .item {
+        justify-content: start;
+    }
+
+    .left-section .sidebar .item h3,
+    .left-section .sign-out h3 {
+        display: block;
+    }
+
+    .left-section .sidebar .item i,
+    .left-section .sign-out i {
+        font-size: 22px;
+    }
+
+    .main,
+    .right-section {
+        padding: 15px;
+    }
+
+    .main .header {
+        gap: 10px;
+    }
+
+    .main .header .icon-btns i#menu-btn {
+        display: block;
+    }
+
+    .main .quick-access .item p {
+        text-align: center;
+    }
+
+    .main table tbody tr td.name,
+    .main table tbody tr td.extension,
+    .main table tbody tr td.size {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .main {
+        padding: 26px 15px 0;
+    }
+
+    .main .header {
+        justify-content: start;
+    }
+
+    .main .header .search {
+        width: 30%;
+    }
+
+    .right-section .profile {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .right-section .widgets {
+        flex-direction: row;
+        gap: 30px;
+    }
+
+    .right-section .widgets .disk {
+        width: 48%;
+    }
+
+    .right-section .widgets .bottom {
+        justify-content: center;
+        gap: 30px;
+    }
+
+    .right-section .widgets .bottom button {
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .main {
+        padding: 100px 15px 0;
+    }
+
+    .main .header .search {
+        width: 68%;
+    }
+
+    .right-section .profile {
+        width: 94%;
+    }
+
+    .right-section .widgets .disk .info h5 {
+        font-size: 14px;
+    }
+
+    .right-section .widgets .disk .info p {
+        font-size: 13px;
+    }
+}
+
+/* Upload page styles */
+.upload-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    margin-top: 20px;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #364670;
+}
+
+.form-group select,
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.file-upload {
+    position: relative;
+}
+
+.file-upload input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-label:hover {
+    border-color: #1976d2;
+    background: #f0f5fd;
+}
+
+.file-label i {
+    font-size: 48px;
+    color: #1976d2;
+    margin-bottom: 15px;
+}
+
+.file-label span {
+    color: #666;
+}
+
+.upload-btn {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    background: #0d47a1;
+}
+
+/* Files page styles */
+.files-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 35px 0 20px;
+}
+
+.files-header h3 {
+    font-weight: 500;
+    color: #364670;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th {
+    text-align: left;
+    padding: 12px 16px;
+    background: #f5f5f5;
+    color: #364670;
+    font-weight: 500;
+}
+
+table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.download-btn {
+    color: #1976d2;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    color: #0d47a1;
+}
+
+/* Login/Register styles */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f5fd;
+}
+
+.auth-box {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-box h2 {
+    color: #364670;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.auth-box .form-group {
+    margin-bottom: 20px;
+}
+
+.auth-box .auth-btn {
+    width: 100%;
+    padding: 12px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-box .auth-btn:hover {
+    background: #0d47a1;
+}
+
+.auth-box .auth-footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #666;
+}
+
+.auth-box .auth-footer a {
+    color: #1976d2;
+    text-decoration: none;
+}
+
+.auth-box .auth-footer a:hover {
+    text-decoration: underline;
+}

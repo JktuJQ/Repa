@@ -19,9 +19,6 @@ def extract_name(db_file: str) -> str:
     return db_file.split("\\")[-1].split(".")[0]
 
 
-main_session = None
-
-
 def full_init(db_files: t.List[str]):
     """
     Invokes `engine_init`, `database_init`, `sessions_init` with pre-defined value `db_names`.

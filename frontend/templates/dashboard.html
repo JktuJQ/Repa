@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="left-section">
+    <div class="sidebar">
+        <h2>Конспекты</h2>
+        <div class="item active">
+            <i class="ri-apps-line"></i>
+            <h3>Dashboard</h3>
+        </div>
+        <div class="item">
+            <i class="ri-folder-line"></i>
+            <h3>Лекции</h3>
+        </div>
+        <div class="item">
+            <i class="ri-video-line"></i>
+            <h3>Семинары</h3>
+        </div>
+        </div>
+        <div class="item">
+            <i class="ri-upload-line"></i>
+            <h3>Загрузить</h3>
+        </div>
+        <div class="item">
+            <i class="ri-settings-3-line"></i>
+            <h3>Настройки</h3>
+        </div>
+    </div>
+
+    <div class="sign-out" onclick="window.location.href='{{ url_for('logout') }}'">
+        <i class="ri-logout-box-r-line"></i>
+        <h3>Выйти из аккаунта</h3>
+    </div>
+</div>
+
+<div class="main">
+    <div class="header">
+        <div class="search">
+            <button><i class="ri-search-2-line"></i></button>
+            <input type="text" placeholder="Поиск">
+            <i class="ri-equalizer-line"></i>
+        </div>
+        <div class="icon-btns">
+            <i class="ri-notification-line"></i>
+            <i class="ri-message-3-line"></i>
+            <i class="ri-menu-line" id="menu-btn"></i>
+        </div>
+    </div>
+
+    <h3 class="separator">
+        Быстрый доступ
+    </h3>
+
+    <div class="quick-access">
+        <!--
+        <a href="{{ url_for('static', filename='assets/lectures') }}" class="item">
+            <i class="ri-book-2-line"></i>
+            <h5>Лекции</h5>
+            <p>{{ file_data['lectures'] }} files</p>
+        </a>
+        <a href="{{ url_for('static', filename='assets/lectures') }}" class="item">
+            <i class="ri-group-line"></i>
+            <h5>Семинары</h5>
+            <p>{{ file_data['seminars'] }} files</p>
+        </a>
+        -->
+    </div>
+
+    <h3 class="separator">
+        Недавние
+    </h3>
+
+    <table>
+        <tbody>
+            {% for category in ['lectures', 'seminars'] %}
+                {% for file in file_data[category][:1] %}
+                <tr>
+                    <td class="icon">
+                        {% if category == 'lectures' %}
+                            <i class="ri-book-2-line"></i>
+                        {% elif category == 'seminars' %}
+                            <i class="ri-group-line"></i>
+                        {% endif %}
+                    </td>
+                    <td class="name">{{ file.name }}</td>
+                    <td class="date">{{ file.created_at }}</td>
+                    <td class="more"><i class="ri-more-fill"></i></td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="right-section">
+    <div class="profile">
+        <div class="info">
+            <img src="https://ui-avatars.com/api/?name={{ username|urlencode }}&background=1976d2&color=fff">
+            <div class="account">
+                <h5>{{ username }}</h5>
+                <p>{{ session.email }}</p>
+            </div>
+        </div>
+        <i class="ri-arrow-down-s-line"></i>
+    </div>
+</div>
+{% endblock %}
