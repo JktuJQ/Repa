@@ -18,33 +18,33 @@
 {% block left_section %}
 <div class="left-section">
     <div class="sidebar">
-        <h1><a href="{{ url_for('dashboard') }}">Repa </a></h1>
-        <a href="{{ url_for('dashboard') }}" class="item active">
+        <h1><a href="{{ url_for('dashboard') }}"><img src="{{ url_for('static', filename='favicon.png') }}" width="24" height="32">&nbsp;Repa</a></h1>
+        <a href="{{ url_for('dashboard') }}" class="item {% if request.path.split('/')[-1] == 'dashboard' %}active{% endif %}">
             <i class="ri-apps-line"></i>
             <h3>Главная</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='notes') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='notes') }}" class="item {% if request.path.split('/')[-1] == 'notes' %}active{% endif %}">
             <i class="ri-quill-pen-line"></i>
             <h3>Конспекты</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='cheatsheets') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='cheatsheets') }}" class="item {% if request.path.split('/')[-1] == 'cheatsheets' %}active{% endif %}">
             <i class="ri-bookmark-line"></i>
             <h3>Шпаргалки</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='textbooks') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='textbooks') }}" class="item {% if request.path.split('/')[-1] == 'textbooks' %}active{% endif %}">
             <i class="ri-book-2-line"></i>
             <h3>Учебники</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='videos') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='videos') }}" class="item {% if request.path.split('/')[-1] == 'videos' %}active{% endif %}">
             <i class="ri-video-chat-fill"></i>
             <h3>Видео</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='clips') }}" class="item">
+        <a href="{{ url_for('catalog', file_type='clips') }}" class="item {% if request.path.split('/')[-1] == 'clips' %}active{% endif %}">
             <i class="ri-mail-send-fill"></i>
             <h3>Клипы</h3>
         </a>
         <br>
-        <a href="{{ url_for('file_download') }}" class="item">
+        <a href="{{ url_for('file_download') }}" class="item {% if request.path.split('/')[-1] == 'download' %}active{% endif %}">
             <i class="ri-upload-line"></i>
             <h3>Загрузить</h3>
         </a>

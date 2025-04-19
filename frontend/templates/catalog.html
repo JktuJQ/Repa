@@ -3,7 +3,11 @@
 {% block title %}Каталог ({{ file_type_ru }}){% endblock %}
 
 {% block content %}
-<div class="files-grid">
+{% if file_type == 'clips' %}
+    <div class="clips-grid">
+{% else %}
+    <div class="files-grid">
+{% endif %}
     {% for file in files %}
     {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
     <div class="file-card">
@@ -20,18 +24,18 @@
                 <img src="{{ url_for('static', filename=file['link']) }}" alt="{{ file['file'].name }}">
                 {% endif %}
                 {% elif file_type in ('videos', 'clips') %}
-                <video controls>
+                <video controls playsinline loop muted>
                     <source src="{{ url_for('static', filename=file['link']) }}"/>
                 </video>
                 {% endif %}
             </div>
-            <div class="file-info">
+            <!-- <div class="file-info">
                 <h4 class="file-title">{{ file['file'].name }}</h4>
                 <div class="file-meta">
                     <span class="author">{{ file['author'] }}</span>
                     <span class="date">{{ file['file'].created_at }}</span>
                 </div>
-            </div>
+            </div> -->
         </a>
     </div>
     {% endfor %}
