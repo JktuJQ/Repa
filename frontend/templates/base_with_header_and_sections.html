@@ -23,6 +23,10 @@
             <i class="ri-apps-line"></i>
             <h3>Главная</h3>
         </a>
+        <a href="{{ url_for('dashboard') }}" class="item {% if request.path.split('/')[-1] == 'dashboard' %}active{% endif %}">
+            <i class="ri-archive-drawer-line"></i>
+            <h3>Каталог</h3>
+        </a>
         <a href="{{ url_for('catalog', file_type='notes') }}" class="item {% if request.path.split('/')[-1] == 'notes' %}active{% endif %}">
             <i class="ri-quill-pen-line"></i>
             <h3>Конспекты</h3>

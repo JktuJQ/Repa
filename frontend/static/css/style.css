@@ -1853,6 +1853,7 @@ textarea.form-control {
 }
 
 /* Upload Tips Section */
+
 .upload-tips h3 {
     color: #364670;
     margin-bottom: 15px;
@@ -2076,17 +2077,18 @@ file-preview-container {
 }
 
 /* File Detail Container */
-.file-detail-container {
+/* .file-detail-container {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 0;
     max-width: 1400px;
+    height: 20vh;
     margin: 20px auto;
     background: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(136, 148, 171, 0.2);
-    overflow: hidden;
-}
+    overflow: auto;
+} */
 
 .file-preview-section {
     position: relative;
