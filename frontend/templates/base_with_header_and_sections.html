@@ -21,16 +21,13 @@
             <i class="ri-apps-line"></i>
             <h3>Главная</h3>
         </a>
-<<<<<<< HEAD
-        <a href="{{ url_for('dashboard') }}" class="item {% if request.path.split('/')[-1] == 'dashboard' %}active{% endif %}">
+        <a href="{{ url_for('unified_catalog') }}" class="item {% if request.path.split('/')[-1] == 'unified_catalog' %}active{% endif %}">
             <i class="ri-archive-drawer-line"></i>
             <h3>Каталог</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='notes') }}" class="item {% if request.path.split('/')[-1] == 'notes' %}active{% endif %}">
-=======
+        <br>
         <a href="{{ url_for('catalog', file_type='notes') }}"
            class="item {% if request.path.split('/')[-1] == 'notes' %}active{% endif %}">
->>>>>>> a1d13943c9fa81c2201f996a0c8502e5f99684d4
             <i class="ri-quill-pen-line"></i>
             <h3>Конспекты</h3>
         </a>
