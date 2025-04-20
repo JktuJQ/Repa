@@ -6,22 +6,22 @@
 <div class="file-detail-container">
     <div class="file-preview-section">
         {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
-            {% if file['file'].filename[-4:] == '.pdf' %}
-            <div class="pdf-viewer-container">
-                <iframe src="https://docs.google.com/gview?url={{ url_for('static', filename=file['link'], _external=True) }}&embedded=true"
-                        frameborder="0"></iframe>
-                <button class="fullscreen-btn" onclick="toggleFullscreen('.pdf-viewer-container')">
-                    <i class="ri-fullscreen-line"></i>
-                </button>
-            </div>
-            {% else %}
-            <div class="image-viewer-container">
-                <img src="{{ url_for('static', filename=file['link']) }}"
-                     alt="{{ file['file'].name }}"
-                     class="preview-image"
-                     onclick="openFullscreen(this)">
-            </div>
-            {% endif %}
+        {% if file['file'].filename[-4:] == '.pdf' %}
+        <div class="pdf-viewer-container">
+            <iframe src="https://docs.google.com/gview?url={{ url_for('static', filename=file['link'], _external=True) }}&embedded=true"
+                    frameborder="0"></iframe>
+            <button class="fullscreen-btn" onclick="toggleFullscreen('.pdf-viewer-container')">
+                <i class="ri-fullscreen-line"></i>
+            </button>
+        </div>
+        {% else %}
+        <div class="image-viewer-container">
+            <img src="{{ url_for('static', filename=file['link']) }}"
+                 alt="{{ file['file'].name }}"
+                 class="preview-image"
+                 onclick="openFullscreen(this)">
+        </div>
+        {% endif %}
         {% elif file_type in ('videos', 'clips') %}
         <div class="video-viewer-container">
             <video controls class="video-preview">
@@ -110,51 +110,51 @@
 </div>
 
 <div class="related-files">
-    <h2>Похожие материалы</h2>
-    <div class="related-files-grid">
-        {% for related in related_files[:5] %}
-        <a href="{{ url_for('file_detail', file_id=related.id) }}" class="related-file-card">
-            <div class="related-file-preview {{ related.file_type }}">
-                {% if related.type == 'notes' %}
-                <i class="ri-quill-pen-line"></i>
-                {% elif related.type == 'cheatsheets' %}
-                <i class="ri-bookmark-line"></i>
-                {% elif related.type == 'textbooks' %}
-                <i class="ri-book-2-line"></i>
-                {% elif related.type == 'videos' %}
-                <i class="ri-video-chat-fill"></i>
-                {% elif related.type == 'clips' %}
-                <i class="ri-mail-send-fill"></i>
-                {% endif %}
+    <h3 class="separator">
+        <i class="ri-links-line"></i> Похожие материалы
+    </h3>
+
+        <div class="files-grid">
+            {% for related in related_files[:5] %}
+            <div class="file-card">
+                <a href="{{ url_for('file_detail', file_id=related['file'].id) }}">
+                    <div class="file-preview-container">
+                        <img src="{{ related['preview'] }}"
+                             alt="{{ related['file'].name }}"
+                             class="file-preview">
+                    </div>
+                    <div class="file-info">
+                        <h4>{{ related['file'].name }}</h4>
+                        <p>{{ related['author'] }}</p>
+                    </div>
+                </a>
             </div>
-            <h3>{{ related.name }}</h3>
-            <p>{{ related.author }} * {{ related.created_at }}</p>
-        </a>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
 </div>
 
-<script>
-// Fullscreen functionality
-function openFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
-    }
-}
 
-function toggleFullscreen(selector) {
-    const element = document.querySelector(selector);
-    if (!document.fullscreenElement) {
-        openFullscreen(element);
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
+<script>
+    // Fullscreen functionality
+    function openFullscreen(element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
         }
     }
-}
+
+    function toggleFullscreen(selector) {
+        const element = document.querySelector(selector);
+        if (!document.fullscreenElement) {
+            openFullscreen(element);
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    }
 </script>
 {% endblock %}

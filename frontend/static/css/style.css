@@ -2031,7 +2031,7 @@ textarea.form-control {
     margin: 20px auto;
 }
 
-.file-preview-container {
+file-preview-container {
     flex: 1;
     min-width: 0;
     background: #f9fafc;
@@ -2832,3 +2832,264 @@ textarea.form-control {
     gap: 1.25rem;
     margin-bottom: 1rem;
 }
+
+/* Related Files Section */
+.related-files {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e8eaf6;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    color: #364670;
+    margin-bottom: 1.5rem;
+}
+
+.section-title i {
+    color: #1976d2;
+}
+
+/* File Card - Matching Catalog Style */
+.file-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.file-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.file-preview-container {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    overflow: hidden;
+    position: relative;
+}
+
+.file-preview {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* Type-specific backgrounds */
+.file-preview.notes { background: #e8f5e9; }
+.file-preview.cheatsheets { background: #fff3e0; }
+.file-preview.textbooks { background: #f3e5f5; }
+.file-preview.videos { background: #e3f2fd; }
+.file-preview.clips { background: #ffebee; }
+
+.video-icon-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+.video-icon-overlay i {
+    font-size: 2.5rem;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.file-info {
+    padding: 1rem;
+}
+
+.file-title {
+    font-size: 1rem;
+    color: #364670;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.file-type {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.file-type.notes { color: #4CAF50; background: #e8f5e9; }
+.file-type.cheatsheets { color: #FF9800; background: #fff3e0; }
+.file-type.textbooks { color: #9C27B0; background: #f3e5f5; }
+.file-type.videos { color: #2196F3; background: #e3f2fd; }
+.file-type.clips { color: #F44336; background: #ffebee; }
+
+.file-date {
+    color: #999;
+}
+
+/* Related Files Section */
+.related-files {
+    margin-top: 3rem;
+}
+
+.related-files .separator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.25rem;
+    color: #364670;
+    margin-bottom: 1.5rem;
+}
+
+.related-files .separator i {
+    color: #1976d2;
+}
+
+.recent-horizontal-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+}
+
+.recent-horizontal-item {
+    flex: 0 0 auto;
+    width: 200px;
+    padding: 1rem;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.recent-horizontal-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.file-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: 24px;
+}
+
+/* Type-specific colors */
+.recent-horizontal-item.notes .file-icon {
+    background: #e8f5e9;
+    color: #4CAF50;
+}
+.recent-horizontal-item.cheatsheets .file-icon {
+    background: #fff3e0;
+    color: #FF9800;
+}
+.recent-horizontal-item.textbooks .file-icon {
+    background: #f3e5f5;
+    color: #9C27B0;
+}
+.recent-horizontal-item.videos .file-icon {
+    background: #e3f2fd;
+    color: #2196F3;
+}
+.recent-horizontal-item.clips .file-icon {
+    background: #ffebee;
+    color: #F44336;
+}
+
+.recent-horizontal-name {
+    font-size: 0.95rem;
+    color: #364670;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.recent-horizontal-date {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: auto;
+}
+
+/* Catalog Subject Separators */
+.subject-section {
+    margin-bottom: 3rem;
+}
+
+.subject-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.subject-header:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    border-radius: 3px;
+}
+
+.subject-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #364670;
+    background: #f0f5fd;
+}
+
+.subject-count {
+    background: #e8eaf6;
+    color: #1976d2;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Category-specific accent colors */
+.notes-section .subject-header:after { background: #4CAF50; }
+.notes-section .subject-count { background: #e8f5e9; color: #4CAF50; }
+
+.cheatsheets-section .subject-header:after { background: #FF9800; }
+.cheatsheets-section .subject-count { background: #fff3e0; color: #FF9800; }
+
+.textbooks-section .subject-header:after { background: #9C27B0; }
+.textbooks-section .subject-count { background: #f3e5f5; color: #9C27B0; }
+
+.videos-section .subject-header:after { background: #2196F3; }
+.videos-section .subject-count { background: #e3f2fd; color: #2196F3; }
+
+.clips-section .subject-header:after { background: #F44336; }
+.clips-section .subject-count { background: #ffebee; color: #F44336; }

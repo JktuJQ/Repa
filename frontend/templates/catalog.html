@@ -6,13 +6,14 @@
 <div class="catalog-container {{ file_type }}-section">
     {% for subject, files in subjects %}
     <div class="subject-section">
-        <h3 class="subject-title">
-            {{ subject }}
-            <span class="file-count">({{ files|length }})</span>
-        </h3>
+        <div class="subject-header">
+            <h2 class="subject-title">{{ subject }}</h2>
+            <span class="subject-count">{{ files|length }}</span>
+        </div>
         <div class="files-grid">
             {% for file in files %}
             <div class="file-card">
+
                 <a href="{{ url_for('file_detail', file_id=file['file'].id) }}">
                     <div class="file-preview-container">
                         <img src="{{ file['preview'] }}"

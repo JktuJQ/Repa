@@ -73,17 +73,21 @@
             {% endif %}
         </h4>
 
-        <div class="recent-horizontal-scroll">
-            {% for file in file_data[category][:5] %}
-            <a href="{{ url_for('file_detail', file_id=file.id) }}">
-            <div class="recent-horizontal-item">
-                <h5 class="recent-horizontal-name">{{ file.name }}</h5>
-                <p class="recent-horizontal-date">{{ file.created_at }}</p>
-                <button class="recent-horizontal-more">
-                    <i class="ri-more-fill"></i>
-                </button>
-            </div>
+        <div class="files-grid">
+            {% for file in file_data[category] %}
+            <div class="file-card">
+                <a href="{{ url_for('file_detail', file_id=file['file'].id) }}">
+                    <div class="file-preview-container">
+                        <img src="{{ file['preview'] }}"
+                             alt="{{ file['file'].name }}"
+                             class="file-preview">
+                    </div>
+                    <div class="file-info">
+                        <h4>{{ file['file'].name }}</h4>
+                        <p>{{ file['author'] }}</p>
+                    </div>
                 </a>
+            </div>
             {% endfor %}
         </div>
     </div>
