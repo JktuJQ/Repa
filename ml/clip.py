@@ -129,3 +129,4 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
         ]
 
         subprocess.run(cmd, check=True)
+
