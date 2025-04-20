@@ -9,7 +9,7 @@ from ml.find_contour import find_page_contour
 
 from backend.forms.video_cut_form import VideoCutForm
 
-from ml.clip import make_shorts
+#from ml.clip import make_shorts
 
 
 @application.route("/upgrade_image/")  # <string:filename>", methods=["GET"])
@@ -39,9 +39,9 @@ def video_cutter(filename: str):
         start = form.start_time.data
         end = form.end_time.data
 
-        make_shorts("frontend/static/" + filename, "frontend/static/clips/" + filename.split("/")[-1],
-                    [t * 60 ** i for i, t in enumerate(start.split(":")[::-1])], [t * 60 ** i for i, t in enumerate(end.split(":")[::-1])],
-                    f"data/clips_base/{label}.mp4")
+        #make_shorts("frontend/static/" + filename, "frontend/static/clips/" + filename.split("/")[-1],
+        #            [t * 60 ** i for i, t in enumerate(start.split(":")[::-1])], [t * 60 ** i for i, t in enumerate(end.split(":")[::-1])],
+        #            f"data/clips_base/{label}.mp4")
 
         return render_template('video_cutter.html', form=form, success=True)
 

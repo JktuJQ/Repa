@@ -91,7 +91,7 @@
             {% if session['username'] == file.author %}
             <div class="author-actions">
                 <button class="update-btn" onclick={% if file['file'].file_type_id not in (4, 5) %}
-                "window.location.href='{{ url_for('upgrade_image', filename=file['link']) }}'">{% else %}"window.location.href='{{ url_for('video_cutter', filename=file['link']) }}'">
+                "window.location.href='{{ url_for('upgrade_image', filename=file['link']) }}'">{% else %}"window.location.href='{{ url_for('video_cutter', filename=file['link']) }}'"> {%endif%}
                     <i class="ri-refresh-line"></i>Обработка
                 </button>
                 <button class="edit-btn" onclick="window.location.href='{{ url_for('update_file', file_id=file['file'].id) }}'">
