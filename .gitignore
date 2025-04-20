@@ -11,12 +11,12 @@ __pycache__
 
 venv/
 
-data/
-
 ml/video_chunks/
 models/
 
-ml/*.ipynb
+*.ipynb
 *.mp4
 *.log
 *.srt
+*.jpg
+*.wav

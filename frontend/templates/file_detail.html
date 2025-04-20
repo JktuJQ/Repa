@@ -8,11 +8,7 @@
         {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
         {% if file['file'].filename[-4:] == '.pdf' %}
         <div class="pdf-viewer-container">
-            <iframe src="https://docs.google.com/gview?url={{ url_for('static', filename=file['link'], _external=True) }}&embedded=true"
-                    frameborder="0"></iframe>
-            <button class="fullscreen-btn" onclick="toggleFullscreen('.pdf-viewer-container')">
-                <i class="ri-fullscreen-line"></i>
-            </button>
+            <iframe src="https://docs.google.com/gview?url={{ url_for('static', filename=file['link']) }}&embedded=true" style="width:718px; height:700px;" frameborder="0"></iframe>
         </div>
         {% else %}
         <div class="image-viewer-container">
@@ -23,6 +19,7 @@
         </div>
         {% endif %}
         {% elif file_type in ('videos', 'clips') %}
+        {{гавно}}
         <div class="video-viewer-container">
             <video controls class="video-preview">
                 <source src="{{ url_for('static', filename=file['link']) }}">
@@ -35,15 +32,15 @@
         <div class="file-header">
             <div class="file-type-badge {{ file_type }}">
                 {% if file_type == 'notes' %}
-                <i class="ri-quill-pen-line"></i> Конспект
+                <i class="ri-quill-pen-line"></i>
                 {% elif file_type == 'cheatsheets' %}
-                <i class="ri-bookmark-line"></i> Шпаргалка
+                <i class="ri-bookmark-line"></i>
                 {% elif file_type == 'textbooks' %}
-                <i class="ri-book-2-line"></i> Учебник
+                <i class="ri-book-2-line"></i>
                 {% elif file_type == 'videos' %}
-                <i class="ri-video-chat-fill"></i> Видео
+                <i class="ri-video-chat-fill"></i>
                 {% elif file_type == 'clips' %}
-                <i class="ri-mail-send-fill"></i> Клип
+                <i class="ri-mail-send-fill"></i>
                 {% endif %}
             </div>
 
@@ -94,7 +91,8 @@
 
             {% if session['username'] == file.author %}
             <div class="author-actions">
-                <button class="update-btn" onclick="window.location.href='{{ url_for('upgrade_image', filename=file['link']) }}'">
+                <button class="update-btn" onclick={% if file['file'].file_type_id not in (4, 5) %}
+                "window.location.href='{{ url_for('upgrade_image', filename=file['link']) }}'">{% else %}"window.location.href='{{ url_for('video_cutter', filename=file['link']) }}'"> {%endif%}
                     <i class="ri-refresh-line"></i>Обработка
                 </button>
                 <button class="edit-btn" onclick="window.location.href='{{ url_for('update_file', file_id=file['file'].id) }}'">

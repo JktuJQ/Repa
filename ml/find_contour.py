@@ -138,38 +138,58 @@ def align_img(image, contour):
     aligned = four_point_transform(image, ordered_contour.reshape(4, 2))
     return aligned
 
+
 def preprocess_img(image):
     return align_img(image, find_page_contour(image, a=180, c=5))
 
 
-# def rotate_image(image, angle):
-#     """Улучшенный поворот изображения"""
-#     if angle == 0:
-#         return image
+def enhance_text_readability(image, scale_factor=1, sharpening_strength=1.3, denoise_level=1):
+    """
+    Улучшает читаемость текста на изображении
 
-#     (h, w) = image.shape[:2]
-#     center = (w // 2, h // 2)
+    Параметры:
+    - image: входное изображение (numpy array)
+    - scale_factor: коэффициент увеличения (рекомендуется 1.0-1.5)
+    - sharpening_strength: сила повышения резкости (1.0-2.0)
+    - denoise_level: уровень подавления шумов (1-10)
 
-#     # Вычисляем матрицу поворота
-#     M = cv2.getRotationMatrix2D(center, angle, 1.0)
+    Возвращает:
+    - Улучшенное изображение
+    """
+    if image is None:
+        raise ValueError("Не удалось загрузить изображение")
 
-#     # Вычисляем новые границы изображения
-#     cos = np.abs(M[0, 0])
-#     sin = np.abs(M[0, 1])
+    # 1. Увеличение разрешения с сохранением деталей
+    if scale_factor != 1.0:
+        high_res = cv2.resize(image, None, fx=scale_factor, fy=scale_factor,
+                              interpolation=cv2.INTER_CUBIC)
+    else:
+        high_res = image.copy()
 
-#     new_w = int((h * sin) + (w * cos))
-#     new_h = int((h * cos) + (w * sin))
+    # 2. Преобразование в LAB цветовое пространство для работы с яркостью
+    lab = cv2.cvtColor(high_res, cv2.COLOR_BGR2LAB)
+    l_channel, a, b = cv2.split(lab)
 
-#     # Корректируем матрицу поворота
-#     M[0, 2] += (new_w - w) / 2
-#     M[1, 2] += (new_h - h) / 2
+    # 3. Адаптивное улучшение контраста только для канала яркости
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    enhanced_l = clahe.apply(l_channel)
 
-#     # Поворачиваем с белым фоном
-#     rotated = cv2.warpAffine(
-#         image, M, (new_w, new_h),
-#         flags=cv2.INTER_CUBIC,
-#         borderMode=cv2.BORDER_CONSTANT,
-#         borderValue=(255, 255, 255)
-#     )
+    # 4. Подавление шумов
+    denoised = cv2.fastNlMeansDenoising(enhanced_l, None, h=denoise_level,
+                                        templateWindowSize=7,
+                                        searchWindowSize=21)
 
-#     return rotated
+    # 5. Повышение резкости с регулируемой силой
+    kernel_size = int(3 * sharpening_strength)
+    if kernel_size % 2 == 0:
+        kernel_size += 1
+
+    sharpened = cv2.GaussianBlur(denoised, (0, 0), kernel_size)
+    sharpened = cv2.addWeighted(denoised, 1.0 + sharpening_strength,
+                                sharpened, -sharpening_strength, 0)
+
+    # 6. Сборка финального изображения
+    merged_lab = cv2.merge((sharpened, a, b))
+    final = cv2.cvtColor(merged_lab, cv2.COLOR_LAB2BGR)
+
+    return final
