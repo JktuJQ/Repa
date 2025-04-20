@@ -64,9 +64,13 @@
             </div>
     </div>
 </div>
-
+<div class="clip-preview">
+    <video controls playsinline loop muted autoplay>
+        <source src="{{ url_for('static', filename='./../static/assets/clips/1(0).mp4') }}"/>
+    </video>
+</div>
 <div class="quick-download-types">
-    <h3>Быстрый выбор типа</h3>
+    <h3>Загрузка файлов</h3>
     <div class="quick-type-buttons">
         <a href="/download?chosen=notes" class="quick-type-btn notes" data-type="notes">
             <i class="ri-quill-pen-line"></i>
