@@ -1,0 +1,30 @@
+{% extends "base_with_header_and_sections.html" %}
+
+{% block title %}Подверждение удаления{% endblock %}
+
+{% block content %}
+<div class="main">
+<div class="delete-confirmation">
+    <div class="confirmation-box">
+        <h2><i class="ri-delete-bin-line"></i>Подтвердите удаление</h2>
+        
+        <div class="note-info">
+            <p>Вы собираетесь удалить:</p>
+            <h3>{{ file.name }}</h3>
+            <p class="meta">Созданную {{ file.created_at }}</p>
+        </div>
+        
+        <form method="POST">
+            <div class="confirmation-buttons">
+                <button type="submit" name="confirm" value="yes" class="btn-delete">
+                    <i class="ri-check-line"></i> Да, удалить
+                </button>
+                <a href="{{ url_for('dashboard') }}" class="btn-cancel">
+                    <i class="ri-close-line"></i> Отменить
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}

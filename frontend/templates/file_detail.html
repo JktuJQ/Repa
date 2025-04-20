@@ -94,14 +94,14 @@
 
             {% if session['username'] == file.author %}
             <div class="author-actions">
-                <button class="update-btn" onclick="window.location.href='{{ url_for('upgrade_image', filename=file['link']) }}">
-                    <i class="ri-refresh-line"></i> Обработка
+                <button class="update-btn" onclick="window.location.href='{{ url_for('upgrade_image', filename=file['link']) }}'">
+                    <i class="ri-refresh-line"></i>Обработка
                 </button>
-                <button class="edit-btn">
-                    <i class="ri-edit-line"></i> Редактировать
+                <button class="edit-btn" onclick="window.location.href='{{ url_for('update_file', file_id=file['file'].id) }}'">
+                    <i class="ri-edit-line"></i>
                 </button>
-                <button class="delete-btn">
-                    <i class="ri-delete-bin-line"></i> Удалить
+                <button class="delete-btn" onclick="window.location.href='{{ url_for('delete_file', file_id=file['file'].id) }}'">
+                    <i class="ri-delete-bin-line"></i>
                 </button>
             </div>
             {% endif %}

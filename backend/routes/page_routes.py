@@ -6,6 +6,8 @@ from flask import render_template, session, url_for, redirect, flash, request
 from werkzeug.utils import secure_filename
 from sqlalchemy import func
 
+import os
+
 import imageio
 
 from PIL import Image
@@ -15,6 +17,7 @@ import base64
 from data.db_models import File, FileType, User
 
 from backend.forms.download_form import DownloadFileForm
+from backend.forms.update_form import UpdateFileForm
 
 from datetime import datetime
 
@@ -251,3 +254,57 @@ def file_detail(file_id: int):
         file_type=file_type,
         related_files=related_files
     )
+
+
+@application.route("/update_file/<int:file_id>", methods=["GET", "POST"])
+def update_file(file_id: int):
+    file = db_session().query(File).filter(File.id == file_id).first()
+    form = UpdateFileForm(obj=file)
+
+    if form.validate_on_submit():
+        file.name = form.name.data
+        file.description = form.description.data
+        file.subject = form.subject.data
+        file.create_at = datetime.today().strftime('%Y-%m-%d')
+
+        if form.file.data:
+            file_path = f"frontend/static{(file_info(file))['link']}"
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+            form.file.save(file_path)
+
+            file.filename = file_path
+            file.filetype = db_session().query(FileType).filter(FileType.type == form.file_type.data).first().id
+
+        db_session().commit()
+        flash("Файл успешно обновлен", "success")
+        return redirect(url_for("file_detail", file_id=file.id))
+
+    return render_template('update_file.html', form=form, file=file)
+
+
+@application.route("/delete_file/<int:file_id>", methods=["GET", "POST"])
+def delete_file(file_id: int):
+    file = db_session().query(File).filter(File.id == file_id).first()
+
+    if not file:
+        flash("Такой записи не существует", "error")
+        return redirect(url_for("dashboard"))
+
+    if request.method == "POST":
+        if request.form.get("confirm") == "yes":
+            try:
+                file_path = f"frontend/static/assets/{db_session().query(FileType).filter(FileType.id == file.file_type_id).first().type}/{file.filename}"
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+
+                db_session().delete(file)
+                db_session().commit()
+                flash("Удаление прошло успешно", "success")
+            except Exception as e:
+                db_session().rollback()
+                flash(f"Ошибка с удалением", "error")
+        return redirect(url_for("dashboard"))
+
+    return render_template("delete_file.html", file=file)

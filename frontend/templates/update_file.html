@@ -1,0 +1,66 @@
+{% extends "base_with_header_and_sections.html" %}
+
+{% block title %}Редактирование {{ file.name }}{% endblock %}
+
+{% block content %}
+
+<div class="download-form-container">
+    <h1>Редактирование файла</h1>
+    
+    <form method="POST" class="edit-file-form" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.file_type.label }}
+            {{ form.file_type(class="form-control") }}
+            {% for error in form.file_type.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <br>
+
+        <div class="form-group">
+            {{ form.name.label }}
+            {{ form.name(class="form-control") }}
+            {% for error in form.name.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.description.label }}
+            {{ form.description(class="form-control", rows=5) }}
+            {% for error in form.description.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.subject.label }}
+            {{ form.subject(class="form-control") }}
+            {% for error in form.subject.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group file-upload-group">
+            {{ form.file.label }}
+            {{ form.file(class="file-input") }}
+            <small class="form-text">
+                Оставьте пустым, если не хотите менять файл.
+            </small>
+            {% for error in form.file.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-actions">
+            {{ form.submit(class="submit-btn") }}
+            <button type="reset" class="cancel-btn">
+                <i class="ri-close-line"></i>Отмена
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
