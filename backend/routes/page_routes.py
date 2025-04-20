@@ -109,9 +109,13 @@ def catalog(file_type: str):
 
 @application.route("/file_detail/<int:file_id>", methods=["GET"])
 def file_detail(file_id: int):
+    file = file_info(db_session().query(File).filter(File.id == file_id).first())
+    file_type = db_session().query(FileType).filter(
+        FileType.id == file["file"].file_type_id).first().type
     return render_template(
         "file_detail.html",
-        file_type=db_session().query(FileType).filter(
-            FileType.id == db_session().query(File).filter(File.id == file_id).first().file_type_id).first().type,
-        file=file_info(db_session().query(File).filter(File.id == file_id).first())
+        file=file,
+        file_type=file_type,
+        related_files=db_session().query(File).filter(
+            (File.subject == file["file"].subject) | (File.author_id == file["file"].author_id)).all()
     )
