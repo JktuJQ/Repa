@@ -44,6 +44,10 @@
             <h3>Клипы</h3>
         </a>
     </div>
+        <a class="sign-out item" onclick="window.location.href='{{ url_for('logout') }}'">
+            <h3>Выйти из аккаунта</h3>
+            <i class="ri-logout-box-r-line"></i>
+        </a>
 </div>
 {% endblock %}
 
@@ -58,10 +62,6 @@
                     <p>{{ session['name'] }}</p>
                 </div>
             </div>
-             <a class="sign-out item" onclick="window.location.href='{{ url_for('logout') }}'">
-                <h3>Выйти из аккаунта</h3>
-                <i class="ri-logout-box-r-line"></i>
-            </a>
     </div>
 </div>
 
