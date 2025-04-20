@@ -48,12 +48,12 @@ def border(input_path, output_path, border_hd=0, border_lr=0, border_color="blac
 
     subprocess.run(cmd)
 
-def blur(input_path, output_path):
+def blur(input_path, output_path, blur_koeff=10):
     cmd = [
         'ffmpeg',
         '-y',
         '-i', input_path,
-        '-vf', 'boxblur=10:5',
+        '-vf', f'boxblur={blur_koeff}:5',
         '-c:a', 'copy',
         output_path
     ]
@@ -93,7 +93,7 @@ def get_duration(input_path):
     return float(subprocess.run(cmd, capture_output=True, text=True).stdout)
 
 def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
-                bg_blur=15):
+                bg_blur=10):
     """
     Duration of main and background videos must be equal.
     :param background: background video. If None then background is scaled blur video
@@ -131,19 +131,19 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
         cmd = [
             'ffmpeg',
             '-y',
-            '-i', temp.name,  # Фон (input 0)
-            '-i', input_path,       # Основное видео (input 1)
+            '-i', temp.name,
+            '-i', input_path,
             '-filter_complex',
             f'[0:v]scale={w}:{h}:force_original_aspect_ratio=increase,'
             f'crop={w}:{h},boxblur={bg_blur}[bg];'
             f'[1:v]scale={w}:-2[fg];'
-            '[bg][fg]overlay=(W-w)/2:(H-h)/2[v]',  # Явно маркируем видео поток
-            '-map', '[v]',          # Берем обработанное видео
-            '-map', '1:a?',         # Берем аудио из второго входа (1:a) с опцией "?" если аудио нет
+            '[bg][fg]overlay=(W-w)/2:(H-h)/2[v]',
+            '-map', '[v]',
+            '-map', '1:a?',
             '-c:v', 'libx264',
             '-preset', 'fast',
             '-crf', '23',
-            '-c:a', 'copy',         # Копируем аудио без перекодирования
+            '-c:a', 'copy',     
             output_path
         ]
 
@@ -161,11 +161,19 @@ def compile_subtitles(input_path, subtitles, output_path):
             ]
      subprocess.run(cmd, check=True)
 
-def make_shorts(input_path, output_path, background_path=None):
+def make_shorts(input_path, output_path, start_time=0, end_time=None, background_path=None, bg_blur=10):
+    if(end_time is None):
+        end_time = get_duration(input_path)
     temp_dir = os.path.dirname(output_path) or '.'
+    cutted_video = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.mp4')
     vert_video = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.mp4')
     subtitle_file = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.srt')
-
-    to_vertical(input_path, vert_video.name, background_path=background_path, bg_blur=5)
-    gen_subtitles(input_path, subtitle_file.name)
+    
+    cut(input_path, cutted_video.name, start_time, end_time)
+    to_vertical(cutted_video.name, vert_video.name, background_path=background_path, bg_blur=bg_blur)
+    gen_subtitles(cutted_video.name, subtitle_file.name)
     compile_subtitles(vert_video.name, subtitle_file.name, output_path)
+
+    cutted_video.close()
+    vert_video.close()
+    subtitle_file.close()
