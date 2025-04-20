@@ -3,10 +3,13 @@
 {% block title %}Каталог ({{ file_type_ru }}){% endblock %}
 
 {% block content %}
-<div class="files-grid">
+<div class="catalog-container {{ file_type }}-section">
     {% for subject, files in subjects %}
     <div class="subject-section">
-        <h3>{{ subject }} ({{ files|length }})</h3>
+        <h3 class="subject-title">
+            {{ subject }}
+            <span class="file-count">({{ files|length }})</span>
+        </h3>
         <div class="files-grid">
             {% for file in files %}
             <div class="file-card">

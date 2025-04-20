@@ -2700,3 +2700,118 @@ textarea.form-control {
     font-size: 0.8rem;
     color: #999;
 }
+
+.left-section .sidebar .item i {
+    color: #1976d2; /* Base blue color */
+    font-size: 22px;
+}
+
+.left-section .sidebar .item .ri-quill-pen-line i { color: #4CAF50; } /* Green */
+.left-section .sidebar .item ri-bookmark-line { color: #FF9800; } /* Orange */
+.left-section .sidebar .item ri-book-2-line { color: #9C27B0; } /* Purple */
+.left-section .sidebar .item ri-video-chat-fill { color: #2196F3; } /* Blue */
+.left-section .sidebar .item ri-mail-send-fill { color: #F44336; } /* Red */
+
+.left-section .sidebar .item:hover i {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+.recent-horizontal-name {
+    font-size: 16px; /* Increased from 14px */
+    font-weight: 600;
+    color: #364670;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.subject-section {
+    break-inside: avoid; /* Prevent column breaks inside subjects */
+    margin-bottom: 2rem;
+    page-break-inside: avoid; /* For older browsers */
+}
+
+.catalog-columns {
+    column-count: 2; /* Two vertical columns */
+    column-gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .catalog-columns {
+        column-count: 1;
+    }
+}
+.subject-title {
+    font-size: 1.2rem;
+    color: #364670;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e8eaf6;
+    margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+    padding-top: 0.5rem;
+}
+
+.file-count {
+    font-size: 0.9rem;
+    color: #999;
+    font-weight: normal;
+    margin-left: 0.5rem;
+}
+
+.catalog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Animation for smoother subject transitions */
+.subject-section {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Remove the column styles and replace with: */
+.subject-section {
+    margin-bottom: 2.5rem;
+}
+
+.subject-title {
+    font-size: 1.25rem;
+    color: #364670;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e8eaf6;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.subject-title:before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: #1976d2;
+}
+
+/* Different colors for different file types */
+.notes-section .subject-title:before { background: #4CAF50; }
+.cheatsheets-section .subject-title:before { background: #FF9800; }
+.textbooks-section .subject-title:before { background: #9C27B0; }
+.videos-section .subject-title:before { background: #2196F3; }
+.clips-section .subject-title:before { background: #F44336; }
+
+.files-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+}
