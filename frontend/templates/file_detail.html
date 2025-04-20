@@ -114,23 +114,44 @@
         <i class="ri-links-line"></i> Похожие материалы
     </h3>
 
-        <div class="files-grid">
-            {% for related in related_files[:5] %}
-            <div class="file-card">
-                <a href="{{ url_for('file_detail', file_id=related['file'].id) }}">
-                    <div class="file-preview-container">
-                        <img src="{{ related['preview'] }}"
-                             alt="{{ related['file'].name }}"
-                             class="file-preview">
+    <div class="files-grid">
+        {% for related in related_files[:5] %}
+        <div class="file-card">
+            <a href="{{ url_for('file_detail', file_id=related['file'].id) }}">
+                <div class="file-preview-container">
+
+
+                    <img src="{{ related['preview'] }}"
+                         alt="{{ related['file'].name }}"
+                         class="file-preview">
+                </div>
+                <div class="file-info">
+                    <h4>{{ related['file'].name }}</h4>
+
+                    <div class="file-meta">
+
+                        <span class="file-author">{{ related['author'] }}</span>
+                        <span class="file-date">{{ related['file'].created_at }}</span>
+
+                        <div class="file-type-badge {{ file['file_type'] }}">
+                            {% if related['file_type'] == 'notes' %}
+                            <i class="ri-quill-pen-line"></i>
+                            {% elif related['file_type'] == 'cheatsheets' %}
+                            <i class="ri-bookmark-line"></i>
+                            {% elif related['file_type'] == 'textbooks' %}
+                            <i class="ri-book-2-line"></i>
+                            {% elif related['file_type'] == 'videos' %}
+                            <i class="ri-video-chat-fill"></i>
+                            {% elif related['file_type'] == 'clips' %}
+                            <i class="ri-mail-send-fill"></i>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="file-info">
-                        <h4>{{ related['file'].name }}</h4>
-                        <p>{{ related['author'] }}</p>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
+                </div>
+            </a>
         </div>
+        {% endfor %}
+    </div>
 </div>
 
 

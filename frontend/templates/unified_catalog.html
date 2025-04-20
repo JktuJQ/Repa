@@ -1,16 +1,24 @@
 {% extends "base_with_header_and_sections.html" %}
 
-{% block title %}Каталог ({{ file_type_ru }}){% endblock %}
+{% block title %}Общий каталог{% endblock %}
 
 {% block content %}
-<div class="catalog-container {{ file_type }}-section">
-    {% for subject, files in subjects %}
-    <div class="subject-section">
-        <div class="subject-header">
-            <h2 class="subject-title">{{ subject }}</h2>
-            <span class="subject-count">{{ files|length }}</span>
-        </div>
-        <div class="files-grid">
+<div class="main">
+<div class="unified-catalog">
+    {% if search_query %}
+    <h2 class="catalog-title">
+        <i class="ri-search-line"></i> Результаты поиска: "{{ search_query }}"
+        <span class="results-count">{{ files|length }} найдено</span>
+    </h2>
+    {% else %}
+    <h2 class="catalog-title">
+        <i class="ri-archive-line"></i> Все материалы
+    </h2>
+    {% endif %}
+
+
+     <div class="files-grid">
+         {% if files %}
             {% for file in files %}
 <div class="file-card">
     <a href="{{ url_for('file_detail', file_id=file['file'].id) }}">
@@ -48,7 +56,14 @@
 </div>
 {% endfor %}
         </div>
+        {% else %}
+        <div class="no-results">
+            <i class="ri-search-eye-line"></i>
+            <h3>Ничего не найдено</h3>
+            <p>Попробуйте изменить поисковый запрос</p>
+        </div>
+        {% endif %}
     </div>
-    {% endfor %}
 </div>
+    </div>
 {% endblock %}

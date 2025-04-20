@@ -76,18 +76,39 @@
         <div class="files-grid">
             {% for file in file_data[category] %}
             <div class="file-card">
-                <a href="{{ url_for('file_detail', file_id=file['file'].id) }}">
-                    <div class="file-preview-container">
-                        <img src="{{ file['preview'] }}"
-                             alt="{{ file['file'].name }}"
-                             class="file-preview">
+            <a href="{{ url_for('file_detail', file_id=file['file'].id) }}">
+                <div class="file-preview-container">
+
+
+                    <img src="{{ file['preview'] }}"
+                         alt="{{ file['file'].name }}"
+                         class="file-preview">
+                </div>
+                <div class="file-info">
+                    <h4>{{ file['file'].name }}</h4>
+
+                    <div class="file-meta">
+
+                        <span class="file-author">{{ file['author'] }}</span>
+                        <span class="file-date">{{ file['file'].created_at }}</span>
+
+                        <div class="file-type-badge {{ file['file_type'] }}">
+                            {% if file['file_type'] == 'notes' %}
+                            <i class="ri-quill-pen-line"></i>
+                            {% elif file['file_type'] == 'cheatsheets' %}
+                            <i class="ri-bookmark-line"></i>
+                            {% elif file['file_type'] == 'textbooks' %}
+                            <i class="ri-book-2-line"></i>
+                            {% elif file['file_type'] == 'videos' %}
+                            <i class="ri-video-chat-fill"></i>
+                            {% elif file['file_type'] == 'clips' %}
+                            <i class="ri-mail-send-fill"></i>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="file-info">
-                        <h4>{{ file['file'].name }}</h4>
-                        <p>{{ file['author'] }}</p>
-                    </div>
-                </a>
-            </div>
+                </div>
+            </a>
+        </div>
             {% endfor %}
         </div>
     </div>
