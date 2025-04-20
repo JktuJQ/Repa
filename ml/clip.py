@@ -5,7 +5,7 @@ from moviepy import VideoFileClip
 from pysrt import SubRipFile, SubRipItem, SubRipTime
 import re
 from datetime import timedelta
-
+import whisper
 from subtitle import gen_subtitles
 
 def cut(input_path, output_path, start_time, end_time):
@@ -130,3 +130,23 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
 
         subprocess.run(cmd, check=True)
 
+
+def compile_subtitles(input_path, subtitles, output_path):
+     cmd = [ 'ffmpeg', '-i',
+            input_path, '-vf', 
+            f"subtitles={subtitles}:force_style='FontName=Roboto,Fontsize=28,PrimaryColour=&HFFFFFF&,BackColour=&H80000000&,OutlineColour=&H000000&,BorderStyle=4,Alignment=2,MarginV=30'",
+            '-c:v', 'libx264', '-crf' , '23', 
+            '-preset', 'fast',
+            '-c:a', 'copy',
+            output_path
+            ]
+     subprocess.run(cmd, check=True)
+
+def make_shorts(input_path, output_path, background_path=None):
+    temp_dir = os.path.dirname(output_path) or '.'
+    vert_video = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.mp4')
+    subtitle_file = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.srt')
+
+    to_vertical(input_path, vert_video.name, background_path=background_path, bg_blur=5)
+    gen_subtitles(input_path, subtitle_file.name)
+    compile_subtitles(vert_video.name, subtitle_file.name, output_path)

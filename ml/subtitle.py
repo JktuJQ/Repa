@@ -13,7 +13,11 @@ def format_time(seconds):
     milliseconds = td.microseconds // 1000
     return f"{hours:02d}:{minutes:02d}:{seconds:02d},{milliseconds:03d}"
 
-def gen_subtitles(input_path, output_file, model="medium"):
+def gen_subtitles(input_path, output_file):
+    ##############################################################
+    # DELETE IN PROD 
+    whisper_model = whisper.load_model("medium")
+    ###############################################################
     result = whisper_model.transcribe(input_path, word_timestamps=True)
     with open(output_file, "w", encoding="utf-8") as f:
         counter = 1
@@ -25,4 +29,4 @@ def gen_subtitles(input_path, output_file, model="medium"):
                 counter += 1
 
 if __name__ == "__main__":
-    whisper_model = load_model(MODEL_TYPE)
+    whisper_model = whisper.load_model(MODEL_TYPE)
