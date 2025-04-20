@@ -1,0 +1,91 @@
+{% extends "base_with_header_and_sections.html" %}
+
+{% block title %}{{ Нарезка клипов }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Нарезка видео</h1>
+    
+    <!-- Video Player -->
+    <div class="video-container mb-4">
+        <video id="videoPlayer" controls width="100%">
+            <source src="{{ url_for('static', filename=filename) }}" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
+    </div>
+    
+    <!-- Cut Form -->
+    <form method="POST" class="video-cut-form">
+        {{ form.hidden_tag() }}
+        
+        <div class="row">
+            <div class="col-md-4">
+                {{ form.label.label }}
+                {{ form.label(class="form-control") }}
+            </div>
+            <div class="col-md-3">
+                {{ form.start_time.label }}
+                <div class="input-group">
+                    {{ form.start_time(class="form-control", id="startTime") }}
+                    <button type="button" class="btn btn-outline-secondary" onclick="setCurrentTime('startTime')">Установить</button>
+                </div>
+            </div>
+            <div class="col-md-3">
+                {{ form.end_time.label }}
+                <div class="input-group">
+                    {{ form.end_time(class="form-control", id="endTime") }}
+                    <button type="button" class="btn btn-outline-secondary" onclick="setCurrentTime('endTime')">Установить</button>
+                </div>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </div>
+    </form>
+    
+    {% if success %}
+    <div class="alert alert-success mt-3">Сделано!</div>
+    {% endif %}
+</div>
+
+<script>
+const video = document.getElementById('videoPlayer');
+    
+function formatTime(seconds) {
+    const date = new Date(0);
+    date.setSeconds(seconds);
+    return date.toISOString().substr(11, 12).replace(',', '.');
+}
+
+function setCurrentTime(fieldId) {
+    const currentTime = video.currentTime;
+    document.getElementById(fieldId).value = formatTime(currentTime);
+}
+
+// Optional: Add keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return; // Don't trigger when typing in forms
+    
+    if (e.key === '[') {
+        setCurrentTime('startTime');
+    } else if (e.key === ']') {
+        setCurrentTime('endTime');
+    }
+});
+</script>
+
+<style>
+.video-container {
+    background: #000;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.video-cut-form {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+</style>
+{% endblock %}
