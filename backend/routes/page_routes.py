@@ -33,17 +33,40 @@ def dashboard():
     if not session.get("logged_in"):
         return redirect(url_for("login"))
 
+    file_data = {}
+    for file_type in FILE_TYPES:
+        files = list(map(file_info, db_session().query(File).filter(
+            File.file_type_id == db_session().query(FileType).filter(
+                FileType.type == file_type).first().id).order_by(File.id.desc())
+                         .all()))
+        for file in files:
+            file_path = f"frontend/static{file['link']}"
+            try:
+                if file_type in ['videos', 'clips']:
+                    reader = imageio.get_reader(file_path)
+                    first_frame = reader.get_data(0)
+                    img = Image.fromarray(first_frame)
+
+                    img.thumbnail((300, 300))
+
+                    buffered = BytesIO()
+                    img.save(buffered, format="JPEG", quality=85)
+                    file['preview'] = f"data:image/jpeg;base64,{base64.b64encode(buffered.getvalue()).decode()}"
+                else:
+                    if file_path.lower().endswith('.pdf'):
+                        file['preview'] = url_for('static', filename='assets/pdf_preview.png')
+                    else:
+                        file['preview'] = url_for('static', filename=file['link'].lstrip('/'))
+            except Exception as e:
+                file['preview'] = url_for('static', filename='assets/default_preview.png')
+        file_data[file_type] = files
+
+
     return render_template(
         "dashboard.html",
         username=session.get("username"),
         file_types=FILE_TYPES,
-        file_data={
-            file_type: db_session().query(File).filter(
-                File.file_type_id == db_session().query(FileType).filter(
-                    FileType.type == file_type).first().id).order_by(File.id.desc())
-            .all()
-            for file_type in FILE_TYPES
-        }
+        file_data=file_data
     )
 
 
@@ -151,10 +174,35 @@ def file_detail(file_id: int):
     file = file_info(db_session().query(File).filter(File.id == file_id).first())
     file_type = db_session().query(FileType).filter(
         FileType.id == file["file"].file_type_id).first().type
+
+    related_files = list(file_info(f) for f in db_session().query(File).filter(
+        (File.subject == file["file"].subject) | (File.author_id == file["file"].author_id)).filter(
+        File.id != file["file"].id).all())
+    for related in related_files:
+        file_path = f"frontend/static{related['link']}"
+        try:
+            if db_session().query(FileType).filter(FileType.id == related['file'].file_type_id).first().type in [
+                'videos', 'clips']:
+                reader = imageio.get_reader(file_path)
+                first_frame = reader.get_data(0)
+                img = Image.fromarray(first_frame)
+
+                img.thumbnail((300, 300))
+
+                buffered = BytesIO()
+                img.save(buffered, format="JPEG", quality=85)
+                related['preview'] = f"data:image/jpeg;base64,{base64.b64encode(buffered.getvalue()).decode()}"
+            else:
+                if file_path.lower().endswith('.pdf'):
+                    related['preview'] = url_for('static', filename='assets/pdf_preview.png')
+                else:
+                    related['preview'] = url_for('static', filename=related['link'].lstrip('/'))
+        except Exception as e:
+            related['preview'] = url_for('static', filename='assets/default_preview.png')
+
     return render_template(
         "file_detail.html",
         file=file,
         file_type=file_type,
-        related_files=db_session().query(File).filter(
-            (File.subject == file["file"].subject) | (File.author_id == file["file"].author_id)).all()
+        related_files=related_files
     )
