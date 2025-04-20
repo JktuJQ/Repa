@@ -11,12 +11,12 @@ databases: t.Dict[str, AutomapBase] = dict()
 sessions: t.Dict[str, Session] = dict()
 
 # First database SHOULD be main database, because `main_session` would be associated with it.
-dbs = [r"data\databases\db.sqlite"]
+dbs = [r"data/databases/db.sqlite"]
 
 
 def extract_name(db_file: str) -> str:
     """Extracts name of database from filename."""
-    return db_file.split("\\")[-1].split(".")[0]
+    return db_file.split("/")[-1].split(".")[0]
 
 
 def full_init(db_files: t.List[str]):
