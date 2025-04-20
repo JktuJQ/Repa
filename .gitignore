@@ -18,3 +18,4 @@ models/
 
 ml/*.ipynb
 *.mp4
+*.log
