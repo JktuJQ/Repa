@@ -8,11 +8,7 @@
         {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
         {% if file['file'].filename[-4:] == '.pdf' %}
         <div class="pdf-viewer-container">
-            <iframe src="https://docs.google.com/gview?url={{ url_for('static', filename=file['link'], _external=True) }}&embedded=true"
-                    frameborder="0"></iframe>
-            <button class="fullscreen-btn" onclick="toggleFullscreen('.pdf-viewer-container')">
-                <i class="ri-fullscreen-line"></i>
-            </button>
+            <iframe src="https://docs.google.com/gview?url={{ url_for('static', filename=file['link']) }}&embedded=true" style="width:718px; height:700px;" frameborder="0"></iframe>
         </div>
         {% else %}
         <div class="image-viewer-container">
@@ -94,7 +90,8 @@
 
             {% if session['username'] == file.author %}
             <div class="author-actions">
-                <button class="update-btn" onclick="window.location.href='{{ url_for('upgrade_image', filename=file['link']) }}'">
+                <button class="update-btn" onclick={% if file['file'].file_type_id not in (4, 5) %}
+                "window.location.href='{{ url_for('upgrade_image', filename=file['link']) }}'">{% else %}"window.location.href='{{ url_for('video_cutter', filename=file['link']) }}'">
                     <i class="ri-refresh-line"></i>Обработка
                 </button>
                 <button class="edit-btn" onclick="window.location.href='{{ url_for('update_file', file_id=file['file'].id) }}'">
