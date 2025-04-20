@@ -1,35 +1,163 @@
 {% extends "base_with_header_and_sections.html" %}
 
-{% block title %}{{ file.name }}{% endblock %}
+{% block title %}{{ file['file'].name }}{% endblock %}
 
 {% block content %}
 <div class="file-detail-container">
-    <div class="file-preview">
+    <div class="file-preview-section">
         {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
-        {% if file['file'].filename[-4:] == 'pdf' %}
-        <iframe src="https://docs.google.com/gview?url=http://example.com/mypdf.pdf&embedded=true&url={{ url_for('static', filename=file['link']) }}"
-        frameborder="0"></iframe>
+            {% if file['file'].filename[-4:] == '.pdf' %}
+            <div class="pdf-viewer-container">
+                <iframe src="https://docs.google.com/gview?url={{ url_for('static', filename=file['link'], _external=True) }}&embedded=true"
+                        frameborder="0"></iframe>
+                <button class="fullscreen-btn" onclick="toggleFullscreen('.pdf-viewer-container')">
+                    <i class="ri-fullscreen-line"></i>
+                </button>
+            </div>
             {% else %}
-            <img src="{{ url_for('static', filename=file['link']) }}" alt="{{ file['file'].name }}">
-        {% endif %}
+            <div class="image-viewer-container">
+                <img src="{{ url_for('static', filename=file['link']) }}"
+                     alt="{{ file['file'].name }}"
+                     class="preview-image"
+                     onclick="openFullscreen(this)">
+            </div>
+            {% endif %}
         {% elif file_type in ('videos', 'clips') %}
-            <video controls>
-                <source src="{{ url_for('static', filename=file['link']) }}"/>
+        <div class="video-viewer-container">
+            <video controls class="video-preview">
+                <source src="{{ url_for('static', filename=file['link']) }}">
             </video>
+        </div>
         {% endif %}
     </div>
-    <div class="file-info">
+
+    <div class="file-details-section">
         <div class="file-header">
-            <h2>{{ file['file'].name }}</h2>
-            <div class="file-meta">
-                <span class="author">Загружено {{ file.author }}</span>
-                <span class="date">в {{ file['file'].created_at }}</span>
+            <div class="file-type-badge {{ file_type }}">
+                {% if file_type == 'notes' %}
+                <i class="ri-quill-pen-line"></i> Конспект
+                {% elif file_type == 'cheatsheets' %}
+                <i class="ri-bookmark-line"></i> Шпаргалка
+                {% elif file_type == 'textbooks' %}
+                <i class="ri-book-2-line"></i> Учебник
+                {% elif file_type == 'videos' %}
+                <i class="ri-video-chat-fill"></i> Видео
+                {% elif file_type == 'clips' %}
+                <i class="ri-mail-send-fill"></i> Клип
+                {% endif %}
             </div>
-        </div>  
-    
-        <div class="file-description">
-            <p>{{ file['file'].description }}</p>
+
+            <h1>{{ file['file'].name }}</h1>
+
+            <div class="file-meta-grid">
+                <div class="meta-item">
+                    <i class="ri-user-line"></i>
+                    <div>
+                        <span class="meta-label">Автор</span>
+                        <span class="meta-value">{{ file.author }}</span>
+                    </div>
+                </div>
+                <div class="meta-item">
+                    <i class="ri-calendar-line"></i>
+                    <div>
+                        <span class="meta-label">Дата загрузки</span>
+                        <span class="meta-value">{{ file['file'].created_at }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>    
+
+        <div class="file-description">
+            <h3><i class="ri-file-info-line"></i> Описание</h3>
+            <div class="description-content">
+                {{ file['file'].description or 'Описание отсутствует' }}
+            </div>
+        </div>
+
+        <div class="file-tags">
+            <h3><i class="ri-price-tag-3-line"></i> Теги</h3>
+            <div class="tags-container">
+                <span class="tag">{{ file['file'].subject or 'Без тега' }}</span>
+                {% for tag in file.tags|default([], true) %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="file-actions">
+            <a href="{{ url_for('static', filename=file['link']) }}" download class="download-btn">
+                <i class="ri-download-line"></i> Скачать
+            </a>
+            <button class="share-btn">
+                <i class="ri-share-line"></i> Поделиться
+            </button>
+            <button class="favorite-btn">
+                <i class="ri-heart-line"></i> В избранное
+            </button>
+
+            {% if session['username'] == file.author %}
+            <div class="author-actions">
+                <button class="edit-btn">
+                    <i class="ri-edit-line"></i> Редактировать
+                </button>
+                <button class="update-btn">
+                    <i class="ri-refresh-line"></i> Обновить
+                </button>
+                <button class="delete-btn">
+                    <i class="ri-delete-bin-line"></i> Удалить
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
+<div class="related-files">
+    <h2>Похожие материалы</h2>
+    <div class="related-files-grid">
+        {% for related in related_files[:5] %}
+        <a href="{{ url_for('file_detail', file_id=related.id) }}" class="related-file-card">
+            <div class="related-file-preview {{ related.file_type }}">
+                {% if related.type == 'notes' %}
+                <i class="ri-quill-pen-line"></i>
+                {% elif related.type == 'cheatsheets' %}
+                <i class="ri-bookmark-line"></i>
+                {% elif related.type == 'textbooks' %}
+                <i class="ri-book-2-line"></i>
+                {% elif related.type == 'videos' %}
+                <i class="ri-video-chat-fill"></i>
+                {% elif related.type == 'clips' %}
+                <i class="ri-mail-send-fill"></i>
+                {% endif %}
+            </div>
+            <h3>{{ related.name }}</h3>
+            <p>{{ related.author }} * {{ related.created_at }}</p>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+// Fullscreen functionality
+function openFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
+}
+
+function toggleFullscreen(selector) {
+    const element = document.querySelector(selector);
+    if (!document.fullscreenElement) {
+        openFullscreen(element);
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+}
+</script>
 {% endblock %}
