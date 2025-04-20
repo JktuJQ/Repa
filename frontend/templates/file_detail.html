@@ -19,6 +19,7 @@
         </div>
         {% endif %}
         {% elif file_type in ('videos', 'clips') %}
+        {{гавно}}
         <div class="video-viewer-container">
             <video controls class="video-preview">
                 <source src="{{ url_for('static', filename=file['link']) }}">
@@ -31,15 +32,15 @@
         <div class="file-header">
             <div class="file-type-badge {{ file_type }}">
                 {% if file_type == 'notes' %}
-                <i class="ri-quill-pen-line"></i> Конспект
+                <i class="ri-quill-pen-line"></i>
                 {% elif file_type == 'cheatsheets' %}
-                <i class="ri-bookmark-line"></i> Шпаргалка
+                <i class="ri-bookmark-line"></i>
                 {% elif file_type == 'textbooks' %}
-                <i class="ri-book-2-line"></i> Учебник
+                <i class="ri-book-2-line"></i>
                 {% elif file_type == 'videos' %}
-                <i class="ri-video-chat-fill"></i> Видео
+                <i class="ri-video-chat-fill"></i>
                 {% elif file_type == 'clips' %}
-                <i class="ri-mail-send-fill"></i> Клип
+                <i class="ri-mail-send-fill"></i>
                 {% endif %}
             </div>
 

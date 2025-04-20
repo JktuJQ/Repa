@@ -219,7 +219,7 @@ def catalog(file_type: str):
 @application.route("/file_detail/<int:file_id>", methods=["GET"])
 def file_detail(file_id: int):
     file = file_info(db_session().query(File).filter(File.id == file_id).first())
-    file_type = db_session().query(FileType).filter(
+    initial_file_type = db_session().query(FileType).filter(
         FileType.id == file["file"].file_type_id).first().type
 
     related_files = list(file_info(f) for f in db_session().query(File).filter(
@@ -251,7 +251,7 @@ def file_detail(file_id: int):
     return render_template(
         "file_detail.html",
         file=file,
-        file_type=file_type,
+        file_type=initial_file_type,
         related_files=related_files
     )
 

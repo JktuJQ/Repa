@@ -2250,7 +2250,6 @@ file-preview-container {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
     border-radius: 50px;
     font-size: 0.875rem;
     font-weight: 500;
@@ -2853,7 +2852,6 @@ file-preview-container {
 }
 
 .file-type {
-    padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-weight: 500;
 }
@@ -3114,7 +3112,7 @@ file-preview-container {
 
 /* File Type Badge */
 .file-type-badge {
-    position: absolute;
+    position: relative;
     top: 12px;
     right: 12px;
     width: 32px;
