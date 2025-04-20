@@ -1,12 +1,12 @@
 import subprocess
 import os
 import tempfile
-from moviepy import VideoFileClip 
+from moviepy import VideoFileClip
 from pysrt import SubRipFile, SubRipItem, SubRipTime
 import re
 from datetime import timedelta
-import whisper
 from subtitle import gen_subtitles
+
 
 def cut(input_path, output_path, start_time, end_time):
     cmd = [
@@ -16,20 +16,22 @@ def cut(input_path, output_path, start_time, end_time):
         '-i', input_path,
         '-c:v', 'libx264',
         '-c:a', 'aac',
-        '-preset', 'fast',    
+        '-preset', 'fast',
         output_path
     ]
 
     subprocess.run(cmd)
 
+
 def scale(path, output, width=None, height=None):
     cmd = [
         'ffmpeg', '-y',
         '-i', path,
-        '-vf', f'scale={width if width is not None else '-1'}:{height if height is not None else '-1'}',
+        '-vf', f'scale={width if width is not None else "-1"}:{height if height is not None else "-1"}',
         output
     ]
     subprocess.run(cmd)
+
 
 def border(input_path, output_path, border_hd=0, border_lr=0, border_color="black"):
     """
@@ -48,6 +50,7 @@ def border(input_path, output_path, border_hd=0, border_lr=0, border_color="blac
 
     subprocess.run(cmd)
 
+
 def blur(input_path, output_path, blur_koeff=10):
     cmd = [
         'ffmpeg',
@@ -57,9 +60,10 @@ def blur(input_path, output_path, blur_koeff=10):
         '-c:a', 'copy',
         output_path
     ]
-    subprocess.run(cmd, check=True, 
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.STDOUT)
+    subprocess.run(cmd, check=True,
+                   stdout=subprocess.DEVNULL,
+                   stderr=subprocess.STDOUT)
+
 
 def compose_center(background_path, overlay_path, output_path):
     cmd = [
@@ -73,6 +77,7 @@ def compose_center(background_path, overlay_path, output_path):
     ]
     subprocess.run(cmd, check=True)
 
+
 def crop(input_path, output_path, width, height, x, y):
     cmd = [
         'ffmpeg', '-y', '-i',
@@ -80,8 +85,9 @@ def crop(input_path, output_path, width, height, x, y):
         f'crop={width}:{height}:{x}:{y}',
         output_path
     ]
-    
+
     subprocess.run(cmd, check=True)
+
 
 def get_duration(input_path):
     cmd = [
@@ -91,6 +97,7 @@ def get_duration(input_path):
         input_path
     ]
     return float(subprocess.run(cmd, capture_output=True, text=True).stdout)
+
 
 def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
                 bg_blur=10):
@@ -120,8 +127,9 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
     else:
         temp_dir = os.path.dirname(output_path) or '.'
         temp = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.mp4')
-        fg_duration, bg_duration = get_duration(input_path), get_duration(background_path)
-        if (bg_duration < fg_duration): 
+        fg_duration, bg_duration = get_duration(
+            input_path), get_duration(background_path)
+        if (bg_duration < fg_duration):
             raise 'Error: background video duration is\
                 less than main video duration'
         if (bg_duration > fg_duration):
@@ -143,7 +151,7 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
             '-c:v', 'libx264',
             '-preset', 'fast',
             '-crf', '23',
-            '-c:a', 'copy',     
+            '-c:a', 'copy',
             output_path
         ]
 
@@ -151,26 +159,32 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
 
 
 def compile_subtitles(input_path, subtitles, output_path):
-     cmd = [ 'ffmpeg', '-i',
-            input_path, '-vf', 
-            f"subtitles={subtitles}:force_style='FontName=Roboto,Fontsize=28,PrimaryColour=&HFFFFFF&,BackColour=&H80000000&,OutlineColour=&H000000&,BorderStyle=4,Alignment=2,MarginV=30'",
-            '-c:v', 'libx264', '-crf' , '23', 
-            '-preset', 'fast',
-            '-c:a', 'copy',
-            output_path
-            ]
-     subprocess.run(cmd, check=True)
+    cmd = ['ffmpeg', '-i',
+           input_path, '-vf',
+           f"subtitles={subtitles}:force_style='FontName=Roboto,Fontsize=18,PrimaryColour=&HFFFFFF&,BackColour=&H80000000&,OutlineColour=&H000000&,BorderStyle=4,Alignment=2,MarginV=30'",
+           '-c:v', 'libx264', '-crf', '23',
+           '-preset', 'fast',
+           '-c:a', 'copy',
+           output_path
+           ]
+    subprocess.run(cmd, check=True)
+
 
 def make_shorts(input_path, output_path, start_time=0, end_time=None, background_path=None, bg_blur=10):
-    if(end_time is None):
-        end_time = get_duration(input_path)
     temp_dir = os.path.dirname(output_path) or '.'
     cutted_video = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.mp4')
     vert_video = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.mp4')
     subtitle_file = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.srt')
-    
-    cut(input_path, cutted_video.name, start_time, end_time)
-    to_vertical(cutted_video.name, vert_video.name, background_path=background_path, bg_blur=bg_blur)
+
+    if (end_time is None and start_time == 0):
+        cutted_video.name = input_path
+    else:
+        if (end_time is None):
+            end_time = get_duration(input_path)
+        cut(input_path, cutted_video.name, start_time, end_time)
+
+    to_vertical(cutted_video.name, vert_video.name,
+                background_path=background_path, bg_blur=bg_blur)
     gen_subtitles(cutted_video.name, subtitle_file.name)
     compile_subtitles(vert_video.name, subtitle_file.name, output_path)
 
