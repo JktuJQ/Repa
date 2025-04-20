@@ -1,0 +1,110 @@
+{% extends "base_with_header_and_sections.html" %}
+
+{% block title %}Общий каталог{% endblock %}
+
+{% block content %}
+<style>
+  #canvas {
+    border: 1px solid black;
+  }
+  .point {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    cursor: grab;
+  }
+</style>
+
+<canvas id="canvas" width="1200" height="900" style="background: {{ filename }}"></canvas>
+
+<script>
+  var canvas = document.getElementById("canvas"),
+    ctx = canvas.getContext("2d");
+
+
+  const ctx = canvas.getContext('2d');
+
+  // Initial coordinates for the four points
+  let points = {{ points }};
+
+  let draggingPoint = null; // Keep track of the point being dragged
+  let offset = { x: 0, y: 0 }; // Mouse offset from point center during drag
+
+
+  function createPointElement(point, index) {
+    const pointElement = document.createElement('div');
+    pointElement.classList.add('point');
+    pointElement.id = `point-${index}`;
+    document.body.appendChild(pointElement); // Important: Add to the body
+
+    point.element = pointElement;  // Store the element with the point data
+    return pointElement;
+  }
+
+  function positionPointElement(point) {
+    point.element.style.left = (point.x - 5) + 'px'; // Adjust for center
+    point.element.style.top = (point.y - 5) + 'px';  // Adjust for center
+  }
+
+
+  function initializePoints() {
+    for (let i = 0; i < points.length; i++) {
+      const pointElement = createPointElement(points[i], i);
+      positionPointElement(points[i]);
+
+      // Event listeners for each point
+      pointElement.addEventListener('mousedown', (e) => {
+        draggingPoint = points[i];
+        offset.x = e.clientX - points[i].x;
+        offset.y = e.clientY - points[i].y;
+        pointElement.style.cursor = 'grabbing';
+      });
+    }
+  }
+
+
+
+  function drawShape() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    ctx.lineTo(points[1].x, points[1].y);
+    ctx.lineTo(points[2].x, points[2].y);
+    ctx.lineTo(points[3].x, points[3].y);
+    ctx.closePath(); // Connect back to the first point
+
+    ctx.fillStyle = 'lightblue';
+    ctx.fill();
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+  }
+
+
+  // Mouse move event listener for the entire document.  Crucial to catch drags outside the point div
+  document.addEventListener('mousemove', (e) => {
+    if (draggingPoint) {
+      draggingPoint.x = e.clientX - offset.x;
+      draggingPoint.y = e.clientY - offset.y;
+      positionPointElement(draggingPoint); // Update point element position
+      drawShape();  // Redraw the shape
+    }
+  });
+
+  // Mouse up event listener to stop dragging
+  document.addEventListener('mouseup', () => {
+    if (draggingPoint) {
+      draggingPoint.element.style.cursor = 'grab';
+      draggingPoint = null;
+    }
+  });
+
+  // Initialize the points and draw the initial shape
+  initializePoints();
+  drawShape();
+
+
+</script>
+{% endblock %}

@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from scipy import ndimage
 
 
 def add_black_border(image, border_size=20):
