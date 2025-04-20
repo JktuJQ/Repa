@@ -75,9 +75,9 @@
         </div>
 
         <div class="file-tags">
-            <h3><i class="ri-price-tag-3-line"></i> Теги</h3>
+            <h3><i class="ri-price-tag-3-line"></i> Учебный предмет</h3>
             <div class="tags-container">
-                <span class="tag">{{ file['file'].subject or 'Без тега' }}</span>
+                <span class="tag">{{ file['file'].subject or 'Без указанного учебного предмета' }}</span>
                 {% for tag in file.tags|default([], true) %}
                 <span class="tag">{{ tag }}</span>
                 {% endfor %}
@@ -87,18 +87,18 @@
         <div class="file-actions">
             <a href="{{ url_for('static', filename=file['link']) }}" download class="download-btn">
                 <i class="ri-download-line"></i> Скачать
-            </a>
+            </a><!--
             <button class="favorite-btn">
                 <i class="ri-heart-line"></i> В избранное
-            </button>
+            </button>-->
 
             {% if session['username'] == file.author %}
             <div class="author-actions">
+                <button class="update-btn" onclick="window.location.href='{{ url_for('upgrade_image', filename=file['link']) }}">
+                    <i class="ri-refresh-line"></i> Обработка
+                </button>
                 <button class="edit-btn">
                     <i class="ri-edit-line"></i> Редактировать
-                </button>
-                <button class="update-btn">
-                    <i class="ri-refresh-line"></i> Обновить
                 </button>
                 <button class="delete-btn">
                     <i class="ri-delete-bin-line"></i> Удалить
@@ -114,23 +114,44 @@
         <i class="ri-links-line"></i> Похожие материалы
     </h3>
 
-        <div class="files-grid">
-            {% for related in related_files[:5] %}
-            <div class="file-card">
-                <a href="{{ url_for('file_detail', file_id=related['file'].id) }}">
-                    <div class="file-preview-container">
-                        <img src="{{ related['preview'] }}"
-                             alt="{{ related['file'].name }}"
-                             class="file-preview">
+    <div class="files-grid">
+        {% for related in related_files[:5] %}
+        <div class="file-card">
+            <a href="{{ url_for('file_detail', file_id=related['file'].id) }}">
+                <div class="file-preview-container">
+
+
+                    <img src="{{ related['preview'] }}"
+                         alt="{{ related['file'].name }}"
+                         class="file-preview">
+                </div>
+                <div class="file-info">
+                    <h4>{{ related['file'].name }}</h4>
+
+                    <div class="file-meta">
+
+                        <span class="file-author">{{ related['author'] }}</span>
+                        <span class="file-date">{{ related['file'].created_at }}</span>
+
+                        <div class="file-type-badge {{ file['file_type'] }}">
+                            {% if related['file_type'] == 'notes' %}
+                            <i class="ri-quill-pen-line"></i>
+                            {% elif related['file_type'] == 'cheatsheets' %}
+                            <i class="ri-bookmark-line"></i>
+                            {% elif related['file_type'] == 'textbooks' %}
+                            <i class="ri-book-2-line"></i>
+                            {% elif related['file_type'] == 'videos' %}
+                            <i class="ri-video-chat-fill"></i>
+                            {% elif related['file_type'] == 'clips' %}
+                            <i class="ri-mail-send-fill"></i>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="file-info">
-                        <h4>{{ related['file'].name }}</h4>
-                        <p>{{ related['author'] }}</p>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
+                </div>
+            </a>
         </div>
+        {% endfor %}
+    </div>
 </div>
 
 

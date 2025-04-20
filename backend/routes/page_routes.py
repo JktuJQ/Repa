@@ -41,6 +41,8 @@ def dashboard():
                          .all()))
         for file in files:
             file_path = f"frontend/static{file['link']}"
+            file_type = db_session().query(FileType).filter(FileType.id == file['file'].file_type_id).first().type
+            file['file_type'] = file_type
             try:
                 if file_type in ['videos', 'clips']:
                     reader = imageio.get_reader(file_path)
@@ -60,7 +62,6 @@ def dashboard():
             except Exception as e:
                 file['preview'] = url_for('static', filename='assets/default_preview.png')
         file_data[file_type] = files
-
 
     return render_template(
         "dashboard.html",
@@ -119,6 +120,46 @@ def file_info(file: File):
     }
 
 
+@application.route("/unified_catalog", methods=["GET"])
+def unified_catalog():
+    query = request.args.get('q', '').strip()
+
+    search_results = db_session().query(File).join(User).filter(
+        (File.name.ilike(f'%{query}%')) |
+        (File.subject.ilike(f'%{query}%')) |
+        (User.username.ilike(f'%{query}%'))
+    ).order_by(File.created_at.desc()).all()
+
+    files = [
+        file_info(file)
+        for file in search_results
+    ]
+    for file in files:
+        file_path = f"frontend/static{file['link']}"
+        file_type = db_session().query(FileType).filter(FileType.id == file['file'].file_type_id).first().type
+        file['file_type'] = file_type
+        try:
+            if file_type in ['videos', 'clips']:
+                reader = imageio.get_reader(file_path)
+                first_frame = reader.get_data(0)
+                img = Image.fromarray(first_frame)
+
+                img.thumbnail((300, 300))
+
+                buffered = BytesIO()
+                img.save(buffered, format="JPEG", quality=85)
+                file['preview'] = f"data:image/jpeg;base64,{base64.b64encode(buffered.getvalue()).decode()}"
+            else:
+                if file_path.lower().endswith('.pdf'):
+                    file['preview'] = url_for('static', filename='assets/pdf_preview.png')
+                else:
+                    file['preview'] = url_for('static', filename=file['link'].lstrip('/'))
+        except Exception as e:
+            file['preview'] = url_for('static', filename='assets/default_preview.png')
+
+    return render_template("unified_catalog.html", files=files, search_query=query)
+
+
 @application.route("/catalog/<string:file_type>", methods=["GET"])
 def catalog(file_type: str):
     if file_type not in FILE_TYPES:
@@ -140,10 +181,13 @@ def catalog(file_type: str):
     sorted_subjects = sorted(subjects.items(), key=lambda x: len(x[1]), reverse=True)
 
     for subject, subject_files in sorted_subjects:
-        for file in subject_files:
+        for file in files:
             file_path = f"frontend/static{file['link']}"
+            file_type = db_session().query(FileType).filter(FileType.id == file['file'].file_type_id).first().type
+            file['file_type'] = file_type
             try:
-                if file_type in ['videos', 'clips']:
+                if file_type in [
+                    'videos', 'clips']:
                     reader = imageio.get_reader(file_path)
                     first_frame = reader.get_data(0)
                     img = Image.fromarray(first_frame)
@@ -180,9 +224,10 @@ def file_detail(file_id: int):
         File.id != file["file"].id).all())
     for related in related_files:
         file_path = f"frontend/static{related['link']}"
+        file_type = db_session().query(FileType).filter(FileType.id == related['file'].file_type_id).first().type
+        related['file_type'] = file_type
         try:
-            if db_session().query(FileType).filter(FileType.id == related['file'].file_type_id).first().type in [
-                'videos', 'clips']:
+            if file_type in ['videos', 'clips']:
                 reader = imageio.get_reader(file_path)
                 first_frame = reader.get_data(0)
                 img = Image.fromarray(first_frame)
