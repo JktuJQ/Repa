@@ -18,40 +18,51 @@
 {% block left_section %}
 <div class="left-section">
     <div class="sidebar">
-        <h1><a href="{{ url_for('dashboard') }}"><img src="{{ url_for('static', filename='favicon.png') }}" width="24" height="32"><span>&nbsp;Repa</span></a></h1>
-        <a href="{{ url_for('dashboard') }}" class="item {% if request.path.split('/')[-1] == 'dashboard' %}active{% endif %}">
+        <h1><a href="{{ url_for('dashboard') }}"><img src="{{ url_for('static', filename='favicon.png') }}" width="24"
+                                                      height="32"><span>&nbsp;Repa</span></a></h1>
+        <a href="{{ url_for('dashboard') }}"
+           class="item {% if request.path.split('/')[-1] == 'dashboard' %}active{% endif %}">
             <i class="ri-apps-line"></i>
             <h3>Главная</h3>
         </a>
+<<<<<<< HEAD
         <a href="{{ url_for('dashboard') }}" class="item {% if request.path.split('/')[-1] == 'dashboard' %}active{% endif %}">
             <i class="ri-archive-drawer-line"></i>
             <h3>Каталог</h3>
         </a>
         <a href="{{ url_for('catalog', file_type='notes') }}" class="item {% if request.path.split('/')[-1] == 'notes' %}active{% endif %}">
+=======
+        <a href="{{ url_for('catalog', file_type='notes') }}"
+           class="item {% if request.path.split('/')[-1] == 'notes' %}active{% endif %}">
+>>>>>>> a1d13943c9fa81c2201f996a0c8502e5f99684d4
             <i class="ri-quill-pen-line"></i>
             <h3>Конспекты</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='cheatsheets') }}" class="item {% if request.path.split('/')[-1] == 'cheatsheets' %}active{% endif %}">
+        <a href="{{ url_for('catalog', file_type='cheatsheets') }}"
+           class="item {% if request.path.split('/')[-1] == 'cheatsheets' %}active{% endif %}">
             <i class="ri-bookmark-line"></i>
             <h3>Шпаргалки</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='textbooks') }}" class="item {% if request.path.split('/')[-1] == 'textbooks' %}active{% endif %}">
+        <a href="{{ url_for('catalog', file_type='textbooks') }}"
+           class="item {% if request.path.split('/')[-1] == 'textbooks' %}active{% endif %}">
             <i class="ri-book-2-line"></i>
             <h3>Учебники</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='videos') }}" class="item {% if request.path.split('/')[-1] == 'videos' %}active{% endif %}">
+        <a href="{{ url_for('catalog', file_type='videos') }}"
+           class="item {% if request.path.split('/')[-1] == 'videos' %}active{% endif %}">
             <i class="ri-video-chat-fill"></i>
             <h3>Видео</h3>
         </a>
-        <a href="{{ url_for('catalog', file_type='clips') }}" class="item {% if request.path.split('/')[-1] == 'clips' %}active{% endif %}">
+        <a href="{{ url_for('catalog', file_type='clips') }}"
+           class="item {% if request.path.split('/')[-1] == 'clips' %}active{% endif %}">
             <i class="ri-mail-send-fill"></i>
             <h3>Клипы</h3>
         </a>
     </div>
-        <a class="sign-out item" onclick="window.location.href='{{ url_for('logout') }}'">
-            <h3>Выйти из аккаунта</h3>
-            <i class="ri-logout-box-r-line"></i>
-        </a>
+    <button class="sign-out-btn" onclick="window.location.href='{{ url_for('logout') }}'">
+        <i class="ri-logout-box-r-line"></i>
+        <span>Выйти из аккаунта</span>
+    </button>
 </div>
 {% endblock %}
 
@@ -66,46 +77,42 @@
                     <p>{{ session['name'] }}</p>
                 </div>
             </div>
+        </div>
     </div>
-</div>
-<!-- <div class="clip-preview">
-    <video controls playsinline loop muted autoplay>
-        <source src="{{ url_for('static', filename='./../static/assets/clips/1(0).mp4') }}"/>
-    </video>
-</div> -->
-<div class="quick-download-types">
-    <h3>Загрузка файлов</h3>
-    <div class="quick-type-buttons">
-        <a href="/download?chosen=notes" class="quick-type-btn notes" data-type="notes">
-            <i class="ri-quill-pen-line"></i>
-            <span>Конспекты</span>
-        </a>
-        <a href="/download?chosen=cheatsheets" class="quick-type-btn cheatsheets" data-type="cheatsheets">
-            <i class="ri-bookmark-line"></i>
-            <span>Шпаргалки</span>
-        </a>
-        <a href="/download?chosen=textbooks" class="quick-type-btn textbooks" data-type="textbooks">
-            <i class="ri-book-2-line"></i>
-            <span>Учебники</span>
-        </a>
-        <a href="/download?chosen=videos" class="quick-type-btn videos" data-type="videos">
-            <i class="ri-video-chat-fill"></i>
-            <span>Видео</span>
-        </a>
-        <a href="/download?chosen=clips" class="quick-type-btn clips" data-type="clips">
-            <i class="ri-mail-send-fill"></i>
-            <span>Клипы</span>
-        </a>
-    </div>
+    <div></div>
+    <div class="quick-download-types">
+        <h3>Загрузка файлов</h3>
+        <div class="quick-type-buttons">
+            <a href="/download?chosen=notes" class="quick-type-btn notes" data-type="notes">
+                <i class="ri-quill-pen-line"></i>
+                <span>Конспекты</span>
+            </a>
+            <a href="/download?chosen=cheatsheets" class="quick-type-btn cheatsheets" data-type="cheatsheets">
+                <i class="ri-bookmark-line"></i>
+                <span>Шпаргалки</span>
+            </a>
+            <a href="/download?chosen=textbooks" class="quick-type-btn textbooks" data-type="textbooks">
+                <i class="ri-book-2-line"></i>
+                <span>Учебники</span>
+            </a>
+            <a href="/download?chosen=videos" class="quick-type-btn videos" data-type="videos">
+                <i class="ri-video-chat-fill"></i>
+                <span>Видео</span>
+            </a>
+            <a href="/download?chosen=clips" class="quick-type-btn clips" data-type="clips">
+                <i class="ri-mail-send-fill"></i>
+                <span>Клипы</span>
+            </a>
+        </div>
 
-    <div class="upload-tips">
-        <h3>Советы по загрузке</h3>
-        <ul>
-            <li><i class="ri-check-line"></i> Используйте понятные названия</li>
-            <li><i class="ri-check-line"></i> Добавляйте описание</li>
-            <li><i class="ri-check-line"></i> Указывайте предмет</li>
-            <li><i class="ri-check-line"></i> Макс. размер файла: 100MB</li>
-        </ul>
+        <div class="upload-tips">
+            <h3>Советы по загрузке</h3>
+            <ul>
+                <li><i class="ri-check-line"></i> Используйте понятные названия</li>
+                <li><i class="ri-check-line"></i> Добавляйте описание</li>
+                <li><i class="ri-check-line"></i> Указывайте предмет</li>
+                <li><i class="ri-check-line"></i> Макс. размер файла: 100MB</li>
+            </ul>
+        </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
