@@ -83,6 +83,15 @@ def crop(input_path, output_path, width, height, x, y):
     
     subprocess.run(cmd, check=True)
 
+def get_duration(input_path):
+    cmd = [
+        'ffprobe', '-v', 'error',
+        '-show_entries', 'format=duration',
+        '-of', 'default=noprint_wrappers=1:nokey=1',
+        input_path
+    ]
+    return float(subprocess.run(cmd, capture_output=True, text=True).stdout)
+
 def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
                 bg_blur=15):
     """
@@ -109,10 +118,20 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
 
         subprocess.run(cmd, check=True)
     else:
+        temp_dir = os.path.dirname(output_path) or '.'
+        temp = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.mp4')
+        fg_duration, bg_duration = get_duration(input_path), get_duration(background_path)
+        if (bg_duration < fg_duration): 
+            raise 'Error: background video duration is\
+                less than main video duration'
+        if (bg_duration > fg_duration):
+            cut(background_path, temp.name, 0, fg_duration)
+        else:
+            temp.name = background_path
         cmd = [
             'ffmpeg',
             '-y',
-            '-i', background_path,  # Фон (input 0)
+            '-i', temp.name,  # Фон (input 0)
             '-i', input_path,       # Основное видео (input 1)
             '-filter_complex',
             f'[0:v]scale={w}:{h}:force_original_aspect_ratio=increase,'
