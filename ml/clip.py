@@ -5,6 +5,8 @@ from moviepy import VideoFileClip
 from pysrt import SubRipFile, SubRipItem, SubRipTime
 import re
 from datetime import timedelta
+import whisper
+from subtitle import gen_subtitles
 
 def cut(input_path, output_path, start_time, end_time):
     cmd = [
@@ -107,8 +109,6 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
 
         subprocess.run(cmd, check=True)
     else:
-
-
         cmd = [
             'ffmpeg',
             '-y',
@@ -130,53 +130,23 @@ def to_vertical(input_path, output_path, w=1080, h=1920, background_path=None,
 
         subprocess.run(cmd, check=True)
 
-def subtitle(input_path, output_dir="subtitled/"):
-    try:
-        cmd = ["auto_subtitle", input_path, "--model", "large", "--language",
-               "ru", "--srt_only", "True", "-o", output_dir]
-        result = subprocess.run(
-                cmd,
-                check=True,
-                stderr=subprocess.PIPE,  # Capture stderr
-                stdout=subprocess.PIPE,
-                text=True  # Return output as string (Python 3.7+)
-                )
-    except subprocess.CalledProcessError as e:
-        print("❌ FFmpeg Error Details:")
-        print(e.stderr)  # This contains the full error log
-        # Optional: Save to a file
-        with open("ffmpeg_error.log", "w") as f:
-            f.write(e.stderr)
 
-def convert_to_word_by_word(input_srt, output_srt):
-    """
-    Convert sentence-based SRT to word-by-word with proper timing
-    :param word_delay: milliseconds each word stays on screen
-    """
-    subs = SubRipFile.open(input_srt)
-    new_subs = SubRipFile()
-    
-    for sub in subs:
-        # Split into words while preserving punctuation
-        words = re.findall(r'\w+|\s+|[^\w\s]', sub.text)
-        words = [w for w in words if not w.isspace() and w.isalpha()]
-        start_time = sub.start
-        duration_per_word = int(sub.duration.ordinal / len(words))
-        for i, word in enumerate(words):
-            new_item = SubRipItem(
-                    index=len(new_subs) + 1,
-                    start=start_time + i*duration_per_word,
-                    end=min(start_time+(i+1)*duration_per_word, sub.end),
-                    text = word
-                    )
-            
-            new_subs.append(new_item)
-    
-    new_subs.save(output_srt)
+def compile_subtitles(input_path, subtitles, output_path):
+     cmd = [ 'ffmpeg', '-i',
+            input_path, '-vf', 
+            f"subtitles={subtitles}:force_style='FontName=Roboto,Fontsize=28,PrimaryColour=&HFFFFFF&,BackColour=&H80000000&,OutlineColour=&H000000&,BorderStyle=4,Alignment=2,MarginV=30'",
+            '-c:v', 'libx264', '-crf' , '23', 
+            '-preset', 'fast',
+            '-c:a', 'copy',
+            output_path
+            ]
+     subprocess.run(cmd, check=True)
 
+def make_shorts(input_path, output_path, background_path=None):
+    temp_dir = os.path.dirname(output_path) or '.'
+    vert_video = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.mp4')
+    subtitle_file = tempfile.NamedTemporaryFile(dir=temp_dir, suffix='.srt')
 
-if __name__ == "__main__":
-    # to_vertical("input.mp4", "output.mp4", background_path="bkg.mp4")
-    subtitle("example1.mp4")
-    # convert_to_word_by_word("subtitled/example1.srt", "word_by_word.srt")
-    
+    to_vertical(input_path, vert_video.name, background_path=background_path, bg_blur=5)
+    gen_subtitles(input_path, subtitle_file.name)
+    compile_subtitles(vert_video.name, subtitle_file.name, output_path)
