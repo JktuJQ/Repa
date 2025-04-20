@@ -7,18 +7,18 @@
         <input type="text" placeholder="Поиск">
         <i class="ri-equalizer-line"></i>
     </div>
-    <div class="icon-btns">
+    <!-- <div class="icon-btns">
         <i class="ri-notification-line"></i>
         <i class="ri-message-3-line"></i>
         <i class="ri-menu-line" id="menu-btn"></i>
-    </div>
+    </div> -->
 </div>
 {% endblock %}
 
 {% block left_section %}
 <div class="left-section">
     <div class="sidebar">
-        <h1><a href="{{ url_for('dashboard') }}"><img src="{{ url_for('static', filename='favicon.png') }}" width="24" height="32">&nbsp;Repa</a></h1>
+        <h1><a href="{{ url_for('dashboard') }}"><img src="{{ url_for('static', filename='favicon.png') }}" width="24" height="32"><span>&nbsp;Repa</span></a></h1>
         <a href="{{ url_for('dashboard') }}" class="item {% if request.path.split('/')[-1] == 'dashboard' %}active{% endif %}">
             <i class="ri-apps-line"></i>
             <h3>Главная</h3>
