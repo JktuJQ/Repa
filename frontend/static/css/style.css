@@ -347,15 +347,15 @@ a {
 .right-section {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* padding: 25px 25px 15px 10px; */
     width: 20vw;
     padding: 25px 10px;
-    /* overflow-y: auto; */
+    overflow-y: auto;
 }
 
 .right-section .quick-download-types {
-    /* margin-top: 10vh; */
+    margin-top: 10vh;
     height: auto;
 }
 
@@ -392,14 +392,10 @@ a {
 .right-section .clip-preview video {
     border-radius: 16px;
     width: 8vw;
+    /* width: auto; */
     outline: 0.2vw solid white;
     box-shadow: 0 2px 6px rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
     transition: all 0.1s ease;
-}
-
-.right-section .clip-preview video:hover {
-    width: 9vw;
-    
 }
 
 .right-section .clip-preview video::-webkit-media-controls {
@@ -1054,11 +1050,14 @@ input:checked + .slider:before {
         gap: 10px;
     }
 
+    .main .quick-access {
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
     .main .header .icon-btns i#menu-btn {
         display: block;
     }
-
-  
 
     .main .quick-access .item {
         width: 90vw;
@@ -1730,7 +1729,7 @@ textarea.form-control {
 
 /* Quick Access Section */
 .quick-access {
-    display: grid;
+    /* display: grid; */
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 15px;
     margin: 20px 0;
@@ -2239,7 +2238,7 @@ textarea.form-control {
 /* Preview Section */
 .file-preview-section {
     position: relative;
-    background: #f8fafc;
+    /* background: #f8fafc; */
     min-height: 500px;
     display: flex;
     align-items: center;
@@ -2723,11 +2722,11 @@ textarea.form-control {
     font-size: 22px;
 }
 
-.left-section .sidebar .item .ri-quill-pen-line i { color: #4CAF50; } /* Green */
-.left-section .sidebar .item ri-bookmark-line { color: #FF9800; } /* Orange */
-.left-section .sidebar .item ri-book-2-line { color: #9C27B0; } /* Purple */
-.left-section .sidebar .item ri-video-chat-fill { color: #2196F3; } /* Blue */
-.left-section .sidebar .item ri-mail-send-fill { color: #F44336; } /* Red */
+.left-section .sidebar .item .ri-quill-pen-line { color: #4CAF50; } /* Green */
+.left-section .sidebar .item .ri-bookmark-line { color: #FF9800; } /* Orange */
+.left-section .sidebar .item .ri-book-2-line { color: #9C27B0; } /* Purple */
+.left-section .sidebar .item .ri-video-chat-fill { color: #2196F3; } /* Blue */
+.left-section .sidebar .item .ri-mail-send-fill { color: #F44336; } /* Red */
 
 .left-section .sidebar .item:hover i {
     transform: scale(1.1);
