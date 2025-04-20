@@ -3,40 +3,27 @@
 {% block title %}Каталог ({{ file_type_ru }}){% endblock %}
 
 {% block content %}
-{% if file_type == 'clips' %}
-    <div class="clips-grid">
-{% else %}
-    <div class="files-grid">
-{% endif %}
-    {% for file in files %}
-    {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
-    <div class="file-card">
-    {% else %}
-    <div class="video-card">
-    {% endif %}
-        <a href="{{ url_for('file_detail', file_id=file['file'].id) }}" class="file-link">
-            <div class="file-preview">
-                {% if file_type in ('notes', 'cheatsheets', 'textbooks') %}
-                {% if file['file'].filename[-4:] == 'pdf' %}
-                <iframe src="https://docs.google.com/gview?url=http://example.com/mypdf.pdf&embedded=true&url={{ url_for('static', filename=file['link']) }}"
-                        frameborder="0"></iframe>
-                {% else %}
-                <img src="{{ url_for('static', filename=file['link']) }}" alt="{{ file['file'].name }}">
-                {% endif %}
-                {% elif file_type in ('videos', 'clips') %}
-                <video controls playsinline loop muted>
-                    <source src="{{ url_for('static', filename=file['link']) }}"/>
-                </video>
-                {% endif %}
+<div class="files-grid">
+    {% for subject, files in subjects %}
+    <div class="subject-section">
+        <h3>{{ subject }} ({{ files|length }})</h3>
+        <div class="files-grid">
+            {% for file in files %}
+            <div class="file-card">
+                <a href="{{ url_for('file_detail', file_id=file['file'].id) }}">
+                    <div class="file-preview-container">
+                        <img src="{{ file['preview'] }}"
+                             alt="{{ file['file'].name }}"
+                             class="file-preview">
+                    </div>
+                    <div class="file-info">
+                        <h4>{{ file['file'].name }}</h4>
+                        <p>{{ file['author'] }}</p>
+                    </div>
+                </a>
             </div>
-            <div class="file-info">
-                <h4 class="file-title">{{ file['file'].name }}</h4>
-                <div class="file-meta">
-                    <span class="author">{{ file['author'] }}</span>
-                    <span class="date">{{ file['file'].created_at }}</span>
-                </div>
-            </div>
-        </a>
+            {% endfor %}
+        </div>
     </div>
     {% endfor %}
 </div>

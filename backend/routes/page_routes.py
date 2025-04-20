@@ -6,6 +6,12 @@ from flask import render_template, session, url_for, redirect, flash, request
 from werkzeug.utils import secure_filename
 from sqlalchemy import func
 
+import imageio
+
+from PIL import Image
+from io import BytesIO
+import base64
+
 from data.db_models import File, FileType, User
 
 from backend.forms.download_form import DownloadFileForm
@@ -95,15 +101,48 @@ def catalog(file_type: str):
     if file_type not in FILE_TYPES:
         return "Неправильный запрос", 400
 
+    files = list(
+        file_info(file)
+        for file in db_session().query(File).filter(
+            File.file_type_id == db_session().query(FileType).filter(FileType.type == file_type).first().id).all()
+    )
+
+    subjects = {}
+    for file in files:
+        subject = file['file'].subject or "Без темы"
+        if subject not in subjects:
+            subjects[subject] = []
+        subjects[subject].append(file)
+
+    sorted_subjects = sorted(subjects.items(), key=lambda x: len(x[1]), reverse=True)
+
+    for subject, subject_files in sorted_subjects:
+        for file in subject_files:
+            file_path = f"frontend/static{file['link']}"
+            try:
+                if file_type in ['videos', 'clips']:
+                    reader = imageio.get_reader(file_path)
+                    first_frame = reader.get_data(0)
+                    img = Image.fromarray(first_frame)
+
+                    img.thumbnail((300, 300))
+
+                    buffered = BytesIO()
+                    img.save(buffered, format="JPEG", quality=85)
+                    file['preview'] = f"data:image/jpeg;base64,{base64.b64encode(buffered.getvalue()).decode()}"
+                else:
+                    if file_path.lower().endswith('.pdf'):
+                        file['preview'] = url_for('static', filename='assets/pdf_preview.png')
+                    else:
+                        file['preview'] = url_for('static', filename=file['link'].lstrip('/'))
+            except Exception as e:
+                file['preview'] = url_for('static', filename='assets/default_preview.png')
+
     return render_template(
         "catalog.html",
         file_type=file_type,
         file_type_ru=FILE_TYPES_RU[FILE_TYPES.index(file_type)],
-        files=[
-            file_info(file)
-            for file in db_session().query(File).filter(
-                File.file_type_id == db_session().query(FileType).filter(FileType.type == file_type).first().id).all()
-        ]
+        subjects=sorted_subjects
     )
 
 
