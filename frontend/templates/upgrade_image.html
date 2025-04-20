@@ -6,6 +6,9 @@
 <style>
   #canvas {
     border: 1px solid black;
+    background-image: url({{ url_for('static', filename=filename) }});
+    background-size: cover;
+    position: relative;
   }
   .point {
     width: 10px;
@@ -14,23 +17,38 @@
     border-radius: 50%;
     position: absolute;
     cursor: grab;
+    user-select: none; /* Prevent text selection */
+  touch-action: none; /* Disable touch behaviors */
   }
 </style>
 
-<canvas id="canvas" width="1200" height="900" style="background: {{ filename }}"></canvas>
+  
+</style>
+
+<canvas id="canvas" width="612px" height="408px" style="background: {{ filename }}"></canvas>
 
 <script>
-  var canvas = document.getElementById("canvas"),
-    ctx = canvas.getContext("2d");
-
-
+  const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
 
   // Initial coordinates for the four points
-  let points = {{ points }};
+  let points = {{ points|tojson }};
+  let offset = { x: 0, y: 0 };
 
-  let draggingPoint = null; // Keep track of the point being dragged
-  let offset = { x: 0, y: 0 }; // Mouse offset from point center during drag
+  const canvas_height = canvas.height;
+  const canvas_width = canvas.width;
+
+  const image_height = {{image_shape[1]}};
+  const image_width = {{image_shape[0]}};
+
+  let draggingPoint = null;
+
+  const repositionAllPoints = () => {
+    points.forEach(positionPointElement)
+  }
+
+  const resizeObserver = new ResizeObserver(repositionAllPoints).observe(document.querySelector(".search"));
+  document.querySelector(".main").addEventListener("scroll", () => {repositionAllPoints();});
 
 
   function createPointElement(point, index) {
@@ -44,8 +62,13 @@
   }
 
   function positionPointElement(point) {
-    point.element.style.left = (point.x - 5) + 'px'; // Adjust for center
-    point.element.style.top = (point.y - 5) + 'px';  // Adjust for center
+    // Get canvas position relative to viewport
+    const canvasRect = canvas.getBoundingClientRect();
+    
+    // Position points relative to canvas, not viewport
+    point.element.style.position = 'absolute';
+    point.element.style.left = (canvasRect.left + point.x * (canvas_width / image_width)) + 'px';
+    point.element.style.top = (canvasRect.top + point.y * (canvas_height / image_height)) + 'px';
   }
 
 
@@ -56,15 +79,22 @@
 
       // Event listeners for each point
       pointElement.addEventListener('mousedown', (e) => {
+        const canvasRect = canvas.getBoundingClientRect();
         draggingPoint = points[i];
+        offset.x = e.clientX - (canvasRect.left + points[i].x);
+        offset.y = e.clientY - (canvasRect.top + points[i].y);
+        pointElement.style.cursor = 'grabbing';
+      });
+      pointElement.addEventListener('touchstart', (event) => {
+        draggingPoint = points[i];
+        event.preventDefault();  // Prevent scrolling while dragging
+        const e = event.touches[0];
         offset.x = e.clientX - points[i].x;
         offset.y = e.clientY - points[i].y;
         pointElement.style.cursor = 'grabbing';
       });
     }
   }
-
-
 
   function drawShape() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
@@ -76,30 +106,55 @@
     ctx.lineTo(points[3].x, points[3].y);
     ctx.closePath(); // Connect back to the first point
 
-    ctx.fillStyle = 'lightblue';
+    ctx.fillStyle = "rgba(0, 255, 0, 0.5)";
     ctx.fill();
     ctx.strokeStyle = 'black';
     ctx.stroke();
   }
 
-
   // Mouse move event listener for the entire document.  Crucial to catch drags outside the point div
-  document.addEventListener('mousemove', (e) => {
+  const pointMove = (e) => {
     if (draggingPoint) {
-      draggingPoint.x = e.clientX - offset.x;
-      draggingPoint.y = e.clientY - offset.y;
+      const canvasRect = canvas.getBoundingClientRect();
+      if (0 < e.clientX - offset.x - canvasRect.left && e.clientX - offset.x - canvasRect.left < canvas_width) {
+        draggingPoint.x = e.clientX - offset.x - canvasRect.left;
+      }
+      if (0 < e.clientY - offset.y - canvasRect.top && e.clientY - offset.y - canvasRect.top < canvas_height) {
+        draggingPoint.y = e.clientY - offset.y - canvasRect.top;
+      }
       positionPointElement(draggingPoint); // Update point element position
       drawShape();  // Redraw the shape
+      console.log(image_width / canvas_width * draggingPoint.x, image_height / canvas_height * draggingPoint.y)
     }
-  });
+  };
+  document.addEventListener('mousemove', pointMove);
+
+  const pointMoveTouch = (event) => {
+    event.preventDefault();  // Prevent scrolling while dragging
+    const e = event.touches[0];
+    if (draggingPoint) {
+      if (0 < e.clientX - offset.x && e.clientX - offset.x < canvas_width) {
+        draggingPoint.x = e.clientX - offset.x;
+      }
+      if (0 < e.clientY - offset.y && e.clientY - offset.y < canvas_height) {
+        draggingPoint.y = e.clientY - offset.y;
+      }
+      positionPointElement(draggingPoint); // Update point element position
+      drawShape();  // Redraw the shape
+      // console.log(image_width / canvas_width * draggingPoint.x, image_height / canvas_height * draggingPoint.y)
+    }
+  };
+  document.addEventListener('touchmove', pointMoveTouch);
 
   // Mouse up event listener to stop dragging
-  document.addEventListener('mouseup', () => {
+  const pointMoveStop = () => {
     if (draggingPoint) {
       draggingPoint.element.style.cursor = 'grab';
       draggingPoint = null;
     }
-  });
+  };
+  document.addEventListener('mouseup', pointMoveStop);
+  document.addEventListener('touchend', pointMoveStop);
 
   // Initialize the points and draw the initial shape
   initializePoints();
