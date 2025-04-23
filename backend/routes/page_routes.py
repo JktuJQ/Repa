@@ -8,12 +8,6 @@ from sqlalchemy import func
 
 import os
 
-import imageio
-
-from PIL import Image
-from io import BytesIO
-import base64
-
 from data.db_models import File, FileType, User
 
 from backend.forms.download_form import DownloadFileForm
@@ -46,23 +40,12 @@ def dashboard():
             file_path = f"frontend/static{file['link']}"
             file_type = db_session().query(FileType).filter(FileType.id == file['file'].file_type_id).first().type
             file['file_type'] = file_type
-            try:
-                if file_type in ['videos', 'clips']:
-                    reader = imageio.get_reader(file_path)
-                    first_frame = reader.get_data(0)
-                    img = Image.fromarray(first_frame)
-
-                    img.thumbnail((300, 300))
-
-                    buffered = BytesIO()
-                    img.save(buffered, format="JPEG", quality=85)
-                    file['preview'] = f"data:image/jpeg;base64,{base64.b64encode(buffered.getvalue()).decode()}"
+            if file_type not in ['videos', 'clips']:
+                if file_path.lower().endswith('.pdf'):
+                    file['preview'] = url_for('static', filename='assets/pdf_preview.png')
                 else:
-                    if file_path.lower().endswith('.pdf'):
-                        file['preview'] = url_for('static', filename='assets/pdf_preview.png')
-                    else:
-                        file['preview'] = url_for('static', filename=file['link'].lstrip('/'))
-            except Exception as e:
+                    file['preview'] = url_for('static', filename=file['link'].lstrip('/'))
+            else:
                 file['preview'] = url_for('static', filename='assets/default_preview.png')
         file_data[file_type] = files
 
@@ -141,23 +124,12 @@ def unified_catalog():
         file_path = f"frontend/static{file['link']}"
         file_type = db_session().query(FileType).filter(FileType.id == file['file'].file_type_id).first().type
         file['file_type'] = file_type
-        try:
-            if file_type in ['videos', 'clips']:
-                reader = imageio.get_reader(file_path)
-                first_frame = reader.get_data(0)
-                img = Image.fromarray(first_frame)
-
-                img.thumbnail((300, 300))
-
-                buffered = BytesIO()
-                img.save(buffered, format="JPEG", quality=85)
-                file['preview'] = f"data:image/jpeg;base64,{base64.b64encode(buffered.getvalue()).decode()}"
+        if file_type not in ['videos', 'clips']:
+            if file_path.lower().endswith('.pdf'):
+                file['preview'] = url_for('static', filename='assets/pdf_preview.png')
             else:
-                if file_path.lower().endswith('.pdf'):
-                    file['preview'] = url_for('static', filename='assets/pdf_preview.png')
-                else:
-                    file['preview'] = url_for('static', filename=file['link'].lstrip('/'))
-        except Exception as e:
+                file['preview'] = url_for('static', filename=file['link'].lstrip('/'))
+        else:
             file['preview'] = url_for('static', filename='assets/default_preview.png')
 
     return render_template("unified_catalog.html", files=files, search_query=query)
@@ -183,29 +155,17 @@ def catalog(file_type: str):
 
     sorted_subjects = sorted(subjects.items(), key=lambda x: len(x[1]), reverse=True)
 
-    for subject, subject_files in sorted_subjects:
+    for _ in sorted_subjects:
         for file in files:
             file_path = f"frontend/static{file['link']}"
             file_type = db_session().query(FileType).filter(FileType.id == file['file'].file_type_id).first().type
             file['file_type'] = file_type
-            try:
-                if file_type in [
-                    'videos', 'clips']:
-                    reader = imageio.get_reader(file_path)
-                    first_frame = reader.get_data(0)
-                    img = Image.fromarray(first_frame)
-
-                    img.thumbnail((300, 300))
-
-                    buffered = BytesIO()
-                    img.save(buffered, format="JPEG", quality=85)
-                    file['preview'] = f"data:image/jpeg;base64,{base64.b64encode(buffered.getvalue()).decode()}"
+            if file_type not in ['videos', 'clips']:
+                if file_path.lower().endswith('.pdf'):
+                    file['preview'] = url_for('static', filename='assets/pdf_preview.png')
                 else:
-                    if file_path.lower().endswith('.pdf'):
-                        file['preview'] = url_for('static', filename='assets/pdf_preview.png')
-                    else:
-                        file['preview'] = url_for('static', filename=file['link'].lstrip('/'))
-            except Exception as e:
+                    file['preview'] = url_for('static', filename=file['link'].lstrip('/'))
+            else:
                 file['preview'] = url_for('static', filename='assets/default_preview.png')
 
     return render_template(
@@ -229,23 +189,12 @@ def file_detail(file_id: int):
         file_path = f"frontend/static{related['link']}"
         file_type = db_session().query(FileType).filter(FileType.id == related['file'].file_type_id).first().type
         related['file_type'] = file_type
-        try:
-            if file_type in ['videos', 'clips']:
-                reader = imageio.get_reader(file_path)
-                first_frame = reader.get_data(0)
-                img = Image.fromarray(first_frame)
-
-                img.thumbnail((300, 300))
-
-                buffered = BytesIO()
-                img.save(buffered, format="JPEG", quality=85)
-                related['preview'] = f"data:image/jpeg;base64,{base64.b64encode(buffered.getvalue()).decode()}"
+        if file_type not in ['videos', 'clips']:
+            if file_path.lower().endswith('.pdf'):
+                related['preview'] = url_for('static', filename='assets/pdf_preview.png')
             else:
-                if file_path.lower().endswith('.pdf'):
-                    related['preview'] = url_for('static', filename='assets/pdf_preview.png')
-                else:
-                    related['preview'] = url_for('static', filename=related['link'].lstrip('/'))
-        except Exception as e:
+                related['preview'] = url_for('static', filename=related['link'].lstrip('/'))
+        else:
             related['preview'] = url_for('static', filename='assets/default_preview.png')
 
     return render_template(
