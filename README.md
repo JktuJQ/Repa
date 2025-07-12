@@ -1,51 +1,48 @@
-# Универсальная база учебных материалов с возможностью загрузки конспектов, шпаргалок и методичек по различным дисциплинам
+# Database of educational materials with the ability to download notes, cheat sheets and manuals for various disciplines
 
 ![Репа](docs/image.png)
 
-## Цель приложения
+## Application goal
 
-Распространенная проблема в вузах — поиск учебных материалов.
-Много времени отнимает поиск разрозненных источников и 
-часто трудно ориентироваться в свалке сотен документов.
+A common problem in universities is searching for educational materials.
+Searching for disparate sources takes a lot of time and it is often difficult to navigate in a dump of hundreds of documents.
 
-**Репа** призвана решить эту проблему,
-добавив дополнительный функционал для удобства пользователей.
+**Repa** is designed to solve this problem by adding additional functionality for the convenience of users.
 
-## Задачи проекта
-Чтобы решить проблему, описанную выше, мы решили создали систему, позволяющую 
-  1. хранить конспекты и записи лекций организованно,
-  2. делиться фотографиями конспектов в хорошем качестве за счет автоматической обработки,
-  3. смотреть лекции, а точнее самые важные моменты из них, в формате таких затягивающих вертикальных видео.
+## Project objectives
+To solve the problem described above, we decided to create a system that allows
+1. storing notes and lecture recordings in an organized manner,
+2. sharing high-quality photos of notes due to automatic processing,
+3. watching lectures, or rather the most important moments from them, in the format of such addictive vertical videos.
 
-## Интерфейс
+## Website interface
 
-Страница входа:
+Login page:
 
-![Страница входа](docs/login_page.png)
+![Login page](docs/login_page.png)
 
-Основное меню:
+Main menu:
 
-![Основное меню](docs/main_page.png)
+![Main menu](docs/main_page.png)
 
-Страница категории:
+Category page:
 
-![Страница категории](docs/category_page.png)
+![Category page](docs/category_page.png)
 
-Страница файла:
+File page:
 
-![Страница файла](docs/file_page.png)
+![File page](docs/file_page.png)
 
-Страница загрузки файла:
+File download page:
 
-![Страница загрузки файла](docs/download_page.png)
+![File download page](docs/download_page.png)
 
-## Примечание
+## Note
 
-Данный проект разрабатывался в рамках хакатона в сжатые сроки и,
-как следствие, написанный код подвержен техническому долгу и засорению (особенно сильно это касается CSS файла).
+This project was developed as part of a hackathon in a short time frame and,
+as a result, the written code is subject to technical debt and clogging (this is especially true for the CSS file).
 
-Функционал особых функций обработки (вырезка контура из фотографии, конвертация видео в вертикальный формат)
-не представлены через сайт, но доступны в ручном режиме через скрипты в папке [ml](ml).
+The functionality of special processing functions (cutting out a contour from a photo, converting video to vertical format)
+is not presented through the site, but is available manually through scripts in the [ml](ml) folder.
 
-Тем не менее, представленный проект жизнеспособен даже в таком состоянии,
-и потому может являться объектом интереса.
+However, the presented project is viable even in this state, and therefore may be an object of interest.
